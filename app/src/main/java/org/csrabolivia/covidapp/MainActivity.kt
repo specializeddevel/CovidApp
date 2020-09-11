@@ -18,9 +18,14 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Depuracion","El Id unico es: ${it}")
             }
         }
-        //temas
+        //suscripcion a un tema
         FirebaseMessaging.getInstance().subscribeToTopic("COVID")
 
+        //recuperacion de info de una push
+        val url: String? = intent.getStringExtra("url")
+        url?.let {
+            Log.d("Depuracion", "Ha llegado esta informacion en un push: ${it}")
+        }
     }
 
 
