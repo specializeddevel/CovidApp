@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "540968220126",
+    "firebase_url": "https://fir-tutorial-7b581.firebaseio.com",
+    "project_id": "fir-tutorial-7b581",
+    "storage_bucket": "fir-tutorial-7b581.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540968220126:android:288d50006c0410a2b6194f",
+        "android_client_info": {
+          "package_name": "org.csrabolivia.covidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540968220126-qffi2pdr06ppo8rp14k8cnnr6gvvkv1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsVpA--1pdC7RTbWO7r3kzxVtlJSFqRF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540968220126-qffi2pdr06ppo8rp14k8cnnr6gvvkv1g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
