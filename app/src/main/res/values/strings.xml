@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CovidApp</string>
+    <!-- Activity Main -->
+    <string name="activity_main_textViewSaludo">Para empezar necesitamos sus datos personales</string>
+    <string name="activity_main_textViewConfidencial">La información que nos proporcione será para uso exclusivo del personal de salud y sera tratada de manera totalmente confidencial.</string>
+    <string name="activity_main_names">Nombres</string>
+    <string name="activity_main_last_names">Apellidos</string>
 </resources>

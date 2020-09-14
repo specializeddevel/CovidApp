@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        Thread.sleep(2000)
+        Thread.sleep(300)
         notification()
         setTheme(R.style.AppTheme)
 
