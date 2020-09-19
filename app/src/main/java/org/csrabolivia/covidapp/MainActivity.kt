@@ -1,5 +1,6 @@
 package org.csrabolivia.covidapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         btContinuar.setOnClickListener(this::escuchar)
         textFieldDateBirthday2.setOnClickListener(this::escucharFecha)
 
-
         val analytics:FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
         bundle.putString("InitScreen", "Integración con Firebase completada")
@@ -55,14 +55,24 @@ class MainActivity : AppCompatActivity() {
         val itemsMunicipio = listOf("Montero", "Otro" )
         val adapterMunicipio = ArrayAdapter(this, R.layout.list_item, itemsMunicipio)
         (textFieldMunicipio.editText as? AutoCompleteTextView)?.setAdapter(adapterMunicipio)
+
+        val itemsCiudad = listOf("Montero", "Otro" )
+        val adapterCiudad = ArrayAdapter(this, R.layout.list_item, itemsCiudad)
+        (textFieldCiudad.editText as? AutoCompleteTextView)?.setAdapter(adapterCiudad)
+
+        val itemsBarrio = listOf("24 de septiembre","27 de mayo","3 de Mayo","30 de Noviembre","Asahi","Bolívar","El Carmen","Fabril","Kennedy","La Cruz","Monteverde","San Juan XXIII","Santa Barbara","Santa Tereza","Villa Cbba.","Villa Verde","Villa Virginia","Virgen de Cotoca","Zona Central","Otro...")
+        val adapterBarrio = ArrayAdapter(this, R.layout.list_item, itemsBarrio)
+        (textFieldBarrio.editText as? AutoCompleteTextView)?.setAdapter(adapterBarrio)
    }
 
     private fun escuchar(v: View) {
-        Log.d("Depuracion", "ingreso a click")
+        //Log.d("Depuracion", "ingreso a click")
+        var intent = Intent(this, AccesoAplicacionActivity::class.java)
+        intent.putExtra("NOMBRE", textFieldNames.editText?.text.toString())
+        startActivity(intent)
     }
 
     private fun escucharFecha(v: View) {
-        Log.d("Depuracion", "ingreso a fecha")
         showDatePickerDialog()
     }
 

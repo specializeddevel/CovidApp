@@ -33,7 +33,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/lineatiempo" />
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -91,13 +90,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewConfidencial"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_perm_identity_24" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_main_names"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,14 +114,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldNames"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_perm_identity_24" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_main_last_names"
-                    android:inputType="text"
-                    android:maxLines="1"/>
+                    android:inputType="textCapWords"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- TextField genero -->
@@ -138,7 +139,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldLastNames"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_call_split_24" >
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
@@ -161,6 +163,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldGender"
                 app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_date_range_24"
                 >
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -183,13 +186,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldLastNames"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_phone_android_24" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_main_phone"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLines="1" />/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- TextField Estado civil -->
@@ -206,11 +211,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldPhone"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_group_24" >
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -228,7 +235,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldCivilState"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_view_comfy_24" >
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
@@ -239,6 +247,7 @@
             <!-- TextField Ciudad -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldCiudad"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -248,18 +257,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldMunicipio"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_location_city_24" >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/activity_main_phone"
-                    android:inputType="phone" />
+                    android:hint="@string/activity_main_City"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- TextField Barrio -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldBarrio"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -269,13 +280,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldCiudad"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:startIconDrawable="@drawable/ic_baseline_view_compact_24" >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/activity_main_phone"
-                    android:inputType="phone" />
+                    android:hint="@string/activity_main_barrio"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- TextField Direccion -->
@@ -290,30 +302,50 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFieldBarrio"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="0.0"
+                app:errorEnabled="false"
+
+                app:startIconDrawable="@drawable/ic_baseline_store_mall_directory_24" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/activity_main_phone"
-                    android:inputType="phone" />
+                    android:hint="@string/activity_main_address"
+                    android:inputType="textCapWords"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btContinuar"
+            <CheckBox
+                android:id="@+id/checkBoxTerminos"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Continuar"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textFieldDireccion"
+                android:text="@string/activity_main_terminos"
+                android:layout_weight="1"                 />
 
- />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btContinuar"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/activity_main_btn_continuar"
+                android:backgroundTint="@color/my_color_dark"
+
+                app:icon="@drawable/ic_baseline_arrow_forward_24"
+                />
         </TableLayout>
 
     </ScrollView>

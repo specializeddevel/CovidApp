@@ -10,4 +10,10 @@
     <string name="activity_main_municipio">Municipio</string>
     <string name="activity_main_gender">Género</string>
     <string name="activity_main_birthday">Fecha de nacimiento</string>
+    <string name="activity_main_City">Ciudad</string>
+    <string name="activity_main_barrio">Barrio</string>
+    <string name="activity_main_address">Dirección (calle y número de puerta)</string>
+    <string name="activity_main_btn_continuar">Continuar</string>
+    <string name="activity_main_terminos">Acepto que el Consejo de Salud Rural Andino Montero, realice un seguimiiento de mi estdo de salud</string>
+    <string name="activity_acceso_aplicacion_cabecera">AUTODIAGNOSTICO: A continuacion por favor responda con SI o con NO, a las siguientes preguntas</string>
 </resources>
