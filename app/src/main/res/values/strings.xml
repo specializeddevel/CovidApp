@@ -16,4 +16,6 @@
     <string name="activity_main_btn_continuar">Continuar</string>
     <string name="activity_main_terminos">Acepto que el Consejo de Salud Rural Andino Montero, realice un seguimiiento de mi estdo de salud</string>
     <string name="activity_acceso_aplicacion_cabecera">AUTODIAGNOSTICO: A continuacion por favor responda con SI o con NO, a las siguientes preguntas</string>
+    <string name="activity_main_btn_atras">Ir atras</string>
+    <string name="activity_main_enCasa">En este momento, ¿Usted se encuentra en su vivienda?</string>
 </resources>

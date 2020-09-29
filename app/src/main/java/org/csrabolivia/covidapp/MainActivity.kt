@@ -1,101 +1,90 @@
 package org.csrabolivia.covidapp
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
-import android.view.View
-import android.widget.*
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
-
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import java.io.IOException
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
-    lateinit var datePicker: DatePickerHelper
 
-    /*val listener= View.OnClickListener { view ->
-        when (view.getId()) {
-            R.id.btContinuar -> {
-                // Do some work here
-                Log.d("Depuracion", "ingreso a click")
-                Toast.makeText(this, "Clicked 1", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }*/
-
+    private val key = "PERSONALDATA"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Thread.sleep(2000)
-        notification()
-        setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
+        //if (verificaInternet()){
 
-        datePicker = DatePickerHelper(this)
-        btContinuar.setOnClickListener(this::escuchar)
-        textFieldDateBirthday2.setOnClickListener(this::escucharFecha)
-
-        val analytics:FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        val bundle = Bundle()
-        bundle.putString("InitScreen", "Integración con Firebase completada")
-        analytics.logEvent("InitScreen", bundle)
-
-        val itemsGender = listOf("Masculino", "Femenino" )
-        val adapterGender = ArrayAdapter(this, R.layout.list_item, itemsGender)
-        (textFieldGender.editText as? AutoCompleteTextView)?.setAdapter(adapterGender)
-
-        val itemsEstadoCivil = listOf("Soltero(a)", "Casado(a)", "Conviviente", "Divorciado(a)", "Separado(a)", "Viudo(a)" )
-        val adapterEstadoCivil = ArrayAdapter(this, R.layout.list_item, itemsEstadoCivil)
-        (textFieldCivilState.editText as? AutoCompleteTextView)?.setAdapter(adapterEstadoCivil)
-
-        val itemsMunicipio = listOf("Montero", "Otro" )
-        val adapterMunicipio = ArrayAdapter(this, R.layout.list_item, itemsMunicipio)
-        (textFieldMunicipio.editText as? AutoCompleteTextView)?.setAdapter(adapterMunicipio)
-
-        val itemsCiudad = listOf("Montero", "Otro" )
-        val adapterCiudad = ArrayAdapter(this, R.layout.list_item, itemsCiudad)
-        (textFieldCiudad.editText as? AutoCompleteTextView)?.setAdapter(adapterCiudad)
-
-        val itemsBarrio = listOf("24 de septiembre","27 de mayo","3 de Mayo","30 de Noviembre","Asahi","Bolívar","El Carmen","Fabril","Kennedy","La Cruz","Monteverde","San Juan XXIII","Santa Barbara","Santa Tereza","Villa Cbba.","Villa Verde","Villa Virginia","Virgen de Cotoca","Zona Central","Otro...")
-        val adapterBarrio = ArrayAdapter(this, R.layout.list_item, itemsBarrio)
-        (textFieldBarrio.editText as? AutoCompleteTextView)?.setAdapter(adapterBarrio)
+             notification()
+            //btContinuar.setOnClickListener(this::escucharBtn)
+            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+            val editor = prefs.edit()
+            editor.remove("PERSONALDATA")
+            editor.apply()
+            val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+            val bundle = Bundle()
+            bundle.putString("InitScreen", "Integración con Firebase completada")
+            analytics.logEvent("InitScreen", bundle)
+            //Se verifica si ya se rgistraron los datos del usuario
+            val conDatos = prefs.getString(key, "SD")
+            //showAlert("Preferencias", yaRegistrado.toString())
+            Log.d("Depuracion", conDatos.toString())
+            if(conDatos.equals("SD")){
+                val intent = Intent(this, PageOneActivity::class.java)
+                intent.putExtra("ID", Constants.IDUNICO)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, AutodiagnosticoActivity::class.java)
+                intent.putExtra("ID", Constants.IDUNICO)
+                startActivity(intent)
+                Toast.makeText(this, "Con datos", Toast.LENGTH_SHORT).show()
+            }
+            setTheme(R.style.AppTheme)
+        //} else {
+        //    Log.d("Error","No se tiene conexion a internet")
+        //    showAlert("Error", "Se requiere conexión a Internet","OK")
+        //}
    }
 
-    private fun escuchar(v: View) {
-        //Log.d("Depuracion", "ingreso a click")
-        var intent = Intent(this, AccesoAplicacionActivity::class.java)
-        intent.putExtra("NOMBRE", textFieldNames.editText?.text.toString())
-        startActivity(intent)
-    }
-
-    private fun escucharFecha(v: View) {
-        showDatePickerDialog()
-    }
-
-    private fun showDatePickerDialog() {
-        val cal = Calendar.getInstance()
-        val d = cal.get(Calendar.DAY_OF_MONTH)
-        val m = cal.get(Calendar.MONTH)
-        val y = cal.get(Calendar.YEAR)
-        datePicker.showDialog(d, m, y, object : DatePickerHelper.Callback {
-            override fun onDateSelected(dayofMonth: Int, month: Int, year: Int) {
-                val dayStr = if (dayofMonth < 10) "0${dayofMonth}" else "${dayofMonth}"
-                val mon = month + 1
-                val monthStr = if (mon < 10) "0${mon}" else "${mon}"
-                textFieldDateBirthday2.setText("${dayStr}-${monthStr}-${year}")
-            }
-        })
+    private fun showAlert(titulo: String, mensaje: String, textoPositivo: String = "", textoNeutral: String = "", textoNegativo: String = ""){
+        var respuesta: String =""
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(titulo)
+        builder.setMessage(mensaje)
+        builder.setCancelable(false)
+        builder.setPositiveButton(textoPositivo){_,_ ->
+            respuesta = "+"
+            moveTaskToBack(true)
+            exitProcess(-1)
+        }
+        builder.setNegativeButton(textoNegativo){_,_ ->
+            respuesta = "-"
+        }
+        builder.setNeutralButton(textoNeutral){_,_ ->
+            respuesta = "*"
+        }
+        val dialogo = builder.create()
+        dialogo.show()
     }
 
     private fun notification(){
+
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener{
 
             it.result?.token?.let{
-                Log.d("Depuracion","El Id unico es: ${it}")
+                Log.d("Depuracion", "El Id unico es: ${it}")
+                Constants.IDUNICO = it
             }
         }
         //suscripcion a un tema
@@ -107,4 +96,41 @@ class MainActivity : AppCompatActivity() {
             Log.d("Depuracion", "Ha llegado esta informacion en un push: ${it}")
         }
     }
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun verificaInternet(): Boolean {
+        val runtime = Runtime.getRuntime()
+        try {
+            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+            val exitValue = ipProcess.waitFor()
+            return exitValue == 0
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
 }
