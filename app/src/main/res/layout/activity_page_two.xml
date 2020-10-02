@@ -40,20 +40,7 @@
         app:spb_stateNumberForegroundColor="#eeeeee"
         app:spb_stateSize="30dp" />
 
-    <!-- Texto saludo -->
-    <TextView
-        android:id="@+id/textViewSaludo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/activity_main_textViewSaludo"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id" />
+
 
     <ScrollView
         android:id="@+id/pageOneScroll2"
@@ -63,14 +50,28 @@
         app:layout_constraintBottom_toTopOf="@+id/btContinuar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSaludo">
+        app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id">
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="1">
-    <!-- TextField Municipio -->
-        <com.google.android.material.textfield.TextInputLayout
+
+        <!-- Texto saludo -->
+        <TextView
+            android:id="@+id/textViewSaludo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/page_two_activity_textViewDatosVivienda"
+            android:textSize="20sp"
+            android:textStyle="bold"
+         />
+         <!-- TextField Municipio -->
+        
+         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textFieldMunicipio"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
@@ -78,7 +79,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:hint="@string/activity_main_municipio"
+            android:hint="@string/page_two_activity_municipio"
             app:startIconDrawable="@drawable/ic_baseline_view_comfy_24" >
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -101,7 +102,7 @@
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/activity_main_City"
+                android:hint="@string/page_two_activity_city"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +119,7 @@
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/activity_main_barrio"
+                android:hint="@string/page_two_activity_barrio"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,21 +136,28 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/activity_main_address"
+                android:hint="@string/page_two_activity_address"
                 android:inputType="textCapWords"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/layoutEnCasa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/border"
+            android:orientation="vertical">
         <!-- Texto en casa -->
         <TextView
             android:id="@+id/textViewEnCasa"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:text="@string/activity_main_enCasa"
+
+            android:text="@string/page_two_activity_enCasa"
             android:textAlignment="textStart"
 
             android:textSize="20sp"
@@ -157,26 +165,26 @@
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/tbEnCasa"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:orientation="horizontal"
             android:gravity="center"
             app:selectionRequired="true"
-            app:layout_goneMarginBottom="50dp"
             app:singleSelection="true">
 
             <Button
-                android:id="@+id/buttonSi"
+                android:id="@+id/buttonEnCasaSi"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SI"
                 android:textSize="20sp"
-                app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+                app:icon="@drawable/ic_baseline_check_circle_outline_24"
+                />
 
             <Button
-                android:id="@+id/buttonNo"
+                android:id="@+id/buttonEnCasaNo"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -185,7 +193,7 @@
                 app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
-
+        </LinearLayout>
     </TableLayout>
 
     </ScrollView>
@@ -200,7 +208,7 @@
 
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/my_color_dark"
-        android:text="@string/activity_main_btn_continuar"
+        android:text="@string/page_one_activity_btn_continuar"
         app:icon="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -216,7 +224,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/my_color_dark"
-        android:text="@string/activity_main_btn_atras"
+        android:text="@string/page_one_activity_btn_atras"
         app:icon="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btContinuar2"

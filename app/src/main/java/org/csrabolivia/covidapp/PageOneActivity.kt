@@ -67,28 +67,26 @@ class PageOneActivity : AppCompatActivity() {
         } else if(validarCampos(textFieldLastNames.editText?.text.toString())) {
             textFieldLastNames.error = "Valor requerido"
             textFieldLastNames.requestFocus()
-
-        } else if (validarCampos(textFieldGender.editText?.text.toString())){
-            textFieldGender.error = "Valor requerido"
-            textFieldGender.requestFocus()
         } else if(validarCampos(textFieldDateBirthday.editText?.text.toString())) {
             textFieldDateBirthday.error = "Valor requerido"
             textFieldDateBirthday.requestFocus()
-        } else  if (validarCampos(textFieldPhone.editText?.text.toString())) {
-            textFieldPhone.error = "Valor requerido"
-            textFieldPhone.requestFocus()
-
+        } else if (validarCampos(textFieldGender.editText?.text.toString())){
+            textFieldGender.error = "Valor requerido"
+            textFieldGender.requestFocus()
         } else if (validarCampos(textFieldCivilState.editText?.text.toString())) {
             textFieldCivilState.error = "Valor requerido"
             textFieldCivilState.requestFocus()
+        } else  if (validarCampos(textFieldPhone.editText?.text.toString())) {
+            textFieldPhone.error = "Valor requerido"
+            textFieldPhone.requestFocus()
         } else {
             var intent = Intent(this, PageTwoActivity::class.java)
             intent.putExtra(Constants.NOMBRES, textFieldNames.editText?.text.toString())
             intent.putExtra(Constants.APELLIDOS, textFieldLastNames.editText?.text.toString())
-            intent.putExtra(Constants.GENERO, textFieldGender.editText?.text.toString())
             intent.putExtra(Constants.FNACIMIENTO, textFieldDateBirthday.editText?.text.toString())
-            intent.putExtra(Constants.TELEFONO, textFieldPhone.editText?.text.toString())
+            intent.putExtra(Constants.GENERO, textFieldGender.editText?.text.toString())
             intent.putExtra(Constants.ESTCIVIL, textFieldCivilState.editText?.text.toString())
+            intent.putExtra(Constants.TELEFONO, textFieldPhone.editText?.text.toString())
             startActivity(intent)
         }
     }

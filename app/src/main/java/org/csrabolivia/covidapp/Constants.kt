@@ -1,9 +1,5 @@
 package org.csrabolivia.covidapp
 
-import android.preference.PreferenceManager
-import java.time.LocalDate
-import java.util.*
-
 class Constants {
     companion object{
         const val NOMBRES: String = "nombres"
@@ -14,8 +10,12 @@ class Constants {
         const val ESTCIVIL = "estCivil"
         const val MUNICIPIO = "municipio"
         const val CIUDAD = "ciudad"
+        const val LATITUD = "latitud"
+        const val LONGITUD = "longitud"
         var IDUNICO : String = "desconocido"
-
+        const val LOCATION_REQUEST = 1000
+        const val GPS_REQUEST = 1001
+        var _conDatosGPS = false
 
     }
 }

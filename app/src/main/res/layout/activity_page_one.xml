@@ -63,7 +63,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:text="@string/activity_main_textViewSaludo"
+                android:text="@string/page_one_activity_textViewSaludo"
 
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -79,7 +79,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:text="@string/activity_main_textViewConfidencial"
+                android:text="@string/page_one_activity_textViewConfidencial"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewSaludo" />
@@ -99,7 +99,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/activity_main_names"
+                    android:hint="@string/page_one_activity_names"
                     android:inputType="textCapWords"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -118,27 +118,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/activity_main_last_names"
+                    android:hint="@string/page_one_activity_last_names"
                     android:inputType="textCapWords"
                     android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- TextField genero -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFieldGender"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:hint="@string/activity_main_gender"
-                app:startIconDrawable="@drawable/ic_baseline_call_split_24">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- TextField fecha nacimiento -->
@@ -150,7 +132,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:hint="@string/activity_main_birthday"
+                android:hint="@string/page_one_activity_birthday"
                 app:startIconDrawable="@drawable/ic_baseline_date_range_24">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -158,6 +140,43 @@
                     android:layout_height="wrap_content"
                     android:inputType="none" />
 
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextField genero -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldGender"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:hint="@string/page_one_activity_gender"
+                app:startIconDrawable="@drawable/ic_baseline_call_split_24">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextField Estado civil -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldCivilState"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:hint="@string/page_one_activity_estado_civil"
+                app:startIconDrawable="@drawable/ic_baseline_group_24">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- TextField telefono -->
@@ -173,27 +192,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/activity_main_phone"
+                    android:hint="@string/page_one_activity_phone"
                     android:inputType="number"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- TextField Estado civil -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFieldCivilState"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:hint="@string/activity_main_estado_civil"
-                app:startIconDrawable="@drawable/ic_baseline_group_24">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -209,7 +209,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/my_color_dark"
 
-        android:text="@string/activity_main_btn_continuar"
+        android:text="@string/page_one_activity_btn_continuar"
         app:icon="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

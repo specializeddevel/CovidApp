@@ -49,8 +49,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/activity_main_textViewSaludo"
-
+        android:text="@string/page_one_activity_textViewSaludo"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,44 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id" />
 
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:selectionRequired="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSaludo"
-        app:layout_goneMarginBottom="50dp"
-        app:singleSelection="true">
-
-        <Button
-            android:id="@+id/buttonSi"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SI"
-            android:textColor="#C62828"
-            android:textSize="20sp"
-            app:icon="@drawable/ic_baseline_check_circle_outline_24"
-            android:textColorHighlight="@color/amarillo"
-            />
-
-        <Button
-            android:id="@+id/buttonNo"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NO"
-            android:textColor="#2e7d32"
-            android:textSize="20sp"
-            app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
-
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <!-- Texto saludo -->
+   <!-- Texto saludo -->
     <TextView
         android:id="@+id/textViewSaludo2"
         android:layout_width="0dp"
@@ -103,13 +65,13 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/activity_main_textViewSaludo"
+        android:text="@string/page_one_activity_textViewSaludo"
 
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id" />
 
     <RadioGroup
         android:layout_width="wrap_content"

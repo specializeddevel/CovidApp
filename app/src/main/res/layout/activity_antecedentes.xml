@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PageThreeActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorBackground"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/l_cuidarnosc" />
+
+    <com.kofigyan.stateprogressbar.StateProgressBar
+        android:id="@+id/your_state_progress_bar_id_pgant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:spb_animateToCurrentProgressState="true"
+        app:spb_checkStateCompleted="true"
+        app:spb_currentStateDescriptionColor="#DB0082"
+        app:spb_currentStateNumber="three"
+        app:spb_maxStateNumber="three"
+        app:spb_stateBackgroundColor="#BDBDBD"
+        app:spb_stateDescriptionColor="#808080"
+        app:spb_stateForegroundColor="#DB0082"
+        app:spb_stateNumberBackgroundColor="#808080"
+        app:spb_stateNumberForegroundColor="#eeeeee"
+        app:spb_stateSize="30dp" />
+
+
+    <!-- Texto explicacion antecedentes -->
+    <TextView
+        android:id="@+id/textViewExplicaAntecedentes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/actecedentes_activity_instruccion"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id_pgant" />
+
+    <ScrollView
+        android:id="@+id/antecedentesScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/btContinuar4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExplicaAntecedentes">
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+
+            <LinearLayout
+                android:id="@+id/layoutAnt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant1"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente1Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente1No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutAnt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant2"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente2Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente2No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutAnt3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant3"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente3Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente3No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutAnt4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant4"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente4Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente4No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutAnt5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant5"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente5Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente5No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutAnt6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant6"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente6Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente6No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutAnt7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant7"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente7Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente7No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutAnt8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvAnt8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_ant8"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/antecedente8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btAntecedente8Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btAntecedente8No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutEmbarazo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical"
+                android:visibility="invisible">
+                <!-- Texto en casa -->
+                <TextView
+                    android:id="@+id/tvEmbarazo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/antecedentes_activity_embarazo"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/embarazada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btEmbarazadaSi"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SI"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btEmbarazadaNo"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NO"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+        </TableLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btContinuar4"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/my_color_dark"
+        android:text="@string/page_one_activity_btn_continuar"
+        app:icon="@drawable/ic_baseline_arrow_forward_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btAtras3"
+        app:layout_constraintTop_toBottomOf="@+id/antecedentesScroll" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btAtras3"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/my_color_dark"
+        android:text="@string/page_one_activity_btn_atras"
+        app:icon="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btContinuar4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/antecedentesScroll" />
+</androidx.constraintlayout.widget.ConstraintLayout>
