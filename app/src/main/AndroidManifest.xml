@@ -14,18 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AntecedentesActivity"></activity>
-        <activity android:name=".AutodiagnosticoActivity" />
-        <activity android:name=".PageThreeActivity" />
-        <activity android:name=".PageTwoActivity" />
-        <activity android:name=".PageOneActivity" />
-        <activity android:name=".AccesoAplicacionActivity" />
+        <activity android:name=".AntecedentesActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".AutodiagnosticoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".PageThreeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".PageTwoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".PageOneActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".AccesoAplicacionActivity"  android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

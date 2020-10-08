@@ -25,10 +25,14 @@ import kotlinx.android.synthetic.main.activity_page_two.view.*
 import org.json.JSONObject
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_page_one.*
+import kotlinx.android.synthetic.main.activity_page_three.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import kotlin.concurrent.thread
 
 
@@ -36,14 +40,14 @@ class PageTwoActivity : AppCompatActivity() {
 
     private val key = "PERSONALDATA"
     private val keyGps = "GPSDATA"
+    private val keyID = "IDUNICO"
     private var cordenadas: String =""
-    private val GPS1_REQUEST_CODE = 101
     private val GPS2_REQUEST_CODE = 102
-    private val TAG = "Permisos"
     private var isGPS = false
     private var respuestaDialogo: String = ""
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +63,6 @@ class PageTwoActivity : AppCompatActivity() {
         val fnacimiento = bundle!!.getString(Constants.FNACIMIENTO)
         val telefono = bundle!!.getString(Constants.TELEFONO)
         val estCivil = bundle!!.getString(Constants.ESTCIVIL)
-        val municipio = bundle!!.getString(Constants.MUNICIPIO)
-        val ciudad = bundle!!.getString(Constants.CIUDAD)
-
         var seleccionEnCasa: Int? = null
 
         val itemsMunicipio = listOf("Montero", "Otro")
@@ -113,83 +114,163 @@ class PageTwoActivity : AppCompatActivity() {
             closeKeyBoard()
         }
 
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                GpsUtils(this@PageTwoActivity).turnGPSOn(GpsUtils.onGpsListener { isGPSEnable -> isGPS })
-            }
-            Log.d(TAG, "terminado encendido de GPS")
-        }
-
         tbEnCasa.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
 
-            if(isChecked){
-                if (toggleButton.buttonEnCasaSi.isPressed){
+            if (isChecked) {
+                if (toggleButton.buttonEnCasaSi.isPressed) {
                     seleccionEnCasa = 1
-                    if (setupPermissions()) {
-                        lifecycleScope.launch {
-                            withContext(Dispatchers.IO) {
-                                getLastKnownLocation()
-                            }
-                        }
-                    }
-                }
-                else{
+                    setupPermissions()
+                } else {
                     seleccionEnCasa = 0
                 }
             }
         }
 
-        btContinuar2.setOnClickListener() {
-            textFieldMunicipio.error = null
-            textFieldCiudad.error = null
-            textFieldBarrio.error = null
-            textFieldDireccion.error = null
-            layoutEnCasa.background = resources.getDrawable(R.drawable.border)
+        checkBoxTerminos.setOnClickListener(){
             closeKeyBoard()
-            if (validarCampos(textFieldMunicipio.editText?.text.toString())) {
-                textFieldMunicipio.error = "Valor requerido"
-            } else if (validarCampos(textFieldCiudad.editText?.text.toString())) {
-                textFieldCiudad.error = "Valor requerido"
-            } else if (validarCampos(textFieldBarrio.editText?.text.toString())) {
-                textFieldBarrio.error = "Valor requerido"
-            } else if (validarCampos(textFieldDireccion.editText?.text.toString())) {
-                textFieldDireccion.error = "Valor requerido"
-                textFieldDireccion.requestFocus()
-                //penKeyBoard()
-            } else if (seleccionEnCasa == null) {
-                tbEnCasa.buttonEnCasaSi.requestFocus()
-                layoutEnCasa.setBackgroundColor(Color.parseColor("#FFCDD2"))
-                layoutEnCasa.background = resources.getDrawable(R.drawable.border_red)
-                Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_LONG)
-                    .show()
-            } else {
-                val REGISTRO = JSONObject()
-                REGISTRO.put("idUnico", Constants.IDUNICO)
-                REGISTRO.put("nombres", nombre)
-                REGISTRO.put("apellidos", apellidos)
-                REGISTRO.put("genero", genero)
-                REGISTRO.put("fnacimiento", fnacimiento)
-                REGISTRO.put("telefono", telefono)
-                REGISTRO.put("estCivil", estCivil)
-                REGISTRO.put("municipio", municipio)
-                REGISTRO.put("ciudad", ciudad)
-                REGISTRO.put("barrio", textFieldBarrio.editText?.text.toString())
-                REGISTRO.put("direccion", textFieldDireccion.editText?.text.toString())
-                val cadena: String = REGISTRO.toString()
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-                val editor = prefs.edit()
-                editor.putString(key, cadena)
-                editor.apply()
-                val conDatos = prefs.getString(key, "SD")
-                Log.d(TAG, conDatos.toString())
-                val intent = Intent(this, AntecedentesActivity::class.java)
-                intent.putExtra(Constants.GENERO, genero)
-                startActivity(intent)
-            }
-
+            btContinuar2.isEnabled = checkBoxTerminos.isChecked
         }
 
 
+        btContinuar2.setOnClickListener() {
+                textFieldMunicipio.error = null
+                textFieldCiudad.error = null
+                textFieldBarrio.error = null
+                textFieldDireccion.error = null
+                layoutEnCasa.background = resources.getDrawable(R.drawable.border)
+                closeKeyBoard()
+                val barrio = textFieldBarrio.editText?.text.toString()
+                val direccion = textFieldDireccion.editText?.text.toString()
+                val municipio = textFieldMunicipio.editText?.text.toString()
+                val ciudad = textFieldCiudad.editText?.text.toString()
+                if (validarCampos(municipio)) {
+                    textFieldMunicipio.error = "Valor requerido"
+                } else if (validarCampos(ciudad)) {
+                    textFieldCiudad.error = "Valor requerido"
+                } else if (validarCampos(barrio)) {
+                    textFieldBarrio.error = "Valor requerido"
+                } else if (validarCampos(direccion)) {
+                    textFieldDireccion.error = "Valor requerido"
+                    textFieldDireccion.requestFocus()
+                    //penKeyBoard()
+                } else if (seleccionEnCasa == null) {
+                    tbEnCasa.buttonEnCasaSi.requestFocus()
+                    layoutEnCasa.setBackgroundColor(Color.parseColor("#FFCDD2"))
+                    layoutEnCasa.background = resources.getDrawable(R.drawable.border_red)
+                    Toast.makeText(
+                        this,
+                        "Por favor responda todas las preguntas",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                } else {
+                    if (!verificaInternet()) {
+                        Toast.makeText(this, "No hay internet, no se puede continuar", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        //Guardado de los datos del usaurio localmente mediante shared preferences
+                        val REGISTRO = JSONObject()
+                        REGISTRO.put("idUnico", Constants.IDUNICO)
+                        REGISTRO.put("nombres", nombre)
+                        REGISTRO.put("apellidos", apellidos)
+                        REGISTRO.put("genero", genero)
+                        REGISTRO.put("fnacimiento", fnacimiento)
+                        REGISTRO.put("telefono", telefono)
+                        REGISTRO.put("estCivil", estCivil)
+                        REGISTRO.put("municipio", municipio)
+                        REGISTRO.put("ciudad", ciudad)
+                        REGISTRO.put("barrio", barrio)
+                        REGISTRO.put("direccion", direccion)
+                        val cadena: String = REGISTRO.toString()
+                        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+                        val editor = prefs.edit()
+                        editor.putString(key, cadena)
+                        editor.apply()
+                        val conDatos = prefs.getString(key, "SD")
+                        Log.d(
+                            "Cuidarnos",
+                            "Se guardaron localmente los datos del usuario: ${conDatos.toString()}"
+                        )
+                        //Guardar datos en la BD remota en firestore
+
+                            if (!Constants.IDUNICO.equals("desconocido")) {
+                                db.collection("usuarios").document(Constants.IDUNICO).set(
+                                hashMapOf
+                                    (
+                                    "id" to Constants.IDUNICO,
+                                    "nombres" to nombre,
+                                    "apellidos" to apellidos,
+                                    "fnacimiento" to fnacimiento,
+                                    "genero" to genero,
+                                    "estCivil" to estCivil,
+                                    "telefono" to telefono,
+                                    "municipio" to municipio,
+                                    "ciudad" to ciudad,
+                                    "barrio" to barrio,
+                                    "direccion" to direccion
+                                )
+                            )
+                                Log.i("Cuidarnos", "Se registraron los datos en la nube")
+                                val intent = Intent(this, AntecedentesActivity::class.java)
+                                intent.putExtra(Constants.GENERO, genero)
+                                startActivity(intent)
+                            } else {
+                                Log.i("Cuidarnos", "No se registraron los datos en la nube por falta de ID")
+                                if (!generarIDUnico()) {
+                                    Toast.makeText(
+                                        this,
+                                        "No se pudo generar ID, no se puede continuar sin una conexión a Internet.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    Log.i("Cuidarnos", "No se pudo generar ID unico")
+                                    btAtras1.callOnClick()
+                                } else {
+                                    btContinuar2.callOnClick()
+                                }
+                            }
+                        }
+                }
+        }
+    }
+
+    private fun generarIDUnico(): Boolean{
+        var generarID = false
+        //generacion del ID unico del celular
+        val internet = verificaInternet()
+        if (Constants.IDUNICO.equals("desconocido") && internet) {
+            FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+
+                it.result?.token?.let {
+                    Log.d("Cuidarnos", "Se genero el Id unico : ${it}")
+                    Constants.IDUNICO = it
+                    val cadena = Constants.IDUNICO
+                    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+                    val editor = prefs.edit()
+                    editor.putString(keyID, cadena)
+                    editor.apply()
+                    Log.d("Cuidarnos", "Se guardo localmente el Id unico")
+                    generarID = true
+                }
+            }
+        } else {
+            Log.d("Cuidarnos", "No se puede generar ID unico por falta de conexion a internet")
+            generarID = false
+        }
+        return generarID
+    }
+
+    fun verificaInternet(): Boolean {
+        val runtime = Runtime.getRuntime()
+        try {
+            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+            val exitValue = ipProcess.waitFor()
+            return exitValue == 0
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        return false
     }
 
 
@@ -228,40 +309,37 @@ class PageTwoActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupPermissions(): Boolean  {
-        var tienePermisos: Boolean = false
-        val permissionGPS1 = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.ACCESS_COARSE_LOCATION)
+
+    private fun setupPermissions()  {
         val permissionGPS2 = ContextCompat.checkSelfPermission(this,
             Manifest.permission.ACCESS_FINE_LOCATION)
 
-        if (permissionGPS1 != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "Permission to GPS1 denied")
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                GPS1_REQUEST_CODE)
-        } else if (permissionGPS2 != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "Permission to GPS1 denied")
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                GPS2_REQUEST_CODE)
-        } else {
-            Log.d(TAG, "Se tienen los permisos para el GPS")
-            tienePermisos = true
+        when {
+            permissionGPS2 != PackageManager.PERMISSION_GRANTED -> {
+                Log.i("Cuidarnos", "Permission to GPS2 denied")
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    GPS2_REQUEST_CODE)
+                Log.d("Cuidarnos", "Permiso no concedido anteriormente, Se intenta otorgar permisos para el GPS")
+            }
+            else -> {
+                Log.d("Cuidarnos", "Ya se tenian los permisos para el GPS")
+
+            }
+
         }
-        return tienePermisos
+        //lifecycleScope.launch {
+        //    withContext(Dispatchers.IO) {
+                getLastKnownLocation()
+        //    }
+        //}
+
     }
 
     fun getLastKnownLocation(): Boolean {
         var exito = false
         if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+                this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             //Thread.sleep(2000)
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location ->
@@ -274,17 +352,12 @@ class PageTwoActivity : AppCompatActivity() {
                         val editor = prefs.edit()
                         editor.putString(keyGps, cadenaGps)
                         editor.apply()
-                        Log.d(TAG, "valor location ${location.toString()}")
+                        Log.d("Cuidarnos", "Se capturaron los siguientes datos de GPS ${location.toString()}")
                         exito = true
                     } else {
-                        Log.d(TAG, "Error al obtenr valor location ${location.toString()}")
-                        Toast.makeText(
-                            this,
-                            "No se pudieron obtener las coordenadas GPS",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Log.d("Cuidarnos", "Error al obtener valor de location")
+                        //Toast.makeText(this, "No se pudieron obtener las coordenadas GPS", Toast.LENGTH_SHORT).show()
                     }
-
                 }
         }
         return exito
@@ -304,20 +377,13 @@ class PageTwoActivity : AppCompatActivity() {
                                             permissions: Array<String>, grantResults: IntArray){
 
         when (requestCode) {
-            GPS1_REQUEST_CODE -> {
-                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-
-                    Log.i(TAG, "Permission has been denied by user")
-                } else {
-                    Log.i(TAG, "Permission has been granted by user")
-                }
-            }
             GPS2_REQUEST_CODE -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
-                    Log.i(TAG, "Permission has been denied by user")
+                    Log.i("Cuidarnos", "Permiso denegado por el usuario")
                 } else {
-                    Log.i(TAG, "Permission has been granted by user")
+                    Log.i("Cuidarnos", "Permiso concedido por el usuario")
+                    getLastKnownLocation()
                 }
             }
         }

@@ -3,6 +3,8 @@ package org.csrabolivia.covidapp
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -13,8 +15,12 @@ import kotlinx.android.synthetic.main.activity_page_two.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.io.IOException
 
 class AntecedentesActivity : AppCompatActivity() {
+
+    private val keyAntecedentes = "ANTECEDENTESDATA"
 
     private var varAntecedente1: Int? = null
     private var varAntecedente2: Int? = null
@@ -98,12 +104,20 @@ class AntecedentesActivity : AppCompatActivity() {
             }
         }
 
-        //Escuclar boton Continuar
+        //Escuchar boton Continuar
         btContinuar4.setOnClickListener(){
             if(!validarRespuestas()){
+                //No paso la validacion
                 Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
                     .show()
+            }else{
+                //Paso la validacion se intenta registro de datos localmente
+                if(registroLocalAntecedentes()){
+                    Log.i("Info", "Se registraron localmente los datos de antecedentes")
+                }
+
             }
+
         }
     }
 
@@ -153,6 +167,33 @@ class AntecedentesActivity : AppCompatActivity() {
             exito = true
         }
         return exito
+    }
+
+    fun registroLocalAntecedentes():Boolean{
+        return try {
+            val REGISTRO = JSONObject()
+            REGISTRO.put("idUnico", Constants.IDUNICO)
+            REGISTRO.put("antecedente1", varAntecedente1)
+            REGISTRO.put("antecedente2", varAntecedente2)
+            REGISTRO.put("antecedente3", varAntecedente3)
+            REGISTRO.put("antecedente4", varAntecedente4)
+            REGISTRO.put("antecedente5", varAntecedente5)
+            REGISTRO.put("antecedente6", varAntecedente6)
+            REGISTRO.put("antecedente7", varAntecedente7)
+            REGISTRO.put("antecedente8", varAntecedente8)
+            REGISTRO.put("embarazada", varEmbarazada)
+            val cadena: String = REGISTRO.toString()
+            Log.i("INFO", "Data antecedentes: $cadena")
+            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+            val editor = prefs.edit()
+            editor.putString(keyAntecedentes, cadena)
+            editor.apply()
+
+            true
+        } catch (e: IOException) {
+            Log.i("ERROR", "Se produjo una excepción al registrar los datos de antecedentes localmente: ${e.localizedMessage}")
+            false
+        }
     }
 }
 

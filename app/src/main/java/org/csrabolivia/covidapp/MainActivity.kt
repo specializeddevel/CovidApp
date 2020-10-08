@@ -10,9 +10,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
@@ -24,40 +28,72 @@ class MainActivity : AppCompatActivity() {
 
     private val key = "PERSONALDATA"
     private val keyGps = "GPSDATA"
+    private val keyID = "IDUNICO"
     private var isGPS = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (isOnline()){
-
-             notification()
+        if (verificaInternet()){
+            // notification()
             //btContinuar.setOnClickListener(this::escucharBtn)
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
             val editor = prefs.edit()
             editor.remove("PERSONALDATA")
+            //editor.remove("IDUNICO")
+            //editor.remove("GPSDATA")
             editor.apply()
             val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
             val bundle = Bundle()
             bundle.putString("InitScreen", "Integración con Firebase completada")
             analytics.logEvent("InitScreen", bundle)
-            //verifica datos de GPS
+            //verifica datos de ID unica
+            val tieneIDUnica = prefs.getString(keyID, "SD")
+            if(!tieneIDUnica.equals("SD")){
+                Constants.IDUNICO = tieneIDUnica.toString()
+                Log.i("Cuidarnos", "Se tienen ID unica registrada: ${Constants.IDUNICO}")
+            } else {
+                Log.i("Cuidarnos", "No se tienen ID unica generada, se intentara generarla")
+                (generarIDUnico()) /*{
+                    Log.i(
+                        "Cuidarnos",
+                        "Parece no haber internet, no se pudo generar ID unico al llamar a la funcion de generacion"
+                    )
+                    showAlert(
+                        "Error",
+                        "Se requiere conexión a Internet para usar la aplicación",
+                        "OK"
+                    )
+                    moveTaskToBack(true)
+                    exitProcess(-1)
+                    Log.i("Cuidarnos", "Salida forzosa de la aplicacion")
+
+                }*/
+            }
             val conDatosGPS = prefs.getString(keyGps, "SD")
-            //Se verifica si ya se rgistraron los datos del usuario
             if(!conDatosGPS.equals("SD")){
                 Constants._conDatosGPS = true
-                Log.i("GPSData", "Se tienen datos de GPS: ${conDatosGPS.toString()}")
+                Log.i("Cuidarnos", "Se tienen datos de GPS: ${conDatosGPS.toString()}")
+            } else {
+                Log.i("Cuidarnos", "No se tienen datos de GPS, se intentara capturarlos")
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        GpsUtils(this@MainActivity).turnGPSOn(GpsUtils.onGpsListener { isGPSEnable -> isGPS })
+                    }
+                    Log.d("Cuidarnos", "terminado encendido de GPS")
+                }
             }
+            //Se verifica si ya se rgistraron los datos del usuario
             val conDatos = prefs.getString(key, "SD")
             //showAlert("Preferencias", yaRegistrado.toString())
             if(conDatos.equals("SD")){
-                Log.i("UserData", "No se tiene datos del usuario")
+                Log.i("Cuidarnos", "No se tiene datos del usuario")
                 val intent = Intent(this, PageOneActivity::class.java)
                 intent.putExtra("ID", Constants.IDUNICO)
                 startActivity(intent)
             } else {
-                Log.i("UserData", "Se tienen datos del usuario: ${conDatos.toString()}")
+                Log.i("Cuidarnos", "Se tienen datos del usuario: ${conDatos.toString()}")
                 val intent = Intent(this, AutodiagnosticoActivity::class.java)
                 intent.putExtra("ID", Constants.IDUNICO)
                 startActivity(intent)
@@ -65,11 +101,13 @@ class MainActivity : AppCompatActivity() {
             }
             setTheme(R.style.AppTheme)
             //GpsUtils(this).turnGPSOn(GpsUtils.onGpsListener { isGPSEnable -> isGPS })
+
+            //verifica datos de GPS
         } else {
             Log.d("Error", "No se tiene conexion a internet")
-            showAlert("Error", "Se requiere conexión a Internet", "OK")
+            showAlert("Error", "Lo sentimos, se requiere conexión a Internet para poder usar la aplicación", "OK")
         }
-   }
+    }
 
     private fun showAlert(
         titulo: String,
@@ -100,21 +138,51 @@ class MainActivity : AppCompatActivity() {
 
     private fun notification(){
 
-        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener{
+        //generacion del ID unico del celular
+        if (Constants.IDUNICO.equals("desconocido") && verificaInternet()) {
+            FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
 
-            it.result?.token?.let{
-                Log.d("Depuracion", "El Id unico es: ${it}")
-                Constants.IDUNICO = it
+                it.result?.token?.let {
+                    Log.d("Cuidarnos", "El Id unico es: ${it}")
+                    Constants.IDUNICO = it
+                    //suscripcion a un tema
+                    FirebaseMessaging.getInstance().subscribeToTopic("COVID")
+
+
+                }
             }
         }
-        //suscripcion a un tema
-        FirebaseMessaging.getInstance().subscribeToTopic("COVID")
 
         //recuperacion de info de una push
         val url: String? = intent.getStringExtra("url")
         url?.let {
-            Log.d("Depuracion", "Ha llegado esta informacion en un push: ${it}")
+            Log.d("Cuidarnos", "Ha llegado esta informacion en un push: ${it}")
         }
+    }
+
+    private fun generarIDUnico(): Boolean{
+        var generarID = false
+        //generacion del ID unico del celular
+        val internet = verificaInternet()
+        if (Constants.IDUNICO.equals("desconocido") && internet) {
+            FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
+                it.result?.token?.let {
+                    Log.d("Cuidarnos", "Se genero el Id unico : ${it}")
+                    Constants.IDUNICO = it
+                    val cadena = Constants.IDUNICO
+                    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+                    val editor = prefs.edit()
+                    editor.putString(keyID, cadena)
+                    editor.apply()
+                    Log.d("Cuidarnos", "Se guardo localmente el Id unico")
+                    generarID = true
+                }
+            }
+        } else {
+            Log.d("Cuidarnos", "No se puede generar ID unico por falta de conexion a internet")
+            generarID = false
+        }
+        return generarID
     }
 
     fun isOnline(context: Context): Boolean {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CovidApp</string>
+    <string name="app_name">Cuidarnos</string>
     <!-- Activity Main -->
     <string name="page_one_activity_textViewSaludo">Para empezar necesitamos que nos proporcione sus datos personales</string>
     <string name="page_one_activity_textViewConfidencial">La información que registre será utilizada exclusivamente por el Personal de Salud y tratada de manera totalmente confidencial.</string>
@@ -20,14 +20,14 @@
     <string name="page_one_activity_btn_atras">Ir atras</string>
     <string name="page_two_activity_enCasa">En este momento, ¿Usted se encuentra en su vivienda?</string>
     <string name="actecedentes_activity_saludo">Por favor responda las siguientes preguntas:</string>
-    <string name="antecedentes_activity_ant1">¿Diabetes o azucar en sangre?</string>
-    <string name="antecedentes_activity_ant2">¿Obesidad o sobrepeso?</string>
-    <string name="antecedentes_activity_ant3">¿Enfermedad de los riñones o Diálisis?</string>
-    <string name="antecedentes_activity_ant4">¿Presión alta?</string>
-    <string name="antecedentes_activity_ant5">¿Enfermedad del corazón?</string>
-    <string name="antecedentes_activity_ant6">¿Enfermedad de los pulmones?</string>
-    <string name="antecedentes_activity_ant7">¿Cáncer?</string>
-    <string name="antecedentes_activity_ant8">¿VIH/SIDA?</string>
-    <string name="actecedentes_activity_instruccion">Usted sabe si tiene, o el médico le ha dicho que tiene...</string>
-    <string name="antecedentes_activity_embarazo">¿Actualmente usted esta embarazada?</string>
+    <string name="antecedentes_activity_ant1">1. ¿Diabetes o azucar en sangre?</string>
+    <string name="antecedentes_activity_ant2">2. ¿Obesidad o sobrepeso?</string>
+    <string name="antecedentes_activity_ant3">3. ¿Enfermedad de los riñones o Diálisis?</string>
+    <string name="antecedentes_activity_ant4">4. ¿Presión alta?</string>
+    <string name="antecedentes_activity_ant5">5. ¿Enfermedad del corazón?</string>
+    <string name="antecedentes_activity_ant6">6. ¿Enfermedad de los pulmones?</string>
+    <string name="antecedentes_activity_ant7">7. ¿Cáncer?</string>
+    <string name="antecedentes_activity_ant8">8. ¿VIH/SIDA?</string>
+    <string name="actecedentes_activity_instruccion">Usted sabe si tiene, o el médico le ha dicho que tiene…</string>
+    <string name="antecedentes_activity_embarazo">9. ¿Actualmente usted esta embarazada?</string>
 </resources>

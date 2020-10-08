@@ -194,6 +194,21 @@
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
+
+        <!-- TextField Barrio -->
+        <CheckBox
+            android:id="@+id/checkBoxTerminos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border"
+            android:checked="true"
+            android:text="@string/page_one_activity_terminos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id" />
     </TableLayout>
 
     </ScrollView>
