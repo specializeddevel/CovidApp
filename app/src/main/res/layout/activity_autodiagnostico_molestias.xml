@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PageThreeActivity">
-
+    tools:context=".AutodiagnosticoMolestiasActivity">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -19,7 +18,7 @@
         app:srcCompat="@mipmap/l_cuidarnosc" />
 
     <com.kofigyan.stateprogressbar.StateProgressBar
-        android:id="@+id/your_state_progress_bar_id_pgant"
+        android:id="@+id/your_state_progress_bar_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
@@ -30,7 +29,7 @@
         app:spb_animateToCurrentProgressState="true"
         app:spb_checkStateCompleted="true"
         app:spb_currentStateDescriptionColor="#DB0082"
-        app:spb_currentStateNumber="three"
+        app:spb_currentStateNumber="two"
         app:spb_maxStateNumber="three"
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
@@ -40,30 +39,49 @@
         app:spb_stateSize="30dp" />
 
 
-    <!-- Texto explicacion antecedentes -->
+
+    <!-- Texto saludo -->
     <TextView
-        android:id="@+id/textViewExplicaAntecedentes"
+        android:id="@+id/textViewSaludo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/actecedentes_activity_instruccion"
-        android:textSize="20sp"
+        android:text="@string/autodiagnostico_titulo"
+        android:textAlignment="center"
+        android:textColor="@color/my_color_light"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id_pgant" />
+        app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id" />
+
+    <TextView
+        android:id="@+id/textViewSaludo2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/autodiagnostico_molestias_intro"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSaludo" />
 
     <ScrollView
-        android:id="@+id/antecedentesScroll"
+        android:id="@+id/autodiagnosticoMolestiasScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/btContinuar4"
+        app:layout_constraintBottom_toTopOf="@+id/btADMContinuar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExplicaAntecedentes">
+        app:layout_constraintTop_toBottomOf="@+id/textViewSaludo2">
 
 
         <TableLayout
@@ -71,8 +89,9 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1">
 
+            <!-- Tos seca -->
             <LinearLayout
-                android:id="@+id/layoutAnt1"
+                android:id="@+id/layoutADM1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -80,20 +99,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt1"
+                    android:id="@+id/tvADM1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant1"
+                    android:text="@string/ADM_activity_text_tos_seca"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente1"
+                    android:id="@+id/ADMp1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -103,27 +121,29 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente1Si"
+                        android:id="@+id/btADMP1Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente1No"
+                        android:id="@+id/btADMP1No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+
+            <!-- Fiebre -->
             <LinearLayout
-                android:id="@+id/layoutAnt2"
+                android:id="@+id/layoutADM2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -131,20 +151,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt2"
+                    android:id="@+id/tvADM2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant2"
+                    android:text="@string/ADM_activity_text_fiebre"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente2"
+                    android:id="@+id/ADMp2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -154,27 +173,29 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente2Si"
+                        android:id="@+id/btADMP2Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente2No"
+                        android:id="@+id/btADMP2No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+
+            <!-- Malestar del cuerpo -->
             <LinearLayout
-                android:id="@+id/layoutAnt3"
+                android:id="@+id/layoutADM3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -182,20 +203,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt3"
+                    android:id="@+id/tvADM3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant3"
+                    android:text="@string/ADM_activity_text_malestar"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente3"
+                    android:id="@+id/ADMp3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -205,27 +225,28 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente3Si"
+                        android:id="@+id/btADMP3Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente3No"
+                        android:id="@+id/btADMP3No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+            <!-- Dolor de cabeza -->
             <LinearLayout
-                android:id="@+id/layoutAnt4"
+                android:id="@+id/layoutADM4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -233,20 +254,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt4"
+                    android:id="@+id/tvADM4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant4"
+                    android:text="@string/ADM_activity_text_dolor_cabeza"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente4"
+                    android:id="@+id/ADMp4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -256,27 +276,28 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente4Si"
+                        android:id="@+id/btADMP4Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente4No"
+                        android:id="@+id/btADMP4No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+            <!-- Problemas de respiracion -->
             <LinearLayout
-                android:id="@+id/layoutAnt5"
+                android:id="@+id/layoutADM5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -284,20 +305,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt5"
+                    android:id="@+id/tvADM5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant5"
+                    android:text="@string/ADM_activity_text_problemas_respiracion"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente5"
+                    android:id="@+id/ADMp5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -307,27 +327,28 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente5Si"
+                        android:id="@+id/btADMP5Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente5No"
+                        android:id="@+id/btADMP5No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+            <!-- Dolores musculares -->
             <LinearLayout
-                android:id="@+id/layoutAnt6"
+                android:id="@+id/layoutADM6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -335,20 +356,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt6"
+                    android:id="@+id/tvADM6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant6"
+                    android:text="@string/ADM_activity_text_dolor_muscular"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente6"
+                    android:id="@+id/ADMp6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -358,27 +378,28 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente6Si"
+                        android:id="@+id/btADMP6Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente6No"
+                        android:id="@+id/btADMP6No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+            <!-- Dolor de garganta -->
             <LinearLayout
-                android:id="@+id/layoutAnt7"
+                android:id="@+id/layoutADM7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -386,20 +407,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt7"
+                    android:id="@+id/tvADM7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant7"
+                    android:text="@string/ADM_activity_text_dolor_garganta"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente7"
+                    android:id="@+id/ADMp7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -409,27 +429,28 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente7Si"
+                        android:id="@+id/btADMP7Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente7No"
+                        android:id="@+id/btADMP7No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+            <!-- Perdida del olfato -->
             <LinearLayout
-                android:id="@+id/layoutAnt8"
+                android:id="@+id/layoutADM8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -437,20 +458,19 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-                <!-- Texto en casa -->
                 <TextView
-                    android:id="@+id/tvAnt8"
+                    android:id="@+id/tvADM8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_ant8"
+                    android:text="@string/ADM_activity_text_perdida_olfato"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/antecedente8"
+                    android:id="@+id/ADMp8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -460,49 +480,49 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btAntecedente8Si"
+                        android:id="@+id/btADMP8Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btAntecedente8No"
+                        android:id="@+id/btADMP8No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+            <!-- Perdida del gusto -->
             <LinearLayout
-                android:id="@+id/layoutEmbarazo"
+                android:id="@+id/layoutADM9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:background="@drawable/border"
-                android:orientation="vertical"
-                android:visibility="invisible">
-                <!-- Texto en casa -->
+                android:orientation="vertical">
+                <!-- Texto tos seca -->
                 <TextView
-                    android:id="@+id/tvEmbarazo"
+                    android:id="@+id/tvADM9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/antecedentes_activity_embarazo"
+                    android:text="@string/ADM_activity_text_perdida_gusto"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/embarazada"
+                    android:id="@+id/ADMp9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -512,20 +532,20 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btEmbarazadaSi"
+                        android:id="@+id/btADMP9Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SI"
+                        android:text="@string/btADSi"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btEmbarazadaNo"
+                        android:id="@+id/btADMP9No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NO"
+                        android:text="@string/btADNo"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
@@ -535,23 +555,24 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btContinuar4"
+        android:id="@+id/btADMContinuar2"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/my_color_dark"
-        android:text="@string/page_antecedentes_activity_btn_finalizar"
+        android:text="@string/page_1_AD_activity_btContinuar"
         app:icon="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btAtras3"
-        app:layout_constraintTop_toBottomOf="@+id/antecedentesScroll" />
+        app:layout_constraintStart_toEndOf="@+id/btADMAtras2"
+        app:layout_constraintTop_toBottomOf="@+id/autodiagnosticoMolestiasScroll" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btAtras3"
+        android:id="@+id/btADMAtras2"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -562,7 +583,9 @@
         android:text="@string/page_one_activity_btn_atras"
         app:icon="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btContinuar4"
+        app:layout_constraintEnd_toStartOf="@+id/btADMContinuar2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/antecedentesScroll" />
+        app:layout_constraintTop_toBottomOf="@+id/autodiagnosticoMolestiasScroll" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

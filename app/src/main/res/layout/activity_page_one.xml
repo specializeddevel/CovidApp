@@ -209,7 +209,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/my_color_dark"
 
-        android:text="@string/page_one_activity_btn_continuar"
+        android:text="@string/page_two_activity_btn_continuar"
         app:icon="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

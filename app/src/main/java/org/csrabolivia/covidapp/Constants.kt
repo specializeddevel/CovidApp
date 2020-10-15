@@ -10,12 +10,15 @@ class Constants {
         const val ESTCIVIL = "estCivil"
         const val MUNICIPIO = "municipio"
         const val CIUDAD = "ciudad"
-        const val LATITUD = "latitud"
-        const val LONGITUD = "longitud"
+        var primeraVez = false
+        var LATITUD = "sin dato"
+        var LONGITUD = "sin dato"
+        var ALTITUD = "sin dato"
+        var PRECISION = "sin dato"
+        var TIEMPO = "sin dato"
         var IDUNICO : String = "desconocido"
         const val LOCATION_REQUEST = 1000
         const val GPS_REQUEST = 1001
         var _conDatosGPS = false
-
     }
 }

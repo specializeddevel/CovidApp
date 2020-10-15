@@ -10,13 +10,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
@@ -40,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             //btContinuar.setOnClickListener(this::escucharBtn)
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
             val editor = prefs.edit()
-            editor.remove("PERSONALDATA")
+            //editor.remove("PERSONALDATA")
             //editor.remove("IDUNICO")
             //editor.remove("GPSDATA")
             editor.apply()
@@ -77,24 +73,27 @@ class MainActivity : AppCompatActivity() {
                 Log.i("Cuidarnos", "Se tienen datos de GPS: ${conDatosGPS.toString()}")
             } else {
                 Log.i("Cuidarnos", "No se tienen datos de GPS, se intentara capturarlos")
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
+                //lifecycleScope.launch {
+                //    withContext(Dispatchers.IO) {
                         GpsUtils(this@MainActivity).turnGPSOn(GpsUtils.onGpsListener { isGPSEnable -> isGPS })
-                    }
+                //    }
                     Log.d("Cuidarnos", "terminado encendido de GPS")
-                }
+                //}
             }
             //Se verifica si ya se rgistraron los datos del usuario
             val conDatos = prefs.getString(key, "SD")
             //showAlert("Preferencias", yaRegistrado.toString())
             if(conDatos.equals("SD")){
-                Log.i("Cuidarnos", "No se tiene datos del usuario")
+                Constants.primeraVez = true
+                Log.i("Cuidarnos", "No se tiene datos del usuario, se inicia adctivity de registro de datos personales y de antecedentes")
                 val intent = Intent(this, PageOneActivity::class.java)
                 intent.putExtra("ID", Constants.IDUNICO)
                 startActivity(intent)
             } else {
-                Log.i("Cuidarnos", "Se tienen datos del usuario: ${conDatos.toString()}")
-                val intent = Intent(this, AutodiagnosticoActivity::class.java)
+                Constants.primeraVez = false
+                Log.i("Cuidarnos", "Se tienen datos del usuario: ${conDatos.toString()}, se salta a la pantalla principal")
+                //val intent = Intent(this, AccesoAplicacionActivity::class.java)
+                val intent = Intent(this, AutodiagnosticoInicialActivity::class.java)
                 intent.putExtra("ID", Constants.IDUNICO)
                 startActivity(intent)
                 Toast.makeText(this, "Con datos", Toast.LENGTH_SHORT).show()

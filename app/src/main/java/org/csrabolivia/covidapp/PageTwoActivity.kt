@@ -20,12 +20,13 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_page_two.*
 import kotlinx.android.synthetic.main.activity_page_two.btAtras1
-import kotlinx.android.synthetic.main.activity_page_two.btContinuar2
+import kotlinx.android.synthetic.main.activity_page_two.btFinalizar1
 import kotlinx.android.synthetic.main.activity_page_two.view.*
 import org.json.JSONObject
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_page_one.*
 import kotlinx.android.synthetic.main.activity_page_three.*
@@ -41,11 +42,11 @@ class PageTwoActivity : AppCompatActivity() {
     private val key = "PERSONALDATA"
     private val keyGps = "GPSDATA"
     private val keyID = "IDUNICO"
-    private var cordenadas: String =""
     private val GPS2_REQUEST_CODE = 102
     private var isGPS = false
     private var respuestaDialogo: String = ""
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -128,11 +129,11 @@ class PageTwoActivity : AppCompatActivity() {
 
         checkBoxTerminos.setOnClickListener(){
             closeKeyBoard()
-            btContinuar2.isEnabled = checkBoxTerminos.isChecked
+            btFinalizar1.isEnabled = checkBoxTerminos.isChecked
         }
 
 
-        btContinuar2.setOnClickListener() {
+        btFinalizar1.setOnClickListener() {
                 textFieldMunicipio.error = null
                 textFieldCiudad.error = null
                 textFieldBarrio.error = null
@@ -192,43 +193,52 @@ class PageTwoActivity : AppCompatActivity() {
                             "Se guardaron localmente los datos del usuario: ${conDatos.toString()}"
                         )
                         //Guardar datos en la BD remota en firestore
-
+                        //TODO: Si existieran datos ya almacenados localmente se deberian cargar al momento de cargar cada activity para el caso de edicion
                             if (!Constants.IDUNICO.equals("desconocido")) {
                                 db.collection("usuarios").document(Constants.IDUNICO).set(
-                                hashMapOf
-                                    (
-                                    "id" to Constants.IDUNICO,
-                                    "nombres" to nombre,
-                                    "apellidos" to apellidos,
-                                    "fnacimiento" to fnacimiento,
-                                    "genero" to genero,
-                                    "estCivil" to estCivil,
-                                    "telefono" to telefono,
-                                    "municipio" to municipio,
-                                    "ciudad" to ciudad,
-                                    "barrio" to barrio,
-                                    "direccion" to direccion
+                                    hashMapOf
+                                        (
+                                        "id" to Constants.IDUNICO,
+                                        "nombres" to nombre,
+                                        "apellidos" to apellidos,
+                                        "fnacimiento" to fnacimiento,
+                                        "genero" to genero,
+                                        "estCivil" to estCivil,
+                                        "telefono" to telefono,
+                                        "municipio" to municipio,
+                                        "ciudad" to ciudad,
+                                        "barrio" to barrio,
+                                        "direccion" to direccion,
+                                        "latitud" to Constants.LATITUD,
+                                        "longitud" to Constants.LONGITUD,
+                                        "altura" to Constants.ALTITUD,
+                                        "precision" to Constants.PRECISION,
+                                        "tiempo" to Constants.TIEMPO
+                                    ), SetOptions.merge()
                                 )
-                            )
                                 Log.i("Cuidarnos", "Se registraron los datos en la nube")
                                 val intent = Intent(this, AntecedentesActivity::class.java)
                                 intent.putExtra(Constants.GENERO, genero)
                                 startActivity(intent)
                             } else {
-                                Log.i("Cuidarnos", "No se registraron los datos en la nube por falta de ID")
+                                Log.i(
+                                    "Cuidarnos",
+                                    "No se registraron los datos en la nube por falta de ID"
+                                )
                                 if (!generarIDUnico()) {
                                     Toast.makeText(
                                         this,
-                                        "No se pudo generar ID, no se puede continuar sin una conexión a Internet.",
+                                        "No se puede continuar sin una conexión a Internet, intente nuevamente",
                                         Toast.LENGTH_LONG
                                     ).show()
                                     Log.i("Cuidarnos", "No se pudo generar ID unico")
                                     btAtras1.callOnClick()
                                 } else {
-                                    btContinuar2.callOnClick()
+                                    btFinalizar1.callOnClick()
                                 }
                             }
-                        }
+
+                    }
                 }
         }
     }
@@ -310,7 +320,7 @@ class PageTwoActivity : AppCompatActivity() {
     }
 
 
-    private fun setupPermissions()  {
+    private fun setupPermissions(): Boolean  {
         val permissionGPS2 = ContextCompat.checkSelfPermission(this,
             Manifest.permission.ACCESS_FINE_LOCATION)
 
@@ -330,7 +340,7 @@ class PageTwoActivity : AppCompatActivity() {
         }
         //lifecycleScope.launch {
         //    withContext(Dispatchers.IO) {
-                getLastKnownLocation()
+                return getLastKnownLocation()
         //    }
         //}
 
@@ -347,12 +357,21 @@ class PageTwoActivity : AppCompatActivity() {
                         val COORDENADASGPS = JSONObject()
                         COORDENADASGPS.put("latitud", location.latitude)
                         COORDENADASGPS.put("longitud", location.longitude)
+                        COORDENADASGPS.put("altitud", location.altitude)
+                        COORDENADASGPS.put("precision", location.accuracy)
+                        COORDENADASGPS.put("tiempo", location.time)
                         val cadenaGps: String = COORDENADASGPS.toString()
                         val prefs = PreferenceManager.getDefaultSharedPreferences(this@PageTwoActivity)
                         val editor = prefs.edit()
                         editor.putString(keyGps, cadenaGps)
                         editor.apply()
+                        Constants.LATITUD = location.latitude.toString()
+                        Constants.LONGITUD = location.longitude.toString()
+                        Constants.ALTITUD = location.altitude.toString()
+                        Constants.PRECISION = location.accuracy.toString()
+                        Constants.TIEMPO = location.time.toString()
                         Log.d("Cuidarnos", "Se capturaron los siguientes datos de GPS ${location.toString()}")
+                        Toast.makeText(this, "Posición geográfica almacenada", Toast.LENGTH_SHORT).show()
                         exito = true
                     } else {
                         Log.d("Cuidarnos", "Error al obtener valor de location")

@@ -14,9 +14,9 @@
     <string name="page_two_activity_city">Ciudad</string>
     <string name="page_two_activity_barrio">Barrio</string>
     <string name="page_two_activity_address">Dirección (calle y número de puerta)</string>
-    <string name="page_one_activity_btn_continuar">Continuar</string>
-    <string name="page_one_activity_terminos">Acepto que el Consejo de Salud Rural Andino Montero, realice un seguimiiento de mi estdo de salud</string>
-    <string name="activity_acceso_aplicacion_cabecera">AUTODIAGNOSTICO: A continuacion por favor responda con SI o con NO, a las siguientes preguntas</string>
+    <string name="page_antecedentes_activity_btn_finalizar">Finalizar</string>
+    <string name="page_two_activity_terminos">Acepto que el Consejo de Salud Rural Andino realice un seguimiento de mi estado de salud y conserve confidencialmente mis datos personales mientras estos sean necesarios</string>
+    <string name="activity_acceso_aplicacion_cabecera">PAGINA PRINCIPAL</string>
     <string name="page_one_activity_btn_atras">Ir atras</string>
     <string name="page_two_activity_enCasa">En este momento, ¿Usted se encuentra en su vivienda?</string>
     <string name="actecedentes_activity_saludo">Por favor responda las siguientes preguntas:</string>
@@ -30,4 +30,23 @@
     <string name="antecedentes_activity_ant8">8. ¿VIH/SIDA?</string>
     <string name="actecedentes_activity_instruccion">Usted sabe si tiene, o el médico le ha dicho que tiene…</string>
     <string name="antecedentes_activity_embarazo">9. ¿Actualmente usted esta embarazada?</string>
+    <string name="autodiagnostico_p1_intro">Aquí da inicio el procedimiento de autodiagnóstico, por favor responda honestamente todas las preguntas</string>
+    <string name="page_two_activity_btn_continuar">Continuar</string>
+    <string name="page_one_activity_btn_continuar">Continuar</string>
+    <string name="autodiagnostico_titulo">Autodiagnóstico</string>
+    <string name="page_1_AD_activity_btContinuar">Continuar</string>
+    <string name="page_1_AD_activity_textP1">En este momento, ¿Ud. tiene COVID-19, confirmado o no por laboratorio?</string>
+    <string name="page_1_AD_activity_textP2">En los último días, ¿estuvo en contacto con una persona confirmada o sospechosa de tener COVID-19?</string>
+    <string name="ADM_activity_text_tos_seca">Tos seca</string>
+    <string name="autodiagnostico_molestias_intro">¿Tiene alguna de las siguientes molestias?</string>
+    <string name="btADSi">SI</string>
+    <string name="btADNo">NO</string>
+    <string name="ADM_activity_text_fiebre">Fiebre</string>
+    <string name="ADM_activity_text_malestar">Malestar de todo el cuerpo</string>
+    <string name="ADM_activity_text_dolor_cabeza">Dolor fuerte de cabeza</string>
+    <string name="ADM_activity_text_problemas_respiracion">Problemas de respiración o fatiga</string>
+    <string name="ADM_activity_text_dolor_garganta">Dolor de garganta</string>
+    <string name="ADM_activity_text_dolor_muscular">Dolores musculares</string>
+    <string name="ADM_activity_text_perdida_olfato">Pérdida para sentir los olores</string>
+    <string name="ADM_activity_text_perdida_gusto">Pérdida para sentir los sabores</string>
 </resources>
