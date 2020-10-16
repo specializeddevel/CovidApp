@@ -13,5 +13,12 @@ class DataDiagnostico {
         var dolorGarganta: Int? = null
         var perdidaOlfato: Int? = null
         var perdidaGusto: Int? = null
+        var peligroDificuldadRespiratoria: Int? = null
+        var peligroTiempoDificultadRespiratoria: String? = null
+        var peligroSeveridadDificultadRespiratoria: Int? = null
+        var peligroMalestarGeneral: Int? = null
+        var peligroTieneOTuvoFiebre: Int? = null
+        var peligroIntensidadFiebre: Int? = null
+        var peligroDolorDePecho: Int? = null
     }
 }

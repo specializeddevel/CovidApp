@@ -62,6 +62,7 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
                 } else
                 {
                     //El paciente tiene COVID y se debe saltar a la activity de sintomas peligrosos
+                    Toast.makeText(this, "Activity de paciente con covid", Toast.LENGTH_SHORT).show()
                 }
             }
         }
