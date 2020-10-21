@@ -7,4 +7,5 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="my_color_dark">#ff33B5E5</color>
     <color name="my_color_light">#ff355689</color>
+    <color name="color_tarjeta">#00FFFFFF</color>
 </resources>

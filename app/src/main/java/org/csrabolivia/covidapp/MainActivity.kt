@@ -13,6 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
+import org.csrabolivia.covidapp.jsondata.DataAntecedentes
+import org.csrabolivia.covidapp.jsondata.DataGPS
+import org.csrabolivia.covidapp.jsondata.DataUsuario
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
@@ -25,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val key = "PERSONALDATA"
     private val keyGps = "GPSDATA"
     private val keyID = "IDUNICO"
+    private val keyAntecedentes = "ANTECEDENTESDATA"
     private var isGPS = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +40,11 @@ class MainActivity : AppCompatActivity() {
             // notification()
             //btContinuar.setOnClickListener(this::escucharBtn)
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            val editor = prefs.edit()
-            //editor.remove("PERSONALDATA")
-            //editor.remove("IDUNICO")
-            //editor.remove("GPSDATA")
-            editor.apply()
+            /*val editor = prefs.edit()
+            editor.remove("PERSONALDATA")
+            editor.remove("IDUNICO")
+            editor.remove("GPSDATA")
+            editor.apply()*/
             val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
             val bundle = Bundle()
             bundle.putString("InitScreen", "Integración con Firebase completada")
@@ -47,29 +52,16 @@ class MainActivity : AppCompatActivity() {
             //verifica datos de ID unica
             val tieneIDUnica = prefs.getString(keyID, "SD")
             if(!tieneIDUnica.equals("SD")){
-                Constants.IDUNICO = tieneIDUnica.toString()
-                Log.i("Cuidarnos", "Se tienen ID unica registrada: ${Constants.IDUNICO}")
+                Variables.IDUNICO = tieneIDUnica.toString()
+                Log.i("Cuidarnos", "Se tienen ID unica registrada: ${Variables.IDUNICO}")
             } else {
                 Log.i("Cuidarnos", "No se tienen ID unica generada, se intentara generarla")
-                (generarIDUnico()) /*{
-                    Log.i(
-                        "Cuidarnos",
-                        "Parece no haber internet, no se pudo generar ID unico al llamar a la funcion de generacion"
-                    )
-                    showAlert(
-                        "Error",
-                        "Se requiere conexión a Internet para usar la aplicación",
-                        "OK"
-                    )
-                    moveTaskToBack(true)
-                    exitProcess(-1)
-                    Log.i("Cuidarnos", "Salida forzosa de la aplicacion")
-
-                }*/
+                generarIDUnico()
             }
             val conDatosGPS = prefs.getString(keyGps, "SD")
             if(!conDatosGPS.equals("SD")){
-                Constants._conDatosGPS = true
+                Variables._conDatosGPS = true
+                cargaDatosGPS(conDatosGPS.toString())
                 Log.i("Cuidarnos", "Se tienen datos de GPS: ${conDatosGPS.toString()}")
             } else {
                 Log.i("Cuidarnos", "No se tienen datos de GPS, se intentara capturarlos")
@@ -84,19 +76,32 @@ class MainActivity : AppCompatActivity() {
             val conDatos = prefs.getString(key, "SD")
             //showAlert("Preferencias", yaRegistrado.toString())
             if(conDatos.equals("SD")){
-                Constants.primeraVez = true
+                Variables.primeraVez = true
                 Log.i("Cuidarnos", "No se tiene datos del usuario, se inicia adctivity de registro de datos personales y de antecedentes")
                 val intent = Intent(this, PageOneActivity::class.java)
-                intent.putExtra("ID", Constants.IDUNICO)
+                intent.putExtra("ID", Variables.IDUNICO)
                 startActivity(intent)
             } else {
-                Constants.primeraVez = false
+                Variables.primeraVez = false
                 Log.i("Cuidarnos", "Se tienen datos del usuario: ${conDatos.toString()}, se salta a la pantalla principal")
-                //val intent = Intent(this, AccesoAplicacionActivity::class.java)
+                cargaDatosUsuario(conDatos.toString())
+                //carga datos de antecedentes
+                val conAntecedentes = prefs.getString(keyAntecedentes, "SD")
+                if (conAntecedentes.equals("SD")) {
+                    //No se encontraron datos de antecedentes
+                    Variables.primeraVez = true
+                    Log.i("Cuidarnos", "No se tiene datos de antecedentes, se inicia adctivity de registro de datos personales y de antecedentes")
+                    val intent = Intent(this, PageOneActivity::class.java)
+                    intent.putExtra("ID", Variables.IDUNICO)
+                    startActivity(intent)
+                } else {
+                    //Se cargan los datos de antcedentes
+                    cargaDatosAntecedentes(conAntecedentes.toString())
+                }
                 val intent = Intent(this, AutodiagnosticoInicialActivity::class.java)
-                intent.putExtra("ID", Constants.IDUNICO)
+                intent.putExtra("ID", Variables.IDUNICO)
                 startActivity(intent)
-                Toast.makeText(this, "Con datos", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Con datos", Toast.LENGTH_SHORT).show()
             }
             setTheme(R.style.AppTheme)
             //GpsUtils(this).turnGPSOn(GpsUtils.onGpsListener { isGPSEnable -> isGPS })
@@ -105,6 +110,67 @@ class MainActivity : AppCompatActivity() {
         } else {
             Log.d("Error", "No se tiene conexion a internet")
             showAlert("Error", "Lo sentimos, se requiere conexión a Internet para poder usar la aplicación", "OK")
+        }
+    }
+
+    private fun cargaDatosAntecedentes(datosAntecedentesCadena: String): Boolean {
+        return try {
+            val gson = Gson()
+            val datosAntecedentesJson: List<DataAntecedentes> = gson.fromJson(datosAntecedentesCadena, Array<DataAntecedentes>::class.java).toList()
+            Variables.varAntecedente1 = datosAntecedentesJson[0].antecedente1
+            Variables.varAntecedente2 = datosAntecedentesJson[0].antecedente2
+            Variables.varAntecedente3 = datosAntecedentesJson[0].antecedente3
+            Variables.varAntecedente4 = datosAntecedentesJson[0].antecedente4
+            Variables.varAntecedente5 = datosAntecedentesJson[0].antecedente5
+            Variables.varAntecedente6 = datosAntecedentesJson[0].antecedente6
+            Variables.varAntecedente7 = datosAntecedentesJson[0].antecedente7
+            Variables.varAntecedente8 = datosAntecedentesJson[0].antecedente8
+            Variables.varEmbarazada = datosAntecedentesJson[0].embarazada
+            Log.d("Cuidarnos", "Se cargaron los datos de antecedentes")
+            //Log.d("Cuidarnos",datosAntecedentesCadena)
+            true
+        } catch (e: IOException){
+            false
+        }
+    }
+
+    private fun cargaDatosUsuario(datosUsuarioCadena: String): Boolean {
+        return try {
+            val gson = Gson()
+            val datosUsuarioJson: List<DataUsuario> =
+                gson.fromJson(datosUsuarioCadena, Array<DataUsuario>::class.java).toList()
+            Variables.IDUNICO = datosUsuarioJson[0].idUnico.toString()
+            Variables.NOMBRES = datosUsuarioJson[0].nombres.toString()
+            Variables.APELLIDOS = datosUsuarioJson[0].apellidos.toString()
+            Variables.GENERO = datosUsuarioJson[0].genero.toString()
+            Variables.FNACIMIENTO = datosUsuarioJson[0].fnacimiento.toString()
+            Variables.TELEFONO = datosUsuarioJson[0].telefono.toString()
+            Variables.ESTCIVIL = datosUsuarioJson[0].estCivil.toString()
+            Variables.MUNICIPIO = datosUsuarioJson[0].municipio.toString()
+            Variables.CIUDAD = datosUsuarioJson[0].ciudad.toString()
+            Variables.BARRIO = datosUsuarioJson[0].barrio.toString()
+            Variables.DIRECCION = datosUsuarioJson[0].direccion.toString()
+            Log.d("Cuidarnos", "Se cargaron los datos de usuario")
+            true
+        } catch (e: IOException){
+            false
+        }
+    }
+
+    private fun cargaDatosGPS(datosGPSCadena: String): Boolean{
+        return try {
+            val gson = Gson()
+            val datosGPSJson: List<DataGPS> =
+                gson.fromJson(datosGPSCadena, Array<DataGPS>::class.java).toList()
+            Variables.LATITUD = datosGPSJson[0].latitud.toString()
+            Variables.LONGITUD = datosGPSJson[0].longitud.toString()
+            Variables.ALTITUD = datosGPSJson[0].altitud.toString()
+            Variables.PRECISION = datosGPSJson[0].precision.toString()
+            Variables.TIEMPO = datosGPSJson[0].tiempo.toString()
+            Log.d("Cuidarnos", "Se cargaron los datos de GPS")
+            true
+        } catch (e: IOException){
+            false
         }
     }
 
@@ -137,17 +203,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun notification(){
 
-        //generacion del ID unico del celular
-        if (Constants.IDUNICO.equals("desconocido") && verificaInternet()) {
+        //generacion del ID unico del celular para esta instalacion de la aplicacion
+        if (Variables.IDUNICO.equals("desconocido") && verificaInternet()) {
             FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
-
                 it.result?.token?.let {
                     Log.d("Cuidarnos", "El Id unico es: ${it}")
-                    Constants.IDUNICO = it
+                    Variables.IDUNICO = it
                     //suscripcion a un tema
                     FirebaseMessaging.getInstance().subscribeToTopic("COVID")
-
-
                 }
             }
         }
@@ -163,12 +226,12 @@ class MainActivity : AppCompatActivity() {
         var generarID = false
         //generacion del ID unico del celular
         val internet = verificaInternet()
-        if (Constants.IDUNICO.equals("desconocido") && internet) {
+        if (Variables.IDUNICO.equals("desconocido") && internet) {
             FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
                 it.result?.token?.let {
                     Log.d("Cuidarnos", "Se genero el Id unico : ${it}")
-                    Constants.IDUNICO = it
-                    val cadena = Constants.IDUNICO
+                    Variables.IDUNICO = it
+                    val cadena = Variables.IDUNICO
                     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
                     val editor = prefs.edit()
                     editor.putString(keyID, cadena)
@@ -242,7 +305,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            if (requestCode == Constants.GPS_REQUEST) {
+            if (requestCode == Variables.GPS_REQUEST) {
                 isGPS = true // flag maintain before get location
             }
         }

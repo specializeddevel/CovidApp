@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/logocsra"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
@@ -19,7 +19,7 @@
         app:srcCompat="@mipmap/l_cuidarnosc" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/img_cuidarnos"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
@@ -44,6 +44,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/img_cuidarnos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

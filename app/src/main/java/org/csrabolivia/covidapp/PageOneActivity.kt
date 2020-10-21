@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import kotlinx.android.synthetic.main.activity_page_one.*
-import org.json.JSONObject
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -81,12 +79,12 @@ class PageOneActivity : AppCompatActivity() {
             textFieldPhone.requestFocus()
         } else {
             var intent = Intent(this, PageTwoActivity::class.java)
-            intent.putExtra(Constants.NOMBRES, textFieldNames.editText?.text.toString())
-            intent.putExtra(Constants.APELLIDOS, textFieldLastNames.editText?.text.toString())
-            intent.putExtra(Constants.FNACIMIENTO, textFieldDateBirthday.editText?.text.toString())
-            intent.putExtra(Constants.GENERO, textFieldGender.editText?.text.toString())
-            intent.putExtra(Constants.ESTCIVIL, textFieldCivilState.editText?.text.toString())
-            intent.putExtra(Constants.TELEFONO, textFieldPhone.editText?.text.toString())
+            intent.putExtra(Variables.NOMBRES, textFieldNames.editText?.text.toString())
+            intent.putExtra(Variables.APELLIDOS, textFieldLastNames.editText?.text.toString())
+            intent.putExtra(Variables.FNACIMIENTO, textFieldDateBirthday.editText?.text.toString())
+            intent.putExtra(Variables.GENERO, textFieldGender.editText?.text.toString())
+            intent.putExtra(Variables.ESTCIVIL, textFieldCivilState.editText?.text.toString())
+            intent.putExtra(Variables.TELEFONO, textFieldPhone.editText?.text.toString())
             startActivity(intent)
         }
     }

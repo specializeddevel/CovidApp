@@ -19,16 +19,7 @@ class AntecedentesActivity : AppCompatActivity() {
 
     private val keyAntecedentes = "ANTECEDENTESDATA"
 
-    private var varAntecedente1: Int? = null
-    private var varAntecedente2: Int? = null
-    private var varAntecedente3: Int? = null
-    private var varAntecedente4: Int? = null
-    private var varAntecedente5: Int? = null
-    private var varAntecedente6: Int? = null
-    private var varAntecedente7: Int? = null
-    private var varAntecedente8: Int? = null
-    private var varEmbarazada: Int? = null
-    private var femenino = false
+
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -38,68 +29,68 @@ class AntecedentesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_antecedentes)
 
         val bundle: Bundle? = intent.extras
-        val genero = bundle!!.getString(Constants.GENERO)
-        femenino =  genero.equals("Femenino")
+        val genero = bundle!!.getString(Variables.GENERO)
+        Variables.femenino =  genero.equals("Femenino")
 
         //Muestra o oculta la pregunta de embarazo en funcion al genero
-        if(femenino){
+        if(Variables.femenino){
             layoutEmbarazo.visibility = View.VISIBLE
         } else {
-            layoutEmbarazo.visibility = View.INVISIBLE
+            layoutEmbarazo.visibility = View.GONE
         }
 
         //Escucha antecedente 1
         antecedente1.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente1 = if (toggleButton.btAntecedente1Si.isPressed){1} else{0}
+                Variables.varAntecedente1 = if (toggleButton.btAntecedente1Si.isPressed){1} else{0}
             }
         }
         //Escucha antecedente 2
         antecedente2.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente2 = if (toggleButton.btAntecedente2Si.isPressed){1} else{0}
+                Variables.varAntecedente2 = if (toggleButton.btAntecedente2Si.isPressed){1} else{0}
             }
         }
         //Escucha antecedente 3
         antecedente3.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente3 = if (toggleButton.btAntecedente3Si.isPressed){1} else{0}
+                Variables.varAntecedente3 = if (toggleButton.btAntecedente3Si.isPressed){1} else{0}
             }
         }
         //Escucha antecedente 4
         antecedente4.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente4 = if (toggleButton.btAntecedente4Si.isPressed){1} else{0}
+                Variables.varAntecedente4 = if (toggleButton.btAntecedente4Si.isPressed){1} else{0}
             }
         }
         //Escucha antecedente 5
         antecedente5.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente5 = if (toggleButton.btAntecedente5Si.isPressed){1} else{0}
+                Variables.varAntecedente5 = if (toggleButton.btAntecedente5Si.isPressed){1} else{0}
             }
         }
         //Escucha antecedente 6
         antecedente6.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente6 = if (toggleButton.btAntecedente6Si.isPressed){1} else{0}
+                Variables.varAntecedente6 = if (toggleButton.btAntecedente6Si.isPressed){1} else{0}
             }
         }
         //Escucha antecedente 7
         antecedente7.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente7 = if (toggleButton.btAntecedente7Si.isPressed){1} else{0}
+                Variables.varAntecedente7 = if (toggleButton.btAntecedente7Si.isPressed){1} else{0}
             }
         }
         //Escucha antecedente 8
         antecedente8.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varAntecedente8 = if (toggleButton.btAntecedente8Si.isPressed){1} else{0}
+                Variables.varAntecedente8 = if (toggleButton.btAntecedente8Si.isPressed){1} else{0}
             }
         }
         //Escucha embarazada
         embarazada.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
-                varEmbarazada = if (toggleButton.btEmbarazadaSi.isPressed) {1} else {0}
+                Variables.varEmbarazada = if (toggleButton.btEmbarazadaSi.isPressed) {1} else {0}
             }
         }
 
@@ -135,32 +126,32 @@ class AntecedentesActivity : AppCompatActivity() {
         layoutAnt7.background = resources.getDrawable(R.drawable.border)
         layoutAnt8.background = resources.getDrawable(R.drawable.border)
         layoutEmbarazo.background = resources.getDrawable(R.drawable.border)
-        if (varAntecedente1 == null) {
+        if (Variables.varAntecedente1 == null) {
             layoutAnt1.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt1.background = resources.getDrawable(R.drawable.border_red)
-        } else if (varAntecedente2 == null) {
+        } else if (Variables.varAntecedente2 == null) {
             layoutAnt2.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt2.background = resources.getDrawable(R.drawable.border_red)
-        } else if (varAntecedente3 == null) {
+        } else if (Variables.varAntecedente3 == null) {
             layoutAnt3.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt3.background = resources.getDrawable(R.drawable.border_red)
-        } else if (varAntecedente4 == null) {
+        } else if (Variables.varAntecedente4 == null) {
             layoutAnt4.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt4.background = resources.getDrawable(R.drawable.border_red)
-        } else if (varAntecedente5 == null) {
+        } else if (Variables.varAntecedente5 == null) {
             layoutAnt5.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt5.background = resources.getDrawable(R.drawable.border_red)
-        } else if (varAntecedente6 == null) {
+        } else if (Variables.varAntecedente6 == null) {
             layoutAnt6.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt6.background = resources.getDrawable(R.drawable.border_red)
-        } else if (varAntecedente7 == null) {
+        } else if (Variables.varAntecedente7 == null) {
             layoutAnt7.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt7.background = resources.getDrawable(R.drawable.border_red)
-        } else if (varAntecedente8 == null) {
+        } else if (Variables.varAntecedente8 == null) {
             layoutAnt8.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutAnt8.background = resources.getDrawable(R.drawable.border_red)
-        } else if (femenino) {
-            if(varEmbarazada==null) {
+        } else if (Variables.femenino) {
+            if(Variables.varEmbarazada==null) {
                 layoutEmbarazo.setBackgroundColor(Color.parseColor("#FFCDD2"))
                 layoutEmbarazo.background = resources.getDrawable(R.drawable.border_red)
             } else {
@@ -180,17 +171,17 @@ class AntecedentesActivity : AppCompatActivity() {
             } else {
                 //Guardado de los datos del usaurio localmente mediante shared preferences
                 val REGISTRO = JSONObject()
-                REGISTRO.put("idUnico", Constants.IDUNICO)
-                REGISTRO.put("antecedente1", varAntecedente1)
-                REGISTRO.put("antecedente2", varAntecedente2)
-                REGISTRO.put("antecedente3", varAntecedente3)
-                REGISTRO.put("antecedente4", varAntecedente4)
-                REGISTRO.put("antecedente5", varAntecedente5)
-                REGISTRO.put("antecedente6", varAntecedente6)
-                REGISTRO.put("antecedente7", varAntecedente7)
-                REGISTRO.put("antecedente8", varAntecedente8)
-                REGISTRO.put("embarazada", varEmbarazada)
-                val cadena: String = REGISTRO.toString()
+                REGISTRO.put("idUnico", Variables.IDUNICO)
+                REGISTRO.put("antecedente1", Variables.varAntecedente1)
+                REGISTRO.put("antecedente2", Variables.varAntecedente2)
+                REGISTRO.put("antecedente3", Variables.varAntecedente3)
+                REGISTRO.put("antecedente4", Variables.varAntecedente4)
+                REGISTRO.put("antecedente5", Variables.varAntecedente5)
+                REGISTRO.put("antecedente6", Variables.varAntecedente6)
+                REGISTRO.put("antecedente7", Variables.varAntecedente7)
+                REGISTRO.put("antecedente8", Variables.varAntecedente8)
+                REGISTRO.put("embarazada", Variables.varEmbarazada)
+                val cadena: String = "[ $REGISTRO ]"
                 Log.i("INFO", "Data antecedentes: $cadena")
                 val prefs = PreferenceManager.getDefaultSharedPreferences(this)
                 val editor = prefs.edit()
@@ -203,23 +194,23 @@ class AntecedentesActivity : AppCompatActivity() {
                     "Se guardaron localmente los antecedentes del usuario: ${conDatos.toString()}"
                 )
                 //Guardar datos en la BD remota en firestore
-                if (!Constants.IDUNICO.equals("desconocido")) {
-                    db.collection("usuarios").document(Constants.IDUNICO).set(
+                if (!Variables.IDUNICO.equals("desconocido")) {
+                    db.collection("usuarios").document(Variables.IDUNICO).set(
                         hashMapOf
                             (
-                            "diabetes" to varAntecedente1,
-                            "obesidad" to varAntecedente2,
-                            "dialisis" to varAntecedente3,
-                            "presion" to varAntecedente4,
-                            "corazon" to varAntecedente5,
-                            "pulmones" to varAntecedente6,
-                            "cancer" to varAntecedente7,
-                            "sida" to varAntecedente8,
-                            "embarazada" to varEmbarazada
+                            "diabetes" to Variables.varAntecedente1,
+                            "obesidad" to Variables.varAntecedente2,
+                            "dialisis" to Variables.varAntecedente3,
+                            "presion" to Variables.varAntecedente4,
+                            "corazon" to Variables.varAntecedente5,
+                            "pulmones" to Variables.varAntecedente6,
+                            "cancer" to Variables.varAntecedente7,
+                            "sida" to Variables.varAntecedente8,
+                            "embarazada" to Variables.varEmbarazada
                         ), SetOptions.merge()
                     )
                     Log.i("Cuidarnos", "Se registraron los antecedentes en la nube")
-                    if (Constants.primeraVez) {
+                    if (Variables.primeraVez) {
                         //Se abrira la activity de autodiagnostico si es la primera vez que se ejecuta la aplicacion
                         intent = Intent(this, AutodiagnosticoInicialActivity::class.java)
                         //intent.putExtra(Constants.GENERO, genero)

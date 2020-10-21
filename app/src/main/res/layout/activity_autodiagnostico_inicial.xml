@@ -7,7 +7,7 @@
     tools:context=".AutodiagnosticoInicialActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/logocsra"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginTop="8dp"
@@ -25,13 +25,13 @@
         android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/logocsra"
         app:layout_constraintTop_toTopOf="parent"
         app:spb_animateToCurrentProgressState="true"
         app:spb_checkStateCompleted="true"
         app:spb_currentStateDescriptionColor="#DB0082"
         app:spb_currentStateNumber="one"
-        app:spb_maxStateNumber="five"
+        app:spb_maxStateNumber="four"
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
         app:spb_stateForegroundColor="#DB0082"

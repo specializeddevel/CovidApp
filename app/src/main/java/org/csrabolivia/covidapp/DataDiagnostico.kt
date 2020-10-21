@@ -1,5 +1,7 @@
 package org.csrabolivia.covidapp
 
+import java.io.IOException
+
 class DataDiagnostico {
     companion object{
         var tieneCovid: Int? = null
@@ -13,12 +15,16 @@ class DataDiagnostico {
         var dolorGarganta: Int? = null
         var perdidaOlfato: Int? = null
         var perdidaGusto: Int? = null
+        var peligroAdultoMayor: Int? = null
         var peligroDificuldadRespiratoria: Int? = null
         var peligroTiempoDificultadRespiratoria: String? = null
         var peligroSeveridadDificultadRespiratoria: Int? = null
+        var peligroCansancioFatiga: Int? = null
         var peligroMalestarGeneral: Int? = null
         var peligroTieneOTuvoFiebre: Int? = null
         var peligroIntensidadFiebre: Int? = null
         var peligroDolorDePecho: Int? = null
+        var nivelDeRieso: Int? = null
     }
+
 }

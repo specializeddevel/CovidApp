@@ -23,18 +23,10 @@ import kotlinx.android.synthetic.main.activity_page_two.btAtras1
 import kotlinx.android.synthetic.main.activity_page_two.btFinalizar1
 import kotlinx.android.synthetic.main.activity_page_two.view.*
 import org.json.JSONObject
-import kotlinx.coroutines.Dispatchers
-import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.iid.FirebaseInstanceId
-import kotlinx.android.synthetic.main.activity_page_one.*
-import kotlinx.android.synthetic.main.activity_page_three.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
-import kotlin.concurrent.thread
 
 
 class PageTwoActivity : AppCompatActivity() {
@@ -58,12 +50,12 @@ class PageTwoActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this!!)
 
         val bundle: Bundle? = intent.extras
-        val nombre = bundle!!.getString(Constants.NOMBRES)
-        val apellidos = bundle!!.getString(Constants.APELLIDOS)
-        val genero = bundle!!.getString(Constants.GENERO)
-        val fnacimiento = bundle!!.getString(Constants.FNACIMIENTO)
-        val telefono = bundle!!.getString(Constants.TELEFONO)
-        val estCivil = bundle!!.getString(Constants.ESTCIVIL)
+        val nombre = bundle!!.getString(Variables.NOMBRES)
+        val apellidos = bundle!!.getString(Variables.APELLIDOS)
+        val genero = bundle!!.getString(Variables.GENERO)
+        val fnacimiento = bundle!!.getString(Variables.FNACIMIENTO)
+        val telefono = bundle!!.getString(Variables.TELEFONO)
+        val estCivil = bundle!!.getString(Variables.ESTCIVIL)
         var seleccionEnCasa: Int? = null
 
         val itemsMunicipio = listOf("Montero", "Otro")
@@ -171,7 +163,7 @@ class PageTwoActivity : AppCompatActivity() {
                     } else {
                         //Guardado de los datos del usaurio localmente mediante shared preferences
                         val REGISTRO = JSONObject()
-                        REGISTRO.put("idUnico", Constants.IDUNICO)
+                        REGISTRO.put("idUnico", Variables.IDUNICO)
                         REGISTRO.put("nombres", nombre)
                         REGISTRO.put("apellidos", apellidos)
                         REGISTRO.put("genero", genero)
@@ -182,7 +174,8 @@ class PageTwoActivity : AppCompatActivity() {
                         REGISTRO.put("ciudad", ciudad)
                         REGISTRO.put("barrio", barrio)
                         REGISTRO.put("direccion", direccion)
-                        val cadena: String = REGISTRO.toString()
+                        var cadena: String = "[ $REGISTRO ]"
+
                         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
                         val editor = prefs.edit()
                         editor.putString(key, cadena)
@@ -194,11 +187,11 @@ class PageTwoActivity : AppCompatActivity() {
                         )
                         //Guardar datos en la BD remota en firestore
                         //TODO: Si existieran datos ya almacenados localmente se deberian cargar al momento de cargar cada activity para el caso de edicion
-                            if (!Constants.IDUNICO.equals("desconocido")) {
-                                db.collection("usuarios").document(Constants.IDUNICO).set(
+                            if (!Variables.IDUNICO.equals("desconocido")) {
+                                db.collection("usuarios").document(Variables.IDUNICO).set(
                                     hashMapOf
                                         (
-                                        "id" to Constants.IDUNICO,
+                                        "id" to Variables.IDUNICO,
                                         "nombres" to nombre,
                                         "apellidos" to apellidos,
                                         "fnacimiento" to fnacimiento,
@@ -209,21 +202,21 @@ class PageTwoActivity : AppCompatActivity() {
                                         "ciudad" to ciudad,
                                         "barrio" to barrio,
                                         "direccion" to direccion,
-                                        "latitud" to Constants.LATITUD,
-                                        "longitud" to Constants.LONGITUD,
-                                        "altura" to Constants.ALTITUD,
-                                        "precision" to Constants.PRECISION,
-                                        "tiempo" to Constants.TIEMPO
+                                        "latitud" to Variables.LATITUD,
+                                        "longitud" to Variables.LONGITUD,
+                                        "altura" to Variables.ALTITUD,
+                                        "precision" to Variables.PRECISION,
+                                        "tiempo" to Variables.TIEMPO
                                     ), SetOptions.merge()
                                 )
-                                Log.i("Cuidarnos", "Se registraron los datos en la nube")
+                                Log.i("Cuidarnos", "Se registraron los datos del usuario en la nube")
                                 val intent = Intent(this, AntecedentesActivity::class.java)
-                                intent.putExtra(Constants.GENERO, genero)
+                                intent.putExtra(Variables.GENERO, genero)
                                 startActivity(intent)
                             } else {
                                 Log.i(
                                     "Cuidarnos",
-                                    "No se registraron los datos en la nube por falta de ID"
+                                    "No se registraron los datos del usuario en la nube por falta de ID"
                                 )
                                 if (!generarIDUnico()) {
                                     Toast.makeText(
@@ -247,13 +240,13 @@ class PageTwoActivity : AppCompatActivity() {
         var generarID = false
         //generacion del ID unico del celular
         val internet = verificaInternet()
-        if (Constants.IDUNICO.equals("desconocido") && internet) {
+        if (Variables.IDUNICO.equals("desconocido") && internet) {
             FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener {
 
                 it.result?.token?.let {
                     Log.d("Cuidarnos", "Se genero el Id unico : ${it}")
-                    Constants.IDUNICO = it
-                    val cadena = Constants.IDUNICO
+                    Variables.IDUNICO = it
+                    val cadena = Variables.IDUNICO
                     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
                     val editor = prefs.edit()
                     editor.putString(keyID, cadena)
@@ -360,22 +353,21 @@ class PageTwoActivity : AppCompatActivity() {
                         COORDENADASGPS.put("altitud", location.altitude)
                         COORDENADASGPS.put("precision", location.accuracy)
                         COORDENADASGPS.put("tiempo", location.time)
-                        val cadenaGps: String = COORDENADASGPS.toString()
+                        val cadenaGps = "[ $COORDENADASGPS ]"
                         val prefs = PreferenceManager.getDefaultSharedPreferences(this@PageTwoActivity)
                         val editor = prefs.edit()
                         editor.putString(keyGps, cadenaGps)
                         editor.apply()
-                        Constants.LATITUD = location.latitude.toString()
-                        Constants.LONGITUD = location.longitude.toString()
-                        Constants.ALTITUD = location.altitude.toString()
-                        Constants.PRECISION = location.accuracy.toString()
-                        Constants.TIEMPO = location.time.toString()
-                        Log.d("Cuidarnos", "Se capturaron los siguientes datos de GPS ${location.toString()}")
+                        Variables.LATITUD = location.latitude.toString()
+                        Variables.LONGITUD = location.longitude.toString()
+                        Variables.ALTITUD = location.altitude.toString()
+                        Variables.PRECISION = location.accuracy.toString()
+                        Variables.TIEMPO = location.time.toString()
+                        Log.d("Cuidarnos", "Se capturaron y almacenarón los siguientes datos de GPS: $cadenaGps")
                         Toast.makeText(this, "Posición geográfica almacenada", Toast.LENGTH_SHORT).show()
                         exito = true
                     } else {
                         Log.d("Cuidarnos", "Error al obtener valor de location")
-                        //Toast.makeText(this, "No se pudieron obtener las coordenadas GPS", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
@@ -386,7 +378,7 @@ class PageTwoActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            if (requestCode == Constants.GPS_REQUEST) {
+            if (requestCode == Variables.GPS_REQUEST) {
                 isGPS = true // flag maintain before get location
             }
         }

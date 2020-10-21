@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.view.*
+import kotlinx.android.synthetic.main.activity_page_one.*
 import java.io.IOException
 
 class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
@@ -80,30 +81,24 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
         }
 
         btADMContinuar2.setOnClickListener() {
-            if (!verificaInternet()) {
-                Toast.makeText(
-                    this,
-                    "Se requiere una conexión activa a Internet.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (!validarRespuestas()) {
+            if (!validarRespuestas()) {
                 //No paso la validacion
                 Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                val sumaMolestias = DataDiagnostico.tosSeca!! + DataDiagnostico.fiebre!! + DataDiagnostico.malestar!! + DataDiagnostico.dolorCabeza!! + DataDiagnostico.dificultadRespirar!! + DataDiagnostico.dolorMuscular!! + DataDiagnostico.dolorGarganta!! + DataDiagnostico.perdidaOlfato!! + DataDiagnostico.perdidaGusto!!
-                if(sumaMolestias==0){
+                val sumaMolestias =
+                    DataDiagnostico.tosSeca!! + DataDiagnostico.fiebre!! + DataDiagnostico.malestar!! + DataDiagnostico.dolorCabeza!! + DataDiagnostico.dificultadRespirar!! + DataDiagnostico.dolorMuscular!! + DataDiagnostico.dolorGarganta!! + DataDiagnostico.perdidaOlfato!! + DataDiagnostico.perdidaGusto!!
+                if (sumaMolestias == 0) {
                     //No tiene ningun molestia
-                    if(DataDiagnostico.tieneContactoCovid==1){
-                        //No tiene molestias pero tuvo contacto con una persona con o sospechosa de covid
-                        Toast.makeText(this, "Activity sin molestias con contacto covid", Toast.LENGTH_SHORT).show()
-                    } else {
-                        //No tiene molestias ni tuvo contacto con una persona con o sospechosade covid
-                        Toast.makeText(this, "Activity sin molestias y sin contacto covid", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Tiene contacto covid: ${DataDiagnostico.tieneContactoCovid}", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MensajeAutodiagnosticoActivity::class.java)
+                    if (DataDiagnostico.tieneContactoCovid != 1)
+                        DataDiagnostico.nivelDeRieso = 0 //No tiene molestias ni tuvo contacto con una persona con o sospechosa de covid
+                    else {
+                        DataDiagnostico.nivelDeRieso = 1 //No tiene molestias pero tuvo contacto con una persona con o sospechosa de covid
                     }
+                    startActivity(intent)
                 } else {
-                    Toast.makeText(this, "pasa activity peligros", Toast.LENGTH_SHORT).show()
-                    //se abre la activity de evaluacion de problemas mas serios de salud
                     val intent = Intent(this, AutodiagnosticoPeligrosP1Activity::class.java)
                     startActivity(intent)
                 }

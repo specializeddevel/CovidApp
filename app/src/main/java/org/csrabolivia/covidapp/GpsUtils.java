@@ -71,7 +71,7 @@ public class GpsUtils {private Context context;
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult((Activity) context, Constants.GPS_REQUEST);
+                                    rae.startResolutionForResult((Activity) context, Variables.GPS_REQUEST);
                                 } catch (IntentSender.SendIntentException sie) {
                                     Log.i(TAG, "PendingIntent unable to execute request.");
                                 }

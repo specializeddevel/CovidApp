@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AutodiagnosticoPeligrosP1Activity"></activity>
+        <activity android:name=".AutodiagnosticoPeligrosP2Activity"></activity>
+        <activity android:name=".MensajeAutodiagnosticoActivity" />
+        <activity android:name=".AutodiagnosticoPeligrosP1Activity" />
         <activity android:name=".AutodiagnosticoMolestiasActivity" />
         <activity
             android:name=".AntecedentesActivity"

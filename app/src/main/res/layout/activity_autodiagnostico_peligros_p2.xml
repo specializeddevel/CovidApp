@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AutodiagnosticoMolestiasActivity">
+    tools:context=".AutodiagnosticoPeligrosP2Activity">
+
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/logocsra"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginTop="8dp"
@@ -24,13 +25,13 @@
         android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/logocsra"
         app:layout_constraintTop_toTopOf="parent"
         app:spb_animateToCurrentProgressState="true"
         app:spb_checkStateCompleted="true"
         app:spb_currentStateDescriptionColor="#DB0082"
-        app:spb_currentStateNumber="three"
-        app:spb_maxStateNumber="five"
+        app:spb_currentStateNumber="four"
+        app:spb_maxStateNumber="four"
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
         app:spb_stateForegroundColor="#DB0082"
@@ -59,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/btADPContinuar3"
+        app:layout_constraintBottom_toTopOf="@+id/btADPFinalizar4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSaludo">
@@ -69,9 +70,9 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1">
 
-            <!-- Dificultad para respirar-->
+            <!-- cansancio y fatiga-->
             <LinearLayout
-                android:id="@+id/layoutADP1_1"
+                android:id="@+id/layoutADP2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -80,18 +81,18 @@
                 android:background="@drawable/border"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tvADP1_1"
+                    android:id="@+id/tvADP2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/ADP_activity_text_dificultad_respiratoria"
+                    android:text="@string/ADP_activity_text_cansancio"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/ADPp1_1"
+                    android:id="@+id/ADPp2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -101,7 +102,7 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btADPP1_1Si"
+                        android:id="@+id/btADPP2Si"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -110,7 +111,7 @@
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btADPP1_1No"
+                        android:id="@+id/btADPP2No"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -119,9 +120,9 @@
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
-            <!--Desde hace cuantos días tiene dificultad para respirar-->
+            <!-- malestar general -->
             <LinearLayout
-                android:id="@+id/layoutADP1_2"
+                android:id="@+id/layoutADP3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -130,67 +131,118 @@
                 android:background="@drawable/border"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tvADP1_2"
+                    android:id="@+id/tvADP3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/ADP_activity_text_tiempo_dificultad_respiratoria"
-                    android:textAlignment="textStart"
-
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-                <LinearLayout
-                    android:id="@+id/layoutADP1_2_boton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btADPSelFecha"
-                        style="@style/Widget.MaterialComponents.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="@color/my_color_dark"
-                        android:text="@string/autodiagnostico_peligros_activity_btn_seleccionar_fecha"/>
-                    <TextView
-                        android:id="@+id/tvFechaDifResp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:background="@drawable/border"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-            <!--Que tan severa es su dificultad para respirar-->
-            <LinearLayout
-                android:id="@+id/layoutADP1_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/border"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvADP1_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:text="@string/ADP_activity_text_severidad_dificultad_respiratoria"
+                    android:text="@string/ADP_activity_text_malestar"
                     android:textAlignment="textStart"
 
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/ADPp1_3"
+                    android:id="@+id/ADPp3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btADPP3Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btADSi"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btADPP3No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btADNo"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <!-- fiebre -->
+            <LinearLayout
+                android:id="@+id/layoutADP4_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvADP4_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/ADP_activity_text_fiebre"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/ADPp4_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btADPP4_1Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btADSi"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btADPP4_1No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btADNo"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+            <!--intensidad de la fiebre -->
+            <LinearLayout
+                android:id="@+id/layoutADP4_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvADP4_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/ADP_activity_text_intensidad_fiebre"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/ADPp4_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -199,25 +251,25 @@
                     app:singleSelection="true">
 
                     <Button
-                        android:id="@+id/btADPP1_3MuySevera"
+                        android:id="@+id/btADPP4_2MuySevera"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/btADP1_3MuySevera"
+                        android:text="@string/btADP4_2MuyAlta"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btADPP1_3Severa"
+                        android:id="@+id/btADPP4_2Severa"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/btADP1_3Severa"
+                        android:text="@string/btADP4_2Alta"
                         android:textSize="20sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btADPP1_3Moderada"
+                        android:id="@+id/btADPP4_2Moderada"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -226,7 +278,7 @@
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
-                        android:id="@+id/btADPP1_3Leve"
+                        android:id="@+id/btADPP4_2Leve"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -235,11 +287,62 @@
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>
+            <!-- dolor de pecho -->
+            <LinearLayout
+                android:id="@+id/layoutADP5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvADP5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/ADP_activity_text_dolor_pecho"
+                    android:textAlignment="textStart"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/ADPp5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btADPP5Si"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btADSi"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <Button
+                        android:id="@+id/btADPP5No"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btADNo"
+                        android:textSize="20sp"
+                        app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
         </TableLayout>
+
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btADPContinuar3"
+        android:id="@+id/btADPFinalizar4"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -248,15 +351,15 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/my_color_dark"
-        android:text="@string/page_1_AD_activity_btContinuar"
+        android:text="@string/page_1_AD_activity_btFinalizar"
         app:icon="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btADPAtras3"
+        app:layout_constraintStart_toEndOf="@+id/btADPAtras4"
         app:layout_constraintTop_toBottomOf="@+id/autodiagnosticoPeligrosScroll" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btADPAtras3"
+        android:id="@+id/btADPAtras4"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -267,7 +370,7 @@
         android:text="@string/page_one_activity_btn_atras"
         app:icon="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btADPContinuar3"
+        app:layout_constraintEnd_toStartOf="@+id/btADPFinalizar4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/autodiagnosticoPeligrosScroll" />
 

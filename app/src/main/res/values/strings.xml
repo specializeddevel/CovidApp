@@ -57,4 +57,12 @@
     <string name="btADP1_3Moderada">Moderada</string>
     <string name="btADP1_3Leve">Leve</string>
     <string name="autodiagnostico_peligros_activity_btn_seleccionar_fecha">Seleccionar</string>
+    <string name="ADP_activity_text_cansancio">¿Siente que se cansa o fatiga facilmente, cuando realiza alguna actividad?</string>
+    <string name="ADP_activity_text_malestar">¿Siente mucho malestar general?</string>
+    <string name="ADP_activity_text_fiebre">¿Tiene o ha tenido recientemente fiebre?</string>
+    <string name="ADP_activity_text_intensidad_fiebre">¿Qué tan intensa es o fue la fiebre?</string>
+    <string name="ADP_activity_text_dolor_pecho">¿Siente dolor de pecho?</string>
+    <string name="page_1_AD_activity_btFinalizar">Finalizar</string>
+    <string name="btADP4_2MuyAlta">MUY ALTA</string>
+    <string name="btADP4_2Alta">ALTA</string>
 </resources>

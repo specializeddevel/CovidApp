@@ -6,13 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_autodiagnostico_inicial.*
-import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.*
-import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.view.*
-import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.view.btADMP1Si
-import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros.*
-import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros.view.*
-import kotlinx.android.synthetic.main.activity_page_one.*
+import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p1.*
+import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p1.view.*
 import java.util.*
 
 class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
@@ -21,7 +16,7 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_autodiagnostico_peligros)
+        setContentView(R.layout.activity_autodiagnostico_peligros_p1)
 
         datePicker = DatePickerHelper(this, isSpinnerType = false)
         DataDiagnostico.peligroDificuldadRespiratoria = null
@@ -34,10 +29,10 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
         //tiene diificultad respiratoria
         ADPp1_1.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if (isChecked) {
-                DataDiagnostico.peligroDificuldadRespiratoria = if (toggleButton.btADPP1_1Si.isPressed) {
+                if (toggleButton.btADPP1_1Si.isPressed) {
                     layoutADP1_2.visibility = View.VISIBLE
                     layoutADP1_3.visibility = View.VISIBLE
-                    1
+                    DataDiagnostico.peligroDificuldadRespiratoria  = 1
                 } else {
                     //limpia y reinicializa los controles
                     ADPp1_3.clearChecked()
@@ -48,7 +43,8 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
                     DataDiagnostico.peligroSeveridadDificultadRespiratoria = null
                     layoutADP1_2.visibility = View.INVISIBLE
                     layoutADP1_3.visibility = View.INVISIBLE
-                    0
+                    DataDiagnostico.peligroDificuldadRespiratoria = 0
+                    //btADPContinuar3.callOnClick()
                 }
             }
         }
@@ -56,8 +52,10 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
         //Desde hace cuanto tiempo tiene diificultad respiratoria
         btADPSelFecha.setOnClickListener() {
             showDatePickerDialog()
+            //if(DataDiagnostico.peligroSeveridadDificultadRespiratoria!=null && DataDiagnostico.peligroTiempoDificultadRespiratoria !=null){
+            //    btADPContinuar3.callOnClick()
+            //}
         }
-
         //Que tan severa es su dificultad respiratoria
         ADPp1_3.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if (isChecked) {
@@ -70,6 +68,9 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
                 } else if (toggleButton.btADPP1_3Leve.isPressed) {
                     DataDiagnostico.peligroSeveridadDificultadRespiratoria = 1
                 }
+                /*if(DataDiagnostico.peligroTiempoDificultadRespiratoria!=null){
+                    btADPContinuar3.callOnClick()
+                }*/
             }
         }
 
@@ -79,17 +80,16 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
                 Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                Toast.makeText(this, "pasa a la siguiente activity", Toast.LENGTH_SHORT).show()
-                //se abre la activity de evaluacion de problemas mas serios de salud
-                //val intent = Intent(this, AutodiagnosticoPeligrosActivity::class.java)
-                //startActivity(intent)
+                //Toast.makeText(this, "pasa a la siguiente activity", Toast.LENGTH_SHORT).show()
+                //se abre la segunda activity de evaluacion de problemas mas serios de salud
+                val intent = Intent(this, AutodiagnosticoPeligrosP2Activity::class.java)
+                startActivity(intent)
             }
         }
 
         btADPAtras3.setOnClickListener(){
             onBackPressed()
         }
-
     }
 
     fun validarRespuestas():Boolean {
@@ -103,7 +103,7 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
         } else if (DataDiagnostico.peligroDificuldadRespiratoria==1 && DataDiagnostico.peligroTiempoDificultadRespiratoria == null) {
             layoutADP1_2.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutADP1_2.background = resources.getDrawable(R.drawable.border_red)
-        } else if (DataDiagnostico.peligroDificuldadRespiratoria==1 &&DataDiagnostico.peligroSeveridadDificultadRespiratoria == null) {
+        } else if (DataDiagnostico.peligroDificuldadRespiratoria==1 && DataDiagnostico.peligroSeveridadDificultadRespiratoria == null) {
             layoutADP1_3.setBackgroundColor(Color.parseColor("#FFCDD2"))
             layoutADP1_3.background = resources.getDrawable(R.drawable.border_red)
         } else {

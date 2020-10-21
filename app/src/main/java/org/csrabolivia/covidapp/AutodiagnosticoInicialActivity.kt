@@ -22,7 +22,7 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
             if (isChecked) {
                 if (toggleButton.btADP1No.isPressed) {
                     DataDiagnostico.tieneCovid = 0
-                    // Por si se muestra la segunda pregunta relacionada
+                    // Por no se muestra la segunda pregunta relacionada
                     layoutAD2.visibility = View.VISIBLE
                 } else {
                     DataDiagnostico.tieneCovid = 1
@@ -30,7 +30,7 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
                     DataDiagnostico.tieneContactoCovid = null
                     layoutAD2.visibility = View.INVISIBLE
                 }
-                Toast.makeText(this, "p1: ${DataDiagnostico.tieneCovid}, p2: ${DataDiagnostico.tieneContactoCovid}", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "p1: ${DataDiagnostico.tieneCovid}, p2: ${DataDiagnostico.tieneContactoCovid}", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -42,18 +42,18 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
                 } else {
                     DataDiagnostico.tieneContactoCovid = 0
                 }
-                Toast.makeText(this, "p1: ${DataDiagnostico.tieneCovid}, p2: ${DataDiagnostico.tieneContactoCovid}", Toast.LENGTH_SHORT).show()
+                //val intent = Intent(this, AutodiagnosticoMolestiasActivity::class.java)
+                //startActivity(intent)
+                //Toast.makeText(this, "p1: ${DataDiagnostico.tieneCovid}, p2: ${DataDiagnostico.tieneContactoCovid}", Toast.LENGTH_SHORT).show()
             }
+            // TODO: 19/10/2020 Verificar que el flujo al seleccionar si o no tiene contacto covid funcione correctamente, habia un error aqui
         }
 
         btADContinuar1.setOnClickListener(){
-            if (!verificaInternet()) {
-                Toast.makeText(this, "Se requiere una conexión activa a Internet.", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (!validarRespuestas()) {
-                    //No paso la validacion
-                    Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
-                        .show()
+            if (!validarRespuestas()) {
+                //No paso la validacion
+                Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
+                     .show()
             } else {
                 if (DataDiagnostico.tieneCovid==0 && DataDiagnostico.tieneContactoCovid!=null){
                     //se abre activity de evaluacion de molestias
@@ -62,13 +62,15 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
                 } else
                 {
                     //El paciente tiene COVID y se debe saltar a la activity de sintomas peligrosos
-                    Toast.makeText(this, "Activity de paciente con covid", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, AutodiagnosticoPeligrosP1Activity::class.java)
+                    startActivity(intent)
+                    //Toast.makeText(this, "Activity de paciente con covid", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
-    fun verificaInternet(): Boolean {
+    /*fun verificaInternet(): Boolean {
         val runtime = Runtime.getRuntime()
         try {
             val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
@@ -80,7 +82,7 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         return false
-    }
+    }*/
 
     fun validarRespuestas():Boolean {
         var exito = false
