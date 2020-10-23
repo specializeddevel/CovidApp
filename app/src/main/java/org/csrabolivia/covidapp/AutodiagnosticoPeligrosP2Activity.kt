@@ -1,4 +1,4 @@
-package org.csrabolivia.covidapp
+ package org.csrabolivia.covidapp
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.google.errorprone.annotations.Var
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p2.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p2.view.*
 import java.lang.Math.abs
@@ -94,136 +93,13 @@ class AutodiagnosticoPeligrosP2Activity : AppCompatActivity() {
                 //se abre la segunda activity de evaluacion de problemas mas serios de salud
                 //val intent = Intent(this, AutodiagnosticoPeligrosP2Activity::class.java)
                 //startActivity(intent)
-                val diagnostico = generarDiagnostico()
-                Log.d("Cuidarnos", "Diagnostico: $diagnostico")
+                //val diagnostico = generarDiagnosticoPersonaNueva()
+                Log.d("Cuidarnos", "Pasar a entregar resultado de paciente con covid")
 
             }
         }
     }
 
-    fun generarDiagnostico(): Int {
-        var retorno = 99  //Si se retorna 99 Es paciente con COVID, no deberia haber entrado a esta funcion
-        val sumaSintomas =
-            DataDiagnostico.tosSeca!! + DataDiagnostico.fiebre!! + DataDiagnostico.malestar!! +
-                    DataDiagnostico.dolorCabeza!! + DataDiagnostico.dificultadRespirar!! + DataDiagnostico.dolorMuscular!! +
-                    DataDiagnostico.dolorGarganta!! + DataDiagnostico.perdidaOlfato!! + DataDiagnostico.perdidaGusto!!
-        Variables.EDAD_ANOS = calcularEdadAnos(Variables.FNACIMIENTO)
-        DataDiagnostico.peligroAdultoMayor = if (Variables.EDAD_ANOS!! >= 60) 1 else 0
-        Variables.varEmbarazada = if (Variables.varEmbarazada == null) 0 else Variables.varEmbarazada
-        val sumaFactores = DataDiagnostico.peligroAdultoMayor!! + Variables.varAntecedente1!! + Variables.varAntecedente2!! + Variables.varAntecedente3!! +
-                Variables.varAntecedente4!! + Variables.varAntecedente5!! + Variables.varAntecedente6!! + Variables.varAntecedente7!! + Variables.varAntecedente8!! +
-                Variables.varEmbarazada!!
-        Log.d("Cuidarnos", "Edad en años: ${Variables.EDAD_ANOS} ${sumaFactores}")
-        if (DataDiagnostico.tieneCovid==0) {
-            if (sumaSintomas >= 2) {
-                if (DataDiagnostico.tieneContactoCovid == 1) {
-                    if (sumaFactores >= 1) {
-                        //Con al menos dos sintomas, al menos un factor de riesgo y contacto covid
-                        retorno = 10
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
-                            retorno = 11
-                        }
-                    } else {
-                        //al menos dos sintomas, sin factor de riesgo y con contacto covid
-                        retorno = 12
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y con contacto covid
-                            retorno = 13
-                        }
-                    }
-                } else {
-                    if (sumaFactores >= 1) {
-                        //al menos dos sintomas, al menos un factor de riesgo y sin contacto covid
-                        retorno = 14
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
-                            retorno = 15
-                        }
-                    } else {
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
-                            retorno = 16
-                        }
-                    }
-                }
-            } else {
-                //un solo sintoma
-                if (DataDiagnostico.tieneContactoCovid == 1) {
-                    if (sumaFactores >= 1) {
-                        //Con un sintoma, al menos un factor de riesgo y contacto covid
-                        retorno = 20
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
-                            retorno = 21
-                        }
-                    } else {
-                        //Con un sintoma, sin factor de riesgo y con contacto covid
-                        retorno = 22
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y con contacto covid
-                            retorno = 23
-                        }
-                    }
-                } else {
-                    if (sumaFactores >= 1) {
-                        //Con un sintoma, al menos un factor de riesgo y sin contacto covid
-                        retorno = 24
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
-                            retorno = 25
-                        }
-                    } else {
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
-                            //Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
-                            retorno = 26
-                        }
-                    }
-                }
-            }
-        }
-        return retorno
-    }
-
-    fun calcularEdadAnos(fechaNac: String ): Int {
-
-        // TODO: 20/10/2020 Se debe verificar que las fechas esten en rangos permitidos en el date picker
-        
-        val DOD: Int = fechaNac.substring(0,2).toInt()
-        val DOM: Int = fechaNac.substring(3,5).toInt()
-        val DOY: Int = fechaNac.substring(6,10).toInt()
-
-        var diaActual = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        val mesActual = Calendar.getInstance().get(Calendar.MONTH) + 1
-        val anoActual = Calendar.getInstance().get(Calendar.YEAR)
-
-
-        var month: Int? = null
-        var yea: Int? = null
-        var day: Int? = null
-
-        if (DOM == mesActual) {
-            yea = (anoActual - DOY) - 1
-            month = mesActual - DOM + 11
-            diaActual++
-        } else if (mesActual >= DOM) {
-            month = (DOM - mesActual)
-            yea = anoActual - DOY
-            diaActual++
-        } else {
-            month = (12 + mesActual) - DOM
-            yea = (anoActual - DOY) - 1
-        }
-        if (DOD > diaActual) {
-            day = diaActual - DOD
-            day = 30 + day
-        } else {
-            day = diaActual - DOD
-        }
-        day = abs(day)
-        month = abs(month)
-        return yea
-    }
 
     fun validarRespuestas():Boolean {
         var exito = false

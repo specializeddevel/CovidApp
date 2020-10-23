@@ -65,4 +65,5 @@
     <string name="page_1_AD_activity_btFinalizar">Finalizar</string>
     <string name="btADP4_2MuyAlta">MUY ALTA</string>
     <string name="btADP4_2Alta">ALTA</string>
+    <string name="autodiagnostico_final">Resultado del autodiagnóstico</string>
 </resources>

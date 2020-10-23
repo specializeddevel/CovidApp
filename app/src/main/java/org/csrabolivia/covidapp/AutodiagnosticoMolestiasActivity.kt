@@ -4,11 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.view.*
 import kotlinx.android.synthetic.main.activity_page_one.*
 import java.io.IOException
+import java.util.*
 
 class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,23 +88,16 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
                 Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                val sumaMolestias =
-                    DataDiagnostico.tosSeca!! + DataDiagnostico.fiebre!! + DataDiagnostico.malestar!! + DataDiagnostico.dolorCabeza!! + DataDiagnostico.dificultadRespirar!! + DataDiagnostico.dolorMuscular!! + DataDiagnostico.dolorGarganta!! + DataDiagnostico.perdidaOlfato!! + DataDiagnostico.perdidaGusto!!
-                if (sumaMolestias == 0) {
-                    //No tiene ningun molestia
-                    Toast.makeText(this, "Tiene contacto covid: ${DataDiagnostico.tieneContactoCovid}", Toast.LENGTH_SHORT).show()
+                    DataDiagnostico.nivelDeRieso = generarDiagnosticoPersonaNueva()
+                    Log.d("Cuidarnos", "Nivel de riesgo calculado: ${DataDiagnostico.nivelDeRieso}")
                     val intent = Intent(this, MensajeAutodiagnosticoActivity::class.java)
-                    if (DataDiagnostico.tieneContactoCovid != 1)
+                    /*if (DataDiagnostico.tieneContactoCovid != 1)
                         DataDiagnostico.nivelDeRieso = 0 //No tiene molestias ni tuvo contacto con una persona con o sospechosa de covid
                     else {
                         DataDiagnostico.nivelDeRieso = 1 //No tiene molestias pero tuvo contacto con una persona con o sospechosa de covid
-                    }
-                    startActivity(intent)
-                } else {
-                    val intent = Intent(this, AutodiagnosticoPeligrosP1Activity::class.java)
+                    }*/
                     startActivity(intent)
                 }
-            }
         }
 
         btADMAtras2.setOnClickListener(){
@@ -110,7 +105,7 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
         }
     }
 
-    fun validarRespuestas():Boolean {
+   fun validarRespuestas():Boolean {
         var exito = false
         layoutADM1.background = resources.getDrawable(R.drawable.border)
         layoutADM2.background = resources.getDrawable(R.drawable.border)
@@ -167,4 +162,141 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
         }
         return false
     }
+
+    fun generarDiagnosticoPersonaNueva(): Int {
+        var retorno = 99  //Si se retorna 99 Es paciente con COVID, no deberia haber entrado a esta funcion
+        val sumaSintomas =
+            DataDiagnostico.tosSeca!! + DataDiagnostico.fiebre!! + DataDiagnostico.malestar!! +
+                    DataDiagnostico.dolorCabeza!! + DataDiagnostico.dificultadRespirar!! + DataDiagnostico.dolorMuscular!! +
+                    DataDiagnostico.dolorGarganta!! + DataDiagnostico.perdidaOlfato!! + DataDiagnostico.perdidaGusto!!
+        Variables.EDAD_ANOS = calcularEdadAnos(Variables.FNACIMIENTO)
+        DataDiagnostico.peligroAdultoMayor = if (Variables.EDAD_ANOS!! >= 60) 1 else 0
+        Variables.varEmbarazada = if (Variables.varEmbarazada == null) 0 else Variables.varEmbarazada
+        val sumaFactores = DataDiagnostico.peligroAdultoMayor!! + Variables.varAntecedente1!! + Variables.varAntecedente2!! + Variables.varAntecedente3!! +
+                Variables.varAntecedente4!! + Variables.varAntecedente5!! + Variables.varAntecedente6!! + Variables.varAntecedente7!! + Variables.varAntecedente8!! +
+                Variables.varEmbarazada!!
+        Log.d("Cuidarnos", "Edad en años: ${Variables.EDAD_ANOS} ${sumaFactores}")
+        if (DataDiagnostico.tieneCovid==0) {
+            if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 1 && sumaFactores == 0) {
+                //Sin ningún síntoma y con contacto con paciente covid sin factor de riesgo
+                retorno = 1
+            } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 1 && sumaFactores >=1 ) {
+                //Sin ningún síntoma y con contacto con paciente covid y con al menos un factor de riesgo
+                retorno = 2
+            } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 0 && sumaFactores == 0  ) {
+                //Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
+                retorno = 0
+            } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 0 && sumaFactores >=1 ) {
+                //Sin ningún síntoma y sin contacto con paciente covid y con al menos un factor de riesgo
+                retorno = 3
+            } else if (sumaSintomas >= 2) {
+                if (DataDiagnostico.tieneContactoCovid == 1) {
+                    if (sumaFactores >= 1) {
+                        //Con al menos dos sintomas, al menos un factor de riesgo y contacto covid
+                        retorno = 10
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
+                            retorno = 11
+                        }
+                    } else {
+                        //al menos dos sintomas, sin factor de riesgo y con contacto covid
+                        retorno = 12
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y con contacto covid
+                            retorno = 13
+                        }
+                    }
+                } else {
+                    if (sumaFactores >= 1) {
+                        //al menos dos sintomas, al menos un factor de riesgo y sin contacto covid
+                        retorno = 14
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
+                            retorno = 15
+                        }
+                    } else {
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
+                            retorno = 16
+                        }
+                    }
+                }
+            } else {
+                //un solo sintoma
+                if (DataDiagnostico.tieneContactoCovid == 1) {
+                    if (sumaFactores >= 1) {
+                        //Con un sintoma, al menos un factor de riesgo y contacto covid
+                        retorno = 20
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
+                            retorno = 21
+                        }
+                    } else {
+                        //Con un sintoma, sin factor de riesgo y con contacto covid
+                        retorno = 22
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y con contacto covid
+                            retorno = 23
+                        }
+                    }
+                } else {
+                    if (sumaFactores >= 1) {
+                        //Con un sintoma, al menos un factor de riesgo y sin contacto covid
+                        retorno = 24
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
+                            retorno = 25
+                        }
+                    } else {
+                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                            //Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
+                            retorno = 26
+                        }
+                    }
+                }
+            }
+        }
+        return retorno
+    }
+
+    fun calcularEdadAnos(fechaNac: String ): Int {
+
+        // TODO: 20/10/2020 Se debe verificar que las fechas esten en rangos permitidos en el date picker
+
+        val DOD: Int = fechaNac.substring(0,2).toInt()
+        val DOM: Int = fechaNac.substring(3,5).toInt()
+        val DOY: Int = fechaNac.substring(6,10).toInt()
+
+        var diaActual = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        val mesActual = Calendar.getInstance().get(Calendar.MONTH) + 1
+        val anoActual = Calendar.getInstance().get(Calendar.YEAR)
+
+
+        var month: Int? = null
+        var yea: Int? = null
+        var day: Int? = null
+
+        if (DOM == mesActual) {
+            yea = (anoActual - DOY) - 1
+            month = mesActual - DOM + 11
+            diaActual++
+        } else if (mesActual >= DOM) {
+            month = (DOM - mesActual)
+            yea = anoActual - DOY
+            diaActual++
+        } else {
+            month = (12 + mesActual) - DOM
+            yea = (anoActual - DOY) - 1
+        }
+        if (DOD > diaActual) {
+            day = diaActual - DOD
+            day = 30 + day
+        } else {
+            day = diaActual - DOD
+        }
+        day = Math.abs(day)
+        month = Math.abs(month)
+        return yea
+    }
+
 }

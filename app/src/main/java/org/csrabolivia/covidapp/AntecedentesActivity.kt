@@ -19,8 +19,6 @@ class AntecedentesActivity : AppCompatActivity() {
 
     private val keyAntecedentes = "ANTECEDENTESDATA"
 
-
-
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
