@@ -4,46 +4,247 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:theme="@style/AppTheme"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/logocsra"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorBackground"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/l_cuidarnosc" />
+        android:id="@+id/imageView2"
+        android:layout_width="209dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="24dp"
+        android:src="@mipmap/l_cuidarnosc"
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img_cuidarnos"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="24dp"
-        android:background="@color/colorBackground"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/imageView3"
+        android:layout_width="83dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:src="@mipmap/csralogotipo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/lineatiempo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewHola"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/activity_acceso_aplicacion_cabecera"
-        android:textSize="20sp"
-        android:textStyle="bold"
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="87dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/cosudelogo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_cuidarnos" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="70dp"
+        android:paddingTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableLayout
+            android:id="@+id/tableLayoutTarjetaDiagnostico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:stretchColumns="1">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/autodiagnosticoCardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:contentPadding="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/autodiagnosticoLayout"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/autodiagnosticoImagen"
+                        android:layout_width="35pt"
+                        android:layout_height="35pt"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_lista" />
+
+                    <TextView
+                        android:id="@+id/autodiagnosticoTitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toRightOf="@+id/autodiagnosticoImagen"
+                        android:text="@string/mainmenu_titulo_autoevaluacion"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/autodiagnosticoSubtitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/autodiagnosticoTitulo"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toRightOf="@+id/autodiagnosticoImagen"
+                        android:text="@string/mainmenu_subtitulo_autoevaluacion" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btIniciarAutoevaluacion"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/autodiagnosticoSubtitulo"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:backgroundTint="@color/my_color_dark"
+                        android:text="@string/mainmenu_textoBoton_autoevaluacion"
+                        android:textSize="18dp"
+                        app:icon="@drawable/ic_baseline_arrow_forward_24" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/editarDatosCardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:contentPadding="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/editarDatosLayout"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/editarDatosImagen"
+                        android:layout_width="35pt"
+                        android:layout_height="35pt"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_portapapeles_1_" />
+
+                    <TextView
+                        android:id="@+id/editarDatosTitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toRightOf="@+id/editarDatosImagen"
+                        android:text="@string/mainmenu_titulo_modificarDatos"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/editarDatosSubtitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editarDatosTitulo"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toRightOf="@+id/editarDatosImagen"
+                        android:text="@string/mainmenu_subtitulo_modificarDatos" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btEditarDatos"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editarDatosSubtitulo"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:backgroundTint="@color/my_color_dark"
+                        android:text="@string/mainmenu_textoBoton_editarDatos"
+                        android:textSize="18dp"
+                        app:icon="@drawable/ic_baseline_arrow_forward_24" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/infoCovidCardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:contentPadding="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/infoCovidLayout"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/infoCovidImagen"
+                        android:layout_width="35pt"
+                        android:layout_height="35pt"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_information_icon" />
+
+                    <TextView
+                        android:id="@+id/infoCovidTitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toRightOf="@+id/infoCovidImagen"
+                        android:text="@string/mainmenu_titulo_infoCovid"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/infoCovidSubtitulo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/infoCovidTitulo"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toRightOf="@+id/infoCovidImagen"
+                        android:text="@string/mainmenu_subtitulo_infoCovid" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btInfoCovid"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/infoCovidSubtitulo"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:backgroundTint="@color/my_color_dark"
+                        android:text="@string/mainmenu_textoBoton_infoCovid"
+                        android:textSize="18dp"
+                        app:icon="@drawable/ic_baseline_arrow_forward_24" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </TableLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

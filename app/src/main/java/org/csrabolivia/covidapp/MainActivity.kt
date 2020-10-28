@@ -97,11 +97,15 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     //Se cargan los datos de antcedentes
                     cargaDatosAntecedentes(conAntecedentes.toString())
+                    Log.i("Cuidarnos", "Se tienen datos de Antecedentes: ${conAntecedentes.toString()}")
+                    //val intent = Intent(this, AutodiagnosticoInicialActivity::class.java)
+                    //intent.putExtra("ID", Variables.IDUNICO)
+                    val intent = Intent(this, AccesoAplicacionActivity::class.java)
+                    //intent.putExtra("ID", Variables.IDUNICO)
+                    startActivity(intent)
+                    //Toast.makeText(this, "Con datos", Toast.LENGTH_SHORT).show()
                 }
-                val intent = Intent(this, AutodiagnosticoInicialActivity::class.java)
-                intent.putExtra("ID", Variables.IDUNICO)
-                startActivity(intent)
-                //Toast.makeText(this, "Con datos", Toast.LENGTH_SHORT).show()
+
             }
             setTheme(R.style.AppTheme)
             //GpsUtils(this).turnGPSOn(GpsUtils.onGpsListener { isGPSEnable -> isGPS })

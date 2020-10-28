@@ -5,7 +5,7 @@ class Variables {
         var NOMBRES: String = "nombres"
         var APELLIDOS: String = "apellidos"
         var GENERO: String = "genero"
-        var FNACIMIENTO = "fnacimineto"
+        var FNACIMIENTO = "fnacimiento"
         var TELEFONO = "telefono"
         var ESTCIVIL = "estCivil"
         var MUNICIPIO = "municipio"

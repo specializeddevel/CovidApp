@@ -45,15 +45,18 @@
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:contentPadding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btFinalizar1"
+        app:layout_constraintBottom_toTopOf="@+id/btFinalizarDiagnostico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSaludo">
+        app:layout_constraintTop_toBottomOf="@+id/textViewSaludo"
+        >
 
         <TableLayout
+            android:id="@+id/tableLayoutTarjetaDiagnostico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="1">
+            android:stretchColumns="1"
+            android:background="@drawable/background_shape_exposure_high">
 
             <RelativeLayout
                 android:id="@+id/headerLayout"
@@ -76,11 +79,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="10dp"
                     android:layout_toRightOf="@+id/headerImagen"
                     android:text="SIN SINTOMAS COVID 19"
-                    android:textSize="20sp" />
+                    android:textSize="22sp"
+
+                    />
 
                 <TextView
                     android:id="@+id/headerSubtitulo"
@@ -89,15 +94,15 @@
                     android:layout_below="@+id/headerTitulo"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_toRightOf="@+id/headerImagen"
-                    android:text="Tiene muy poca probabilidad de tener COVID 19" />
+                    android:layout_toRightOf="@+id/headerImagen"/>
             </RelativeLayout>
 
             <ScrollView
                 android:id="@+id/diagnosticoScroll"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -133,9 +138,7 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_alignParentTop="true"
-
-                            android:gravity="center"
-                            app:tint="#000000" />
+                            android:gravity="center" />
 
                         <TextView
                             android:id="@+id/diagnosticoHoraLiteral"
@@ -176,7 +179,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:gravity="center_vertical"
-                            android:text="Por favor recuerde seguir las siguientes recomendaciones:"
                             android:textSize="16sp" />
                     </RelativeLayout>
 
@@ -194,7 +196,7 @@
                             android:layout_height="35pt"
                             android:layout_alignParentTop="true"
                             android:gravity="center_horizontal|center_vertical"
-                            android:src="@drawable/ic__13_face_mask" />
+                            android:src="@drawable/ic_mascara" />
 
                         <TextView
                             android:id="@+id/mensaje2Texto"
@@ -204,7 +206,6 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje2Imagen"
                             android:gravity="center_vertical"
-                            android:text="Haga uso de un barbijo que le cubra la nariz y la boca, siempre que se encuentre fuera de su vivienda."
                             android:textSize="16sp" />
                     </RelativeLayout>
 
@@ -232,7 +233,6 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje3Imagen"
                             android:gravity="center_vertical"
-                            android:text="Mantenga la distancia con otras personas, separándose de ellas por al menos 1 metro de distancia."
                             android:textSize="16sp" />
                     </RelativeLayout>
 
@@ -260,7 +260,6 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje4Imagen"
                             android:gravity="center_vertical"
-                            android:text="Sin embargo, es recomendable que haga el autodiagnostico cada:"
                             android:textSize="16sp" />
                     </RelativeLayout>
 
@@ -288,7 +287,6 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje5Imagen"
                             android:gravity="center_vertical"
-                            android:text="Sin embargo, es recomendable que haga el autodiagnostico cada:"
                             android:textSize="16sp" />
                     </RelativeLayout>
 
@@ -316,7 +314,6 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje6Imagen"
                             android:gravity="center_vertical"
-                            android:text="Sin embargo, es recomendable que haga el autodiagnostico cada:"
                             android:textSize="16sp" />
                     </RelativeLayout>
                 </RelativeLayout>
@@ -326,7 +323,7 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btFinalizar1"
+        android:id="@+id/btFinalizarDiagnostico"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

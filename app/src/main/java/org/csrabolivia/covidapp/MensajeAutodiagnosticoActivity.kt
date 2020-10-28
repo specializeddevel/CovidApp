@@ -1,13 +1,12 @@
 package org.csrabolivia.covidapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_mensaje_autodiagnostico.*
@@ -21,6 +20,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mensaje_autodiagnostico)
 
+
+
         //Niveles de riesgo
         //0 -> Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
         //1 -> Sin ningún síntoma y con contacto con paciente covid sin factor de riesgo
@@ -33,6 +34,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
         //14 -> Con al menos dos sintomas, al menos un factor de riesgo y sin contacto covid
         //15 -> Con al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
         //16 -> Con al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
+        //17 -> Con al menos dos sintomas (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
         //20 -> Con un sintoma, al menos un factor de riesgo y contacto covid
         //21 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
         //22 -> Con un sintoma, sin factor de riesgo y con contacto covid
@@ -40,6 +42,9 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
         //24 -> Con un sintoma, al menos un factor de riesgo y sin contacto covid
         //25 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
         //26 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
+        //27 -> Con un sintoma (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
+        //Diagnostico para caso SIN contacto con persona con COVID, 2 o más síntomas (no incluidos perdida de olfato y perdida de gusto) y SIN antecedente de riesgo
+
 
         val nombreCompleto = "${Variables.NOMBRES}  ${Variables.APELLIDOS}"
         mensaje2Layout.visibility = View.GONE
@@ -52,568 +57,648 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
         when(DataDiagnostico.nivelDeRieso){
             //Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
             0 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_low)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_green)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
-                headerImagen.setImageResource(R.drawable.ic_checked)
-                headerSubtitulo.setText("No presenta ningún sintoma relacionado con COVID-19")
+                headerImagen.setImageResource(R.drawable.ic_comprobar)
+                ////headerSubtitulo.setText("No presenta ningún sintoma relacionado con COVID-19")
                 diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>no tiene síntomas compatibles con COVID-19</b>"))
-                diagnosticoLinea2.setText("Sin embargo es recomendable que haga el autodiagnostico cada:")
+                diagnosticoLinea2.setText("Le recomendamos que realice una nueva autoevaluación dentro de:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("3")
                 diagnosticoHoraTexto.setText("DÍAS")
-                mensaje1Texto.setText("Por favor recuerde seguir las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor recuerde seguir las siguientes recomendaciones:")
                 //mensaje 2
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje2Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca, siempre que se encuentre fuera de su vivienda.")
+                mensaje2Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje2Texto.setText(R.string.autoevaluacion_use_barbijo_bajo)
                 //mensaje 3
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__01_long_distance)
-                mensaje3Texto.setText("Mantenga la distancia con otras personas, separándose de ellas por al menos 1 metro de distancia.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_distanciamiento_social)
+                mensaje3Texto.setText(R.string.autoevaluacion_distanciamiento)
                 //mensaje 4
                 mensaje4Layout.visibility = View.VISIBLE
-                mensaje4Imagen.setImageResource(R.drawable.ic_handwash)
-                mensaje4Texto.setText("Lávese las manos con agua y jabón, de manera frecuente y por lo menos por 20 segundos.")
+                mensaje4Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
+                mensaje4Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             //Sin ningún síntoma y con contacto con paciente covid sin factor de riesgo
             1 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
-                headerSubtitulo.setText("No presenta ningún sintoma relacionado con COVID-19, pero existe probabilidad de tenerlo")
+                headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
+                ////headerSubtitulo.setText("No presenta ningún sintoma relacionado con COVID-19, pero existe probabilidad de tenerlo")
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>no tiene síntomas compatibles con COVID-19</b>"))
-                diagnosticoLinea2.setText("Sin embargo, a causa de que estuvo en contacto con una persona con COVID-19 podria haberse contagiado, es recomendable que haga el autodiagnóstico nuevamente cada:")
+                diagnosticoLinea2.setText("Su evaluación no es compatible con COVID-19, pero existe sospecha leve de contagio porque recientemente estuvo en contacto con una persona con COVID-19. Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor recuerde seguir las siguientes recomendaciones:")
+                ////mensaje1Texto.setText("Por favor recuerde seguir las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_si)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("En caso de que presente cualquier tipo de síntoma, deberá realizar el autodiagnóstico para evitar llegar a una situación de gravedad.")
+                mensaje2Texto.setText(R.string.autoevaluacion_nuevo_sintoma)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca, siempre que se encuentre fuera de su vivienda.")
-                //mensaje 3
+                mensaje3Imagen.setImageResource(R.drawable.ic_enviar_datos)
+                //mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_bajo)
+                mensaje3Texto.setText(R.string.autoevaluacion_envio_datos_bajo)
+                //mensaje 2
                 mensaje4Layout.visibility = View.VISIBLE
-                mensaje4Imagen.setImageResource(R.drawable.ic__01_long_distance)
-                mensaje4Texto.setText("Mantenga la distancia con otras personas, separándose de ellas por al menos 1 metro de distancia.")
-                //mensaje 4
+                mensaje4Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje4Texto.setText(R.string.autoevaluacion_use_barbijo_bajo)
+                //mensaje 3
                 mensaje5Layout.visibility = View.VISIBLE
-                mensaje5Imagen.setImageResource(R.drawable.ic_handwash)
-                mensaje5Texto.setText("Lávese las manos con agua y jabón, de manera frecuente y por lo menos por 20 segundos.")
+                mensaje5Imagen.setImageResource(R.drawable.ic_distanciamiento_social)
+                mensaje5Texto.setText(R.string.autoevaluacion_distanciamiento)
+                //mensaje 4
+                mensaje6Layout.visibility = View.VISIBLE
+                mensaje6Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
+                mensaje6Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             //Sin ningún síntoma y con contacto con paciente covid y con al menos un factor de riesgo
             2 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
-                headerSubtitulo.setText("No presenta ningún sintoma de COVID-19, pero existe probabilidad de tenerlo.")
+                ////headerSubtitulo.setText("No presenta ningún sintoma de COVID-19, pero existe probabilidad de tenerlo.")
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>no tiene síntomas compatibles con COVID-19</b>"))
-                diagnosticoLinea2.setText("Sin embargo, a causa de que estuvo en contacto con una persona con COVID-19 existe la posibilidad de haberse contagiado, tambien presenta al menos un antecedente que podría poner en riesgo su salud, es recomendable que haga el autodiagnóstico cada:")
+                diagnosticoLinea2.setText("Su evaluación no es compatible con COVID-19, pero existe sospecha leve de contagio porque recientemente estuvo en contacto con una persona con COVID-19. Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor recuerde seguir cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor recuerde seguir cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_red)
+                mensaje2Imagen.setImageResource(R.drawable.ic_si)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("En caso de que presente cualquier síntoma, deberá realizar el autodiagnóstico para evitar llegar a una situación de gravedad.")
+                mensaje2Texto.setText(R.string.autoevaluacion_nuevo_sintoma)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca, siempre que se encuentre fuera de su vivienda.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_bajo)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
-                mensaje4Imagen.setImageResource(R.drawable.ic__01_long_distance)
-                mensaje4Texto.setText("Mantenga la distancia con otras personas, separándose de ellas por al menos 1 metro de distancia.")
+                mensaje4Imagen.setImageResource(R.drawable.ic_distanciamiento_social)
+                mensaje4Texto.setText(R.string.autoevaluacion_distanciamiento)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
-                mensaje5Imagen.setImageResource(R.drawable.ic_handwash)
-                mensaje5Texto.setText("Lávese las manos con agua y jabón, de manera frecuente y por lo menos por 20 segundos.")
+                mensaje5Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
+                mensaje5Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             //Sin ningún síntoma y sin contacto con paciente covid y con al menos un factor de riesgo
             3 -> {
-                headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_low)
+                headerLayout.setBackgroundResource(R.drawable.layout_bg_green)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
-                headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
-                headerSubtitulo.setText("No presenta ningún sintoma relacionado con COVID-19 pero presenta factores de riesgo")
+                headerImagen.setImageResource(R.drawable.ic_comprobar)
+                ////headerSubtitulo.setText("No presenta ningún sintoma relacionado con COVID-19 pero presenta factores de riesgo")
                 diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>no tiene síntomas compatibles con COVID-19</b>"))
-                diagnosticoLinea2.setText("Sin embargo, tiene antecedentes que actuan como factores de riesgo en caso de contraer COVID-19, intente realizar el autodiagnóstico cada:")
+                diagnosticoLinea2.setText("Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
-                diagnosticoHoraLiteral.setText("4")
+                diagnosticoHoraLiteral.setText("3")
                 diagnosticoHoraTexto.setText("DIAS")
-                mensaje1Texto.setText("Por favor recuerde seguir cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor recuerde seguir cuidadosamente las siguientes recomendaciones:")
                 //mensaje 2
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje2Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca, siempre que se encuentre fuera de su vivienda.")
+                mensaje2Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje2Texto.setText(R.string.autoevaluacion_use_barbijo_bajo)
                 //mensaje 3
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__01_long_distance)
-                mensaje3Texto.setText("Mantenga la distancia con otras personas, separándose de ellas por al menos 1 metro de distancia.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_distanciamiento_social)
+                mensaje3Texto.setText(R.string.autoevaluacion_distanciamiento)
                 //mensaje 4
                 mensaje4Layout.visibility = View.VISIBLE
-                mensaje4Imagen.setImageResource(R.drawable.ic_handwash)
-                mensaje4Texto.setText("Lávese las manos con agua y jabón, de manera frecuente y por lo menos por 20 segundos.")
+                mensaje4Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
+                mensaje4Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             //10 - Con al menos dos sintomas, al menos un factor de riesgo y contacto covid
             10-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y alto riesgo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 y alta probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus sintomas son agrabiados por sus antecedentes de riesgo y el contacto con una persona con COVID-19, realice nuevamente el autodiagnostico en:")
-                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                ////headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y alto riesgo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 y existe la probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-19. Por favor realice otra autoevaluación en:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_telefono_inteligente)
                 diagnosticoHoraLiteral.setText("24")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //11 -> Con al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
             11-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta algunos síntomas altamente compatibles con COVID-19 y alto riesgo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas altamente compatibles con COVID-19 y elevada probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus sintomas son muy específicos a COVID-19 y son agrabiados por sus antecedentes de riesgo y el contacto con una persona con COVID-19, realice nuevamente el autodiagnostico en:")
-                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                ////headerSubtitulo.setText("Presenta algunos síntomas altamente compatibles con COVID-19 y alto riesgo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas altamente compatibles con COVID-19 y elevada probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-19 y presenta síntomas muy específicos. Por favor realice otra autoevaluación en:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_telefono_inteligente)
                 diagnosticoHoraLiteral.setText("24")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //12 -> Con al menos dos sintomas, sin factor de riesgo y con contacto covid
             12 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo médio.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 y probabilidad de haberlo contraido.</b>"))
-                diagnosticoLinea2.setText("Sus sintomas son agrabiados por el contacto reciente con una persona con COVID-19, realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo médio.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 y existe la probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-1. Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por su seguridad y la de su familia, por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por su seguridad y la de su familia, por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //13 -> Con al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y con contacto covid
             13-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta algunos síntomas altamente compatibles con COVID-19 y probabilidad de haberlo contraído.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas altamente compatibles con COVID-19 y elevada probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus síntomas son muy específicos a COVID-19 y son agraviados por el contacto reciente con una persona con COVID-19, realice nuevamente el autodiagnóstico en:")
-                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                ////headerSubtitulo.setText("Presenta algunos síntomas altamente compatibles con COVID-19 y probabilidad de haberlo contraído.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas altamente compatibles con COVID-19 y elevada probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es muy compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-19 y presenta síntomas muy específicos. Por favor realice otra autoevaluación cada:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_telefono_inteligente)
                 diagnosticoHoraLiteral.setText("24")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //14 - Con al menos dos sintomas, al menos un factor de riesgo y sin contacto covid
             14-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo moderado.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 y alguna probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus sintomas son agrabiados por sus antecedentes de riesgo, le recomendamos que realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo moderado.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 pero baja probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19. Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y se programará un contacto entre Ud. y el personal de salud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_aislamiento_14)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //15 -> Con al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
             15-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta algunos síntomas altamente compatibles con COVID-19 y probabilidad de haberlo contraído.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas altamente compatibles con COVID-19 y elevada probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus síntomas son muy específicos a COVID-19 y son agraviados por algunos de sus antecedentes, realice nuevamente el autodiagnóstico en:")
+                ////headerSubtitulo.setText("Presenta algunos síntomas altamente compatibles con COVID-19 y probabilidad de haberlo contraído.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas altamente compatibles con COVID-19 y elevada probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque presenta síntomas muy específicos. Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
-                diagnosticoHoraLiteral.setText("48")
+                diagnosticoHoraLiteral.setText("24")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //16 -> Con al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
             16-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo bajo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 y alguna probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus síntomas son compatibles con COVID-19 y presenta bajo riesgo en caso de haberlo contraído, le recomendamos que realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo bajo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 pero baja probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque presenta síntomas muy específicos. Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y se programará un contacto entre Ud. y el personal de salud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_bajo)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado el nayor tiempo posible, en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece_low)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("Procure no utilizar el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
+            }
+            //17 -> Con al menos dos sintomas (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
+            17-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
+                headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
+                headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
+                headerTitulo.setText("POSIBILIDAD DE COVID-19")
+                ////headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo bajo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 pero baja probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es levemente compatible con COVID-19. Por favor realice otra autoevaluación en:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                diagnosticoHoraLiteral.setText("48")
+                diagnosticoHoraTexto.setText("HORAS")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje 1
+                mensaje2Layout.visibility = View.VISIBLE
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
+                //mensaje2Imagen.
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_bajo)
+                //mensaje 3
+                mensaje4Layout.visibility = View.VISIBLE
+                mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece_low)
+                //mensaje 4
+                mensaje5Layout.visibility = View.VISIBLE
+                mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
             }
             //20 -> Con un sintoma, al menos un factor de riesgo y contacto covid
             20-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta un síntoma compatible con COVID-19 y riesgo bajo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma compatible con COVID-19 y probabilidad de haberlo contraído.</b>"))
-                diagnosticoLinea2.setText("Su síntoma es compatible con COVID-19 y el contacto con una persona con COVID-19 incrementa el riesgo de haberse contagiado, le recomendamos que realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta un síntoma compatible con COVID-19 y riesgo bajo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma compatible con COVID-19 y probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-19. Por favor realice otra autoevaluación cada:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y se programará un contacto entre Ud. y el personal de salud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_bajo)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado el nayor tiempo posible, en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece_low)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("Procure no utilizar el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
             }
             //21 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
             21-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta síntoma altamente compatible con COVID-19 y alto riesgo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntoma altamente compatible con COVID-19 y elevada probabilidad de haberse contagiado.</b>"))
-                diagnosticoLinea2.setText("Su sintoma es específico a COVID-19 y se ve reforzado por el contacto reciente con una persona con COVID-19. Dados sus antedecentes de riesgo, realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta síntoma altamente compatible con COVID-19 y alto riesgo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma altamente compatible con COVID-19 y existe la probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-19 y presenta un síntoma muy específico. Por favor realice otra autoevaluación cada:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_bajo)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //22 -> Con un sintoma, sin factor de riesgo y con contacto covid
             22 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y riesgo bajo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntoma compatible con COVID-19 y probabilidad de haberlo contraido.</b>"))
-                diagnosticoLinea2.setText("El síntoma informado se ve agrabiado por el contacto reciente con una persona con COVID-19, realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y riesgo bajo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma compatible con COVID-19 y existe la probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-19. Por favor realice otra autoevaluación cada:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por su seguridad y la de su familia, por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por su seguridad y la de su familia, por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_bajo)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
             }
             //23 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y con contacto covid
             23-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta síntoma altamente compatible con COVID-19 y probabilidad de haberlo contraído.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntoma altamente compatible con COVID-19 y elevada probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus síntomas son muy específicos a COVID-19 y son agraviados por el contacto reciente con una persona con COVID-19, realice nuevamente el autodiagnóstico en:")
+                ////headerSubtitulo.setText("Presenta síntoma altamente compatible con COVID-19 y probabilidad de haberlo contraído.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma altamente compatible con COVID-19 y elevada probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque recientemente estuvo en contacto con una persona con COVID-19 y presenta un síntoma muy específico. Por favor realice otra autoevaluación cada:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("No utilice el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben permanecer en su vienda, pronto será sometido a pruebas que permitan confirmar el diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //24 -> Con un sintoma, al menos un factor de riesgo y sin contacto covid
             24-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
                 headerTitulo.setText("POSIBILIDAD BAJA DE COVID-19")
-                headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y riesgo moderado.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntoma compatible con COVID-19 y baja probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Sus antecedentes podrían poner en riesgo su salud en caso de contraer COVID-19, le recomendamos que realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y riesgo moderado.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma compatible con COVID-19 pero baja probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es levemente compatible con COVID-19. Por favor realice otra autoevaluación cada:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_red)
+                mensaje2Imagen.setImageResource(R.drawable.ic_si)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("En caso de que presente nuevos síntomas, realice el autodiagnóstico para evitar llegar a una situación de gravedad.")
+                mensaje2Texto.setText(R.string.autoevaluacion_nuevo_sintoma)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_bajo)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
-                mensaje4Imagen.setImageResource(R.drawable.ic__01_long_distance)
-                mensaje4Texto.setText("Mantenga la distancia con otras personas, separándose de ellas por al menos 1 metro de distancia.")
+                mensaje4Imagen.setImageResource(R.drawable.ic_distanciamiento_social)
+                mensaje4Texto.setText(R.string.autoevaluacion_distanciamiento)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
-                mensaje5Imagen.setImageResource(R.drawable.ic_handwash)
-                mensaje5Texto.setText("Lávese las manos con agua y jabón, de manera frecuente y por lo menos por 20 segundos.")
+                mensaje5Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
+                mensaje5Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             //25 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
             25-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
-                headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y mediana probabilidad de haberlo contraído.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntoma altamente compatible con COVID-19 y probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("Su síntoma es específico a COVID-19 y en caso de tenerlo sus antecedentes podrían poner en riesgo su salud, para evitarlo, realice nuevamente el autodiagnóstico en:")
+                ////headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y mediana probabilidad de haberlo contraído.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma altamente compatible con COVID-19 y existe la probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque presenta un síntoma muy específico. Por favor realice otra autoevaluación cada:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_bn)
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("Su diagnóstico a sido informado y en breve personal de salud se pondrá en contacto con Ud.")
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_bajo)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic__13_face_mask)
-                mensaje3Texto.setText("Haga uso de un barbijo que le cubra la nariz y la boca en todo momento.")
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("Si sus síntomas aumentan, aíslece en una habitación separada hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece_low)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("Procure no utilizar el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
                 //mensaje 4
                 mensaje6Layout.visibility = View.VISIBLE
                 mensaje6Imagen.setImageResource(R.drawable.ic_cuarentena)
-                mensaje6Texto.setText("Ud. y su familia deben salir lo menos posible de su vienda, pronto se podra confirmar su diagnostico.")
+                mensaje6Texto.setText(R.string.autoevaluacion_aislamiento_familia)
             }
             //26 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
             26-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
                 headerTitulo.setText("POSIBILIDAD BAJA DE COVID-19")
-                headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y riesgo bajo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma compatible con COVID-19 y baja probabilidad de tenerlo.</b>"))
-                diagnosticoLinea2.setText("El síntoma es compatible con COVID-19 y presenta bajo riesgo en caso de haberlo contraído, le recomendamos que realice nuevamente el autodiagnostico en:")
+                ////headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y riesgo bajo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma compatible con COVID-19 pero baja probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es levemente compatible con COVID-19. Por favor realice otra autoevaluación cada:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
-                mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
-                mensaje2Imagen.setImageResource(R.drawable.ic_danger_red)
+                mensaje2Imagen.setImageResource(R.drawable.ic_si)
                 //mensaje2Imagen.
-                mensaje2Texto.setText("En caso de que presente nuevos síntomas, realice el autodiagnóstico para evitar llegar a una situación de gravedad.")
+                mensaje2Texto.setText(R.string.autoevaluacion_nuevo_sintoma)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
-                mensaje4Texto.setText("De ser posible, aíslese en una habitación independiente hasta que se pueda confirmar su diagnóstico.")
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece_low)
                 //mensaje 4
                 mensaje5Layout.visibility = View.VISIBLE
                 mensaje5Imagen.setImageResource(R.drawable.ic_diarrhea)
-                mensaje5Texto.setText("Procure no utilizar el mismo baño que utilizan las demás personas con las que convive.")
+                mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
+            }
+            //27 -> Con un sintoma (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
+            27-> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
+                headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
+                headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
+                headerTitulo.setText("POSIBILIDAD BAJA DE COVID-19")
+                ////headerSubtitulo.setText("Presenta síntoma compatible con COVID-19 y riesgo bajo.")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene un síntoma compatible con COVID-19 pero baja probabilidad de haberse contagiado.</b>"))
+                diagnosticoLinea2.setText("Su evaluación es levemente compatible con COVID-19. Por favor realice otra autoevaluación cada:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                diagnosticoHoraLiteral.setText("3")
+                diagnosticoHoraTexto.setText("DÍAS")
+                //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
+                //mensaje 1
+                mensaje2Layout.visibility = View.VISIBLE
+                mensaje2Imagen.setImageResource(R.drawable.ic_si)
+                //mensaje2Imagen.
+                mensaje2Texto.setText(R.string.autoevaluacion_nuevo_sintoma)
+                mensaje3Layout.visibility = View.VISIBLE
+                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_bajo)
+                //mensaje 3
+                mensaje4Layout.visibility = View.VISIBLE
+                mensaje4Imagen.setImageResource(R.drawable.ic_distanciamiento_social)
+                mensaje4Texto.setText(R.string.autoevaluacion_distanciamiento)
+                //mensaje 4
+                mensaje5Layout.visibility = View.VISIBLE
+                mensaje5Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
+                mensaje5Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             else -> Toast.makeText(this, "Valor de nivel de riesgo no reconocido", Toast.LENGTH_SHORT).show()
         }
 
-        btFinalizar1.setOnClickListener() {
+        btFinalizarDiagnostico.setOnClickListener() {
             if (verificaInternet()) {
                 val diaActual = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                 val mesActual = Calendar.getInstance().get(Calendar.MONTH) + 1
                 val anoActual = Calendar.getInstance().get(Calendar.YEAR)
                 val horaActual = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
                 val minutoActual = Calendar.getInstance().get(Calendar.MINUTE)
-                val segundoActual = Calendar.getInstance().get(Calendar.SECOND)
                 val diaActualCadena = if (diaActual <= 9) "0${diaActual}" else diaActual
                 val mesActualCadena = if (mesActual <= 9) "0${mesActual}" else mesActual
                 val horaActualCadena = if (horaActual <= 9) "0${horaActual}" else horaActual
@@ -655,35 +740,38 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                                 "nivel_riesgo" to DataDiagnostico.nivelDeRieso,
                             ),
                         )*/
-                    db.collection("usuarios").document(Variables.IDUNICO).collection("diagnosticos").document("autodiagnostico").set(
-                        hashMapOf                            (
-                            "id_unica" to Variables.IDUNICO,
-                            "fecha_actual" to fechaActualCompleta,
-                            "hora_actual" to horaActualCompleta,
-                            "tiene_covid" to DataDiagnostico.tieneCovid,
-                            "tiene_contacto_covid" to DataDiagnostico.tieneContactoCovid,
-                            "tos_seca" to DataDiagnostico.tosSeca,
-                            "fiebre" to DataDiagnostico.fiebre,
-                            "malestar" to DataDiagnostico.malestar,
-                            "dolor_cabeza" to DataDiagnostico.dolorCabeza,
-                            "dificultad_respiratoria" to DataDiagnostico.dificultadRespirar,
-                            "dolor_muscular" to DataDiagnostico.dolorMuscular,
-                            "dolor_garganta" to DataDiagnostico.dolorGarganta,
-                            "perdida_olfato" to DataDiagnostico.perdidaOlfato,
-                            "perdida_gusto" to DataDiagnostico.perdidaGusto,
-                            "peligro_adulto_mayor" to DataDiagnostico.peligroAdultoMayor,
-                            "peligro_dificultad_respiratoria" to DataDiagnostico.peligroDificuldadRespiratoria,
-                            "peligro_tiempo_dificultad_respiratoria" to DataDiagnostico.peligroTiempoDificultadRespiratoria,
-                            "peligro_severidad_dificultad_respiratoria" to DataDiagnostico.peligroSeveridadDificultadRespiratoria,
-                            "peligro_cansancio_fatiga" to DataDiagnostico.peligroCansancioFatiga,
-                            "peligro_malestar_general" to DataDiagnostico.peligroMalestarGeneral,
-                            "peligro_fiebre" to DataDiagnostico.peligroTieneOTuvoFiebre,
-                            "peligro_intensidad_fiebre" to DataDiagnostico.peligroIntensidadFiebre,
-                            "peligro_dolor_pecho" to DataDiagnostico.peligroDolorDePecho,
-                            "nivel_riesgo" to DataDiagnostico.nivelDeRieso,
-                        ),
+                    //db.collection("usuarios").document(Variables.IDUNICO).collection("diagnosticos").document("autodiagnostico").set(
+                    db.collection("usuarios").document(Variables.IDUNICO).set(
+                        hashMapOf
+                            (
+                            "autoevaluacion_fecha_actual" to fechaActualCompleta,
+                            "autoevaluacion_hora_actual" to horaActualCompleta,
+                            "autoevaluacion_tiene_covid" to DataDiagnostico.tieneCovid,
+                            "autoevaluacion_tiene_contacto_covid" to DataDiagnostico.tieneContactoCovid,
+                            "autoevaluacion_tos_seca" to DataDiagnostico.tosSeca,
+                            "autoevaluacion_fiebre" to DataDiagnostico.fiebre,
+                            "autoevaluacion_malestar" to DataDiagnostico.malestar,
+                            "autoevaluacion_dolor_cabeza" to DataDiagnostico.dolorCabeza,
+                            "autoevaluacion_dificultad_respiratoria" to DataDiagnostico.dificultadRespirar,
+                            "autoevaluacion_dolor_muscular" to DataDiagnostico.dolorMuscular,
+                            "autoevaluacion_dolor_garganta" to DataDiagnostico.dolorGarganta,
+                            "autoevaluacion_perdida_olfato" to DataDiagnostico.perdidaOlfato,
+                            "autoevaluacion_perdida_gusto" to DataDiagnostico.perdidaGusto,
+                            "autoevaluacion_peligro_adulto_mayor" to DataDiagnostico.peligroAdultoMayor,
+                            "autoevaluacion_peligro_dificultad_respiratoria" to DataDiagnostico.peligroDificuldadRespiratoria,
+                            "autoevaluacion_peligro_tiempo_dificultad_respiratoria" to DataDiagnostico.peligroTiempoDificultadRespiratoria,
+                            "autoevaluacion_peligro_severidad_dificultad_respiratoria" to DataDiagnostico.peligroSeveridadDificultadRespiratoria,
+                            "autoevaluacion_peligro_cansancio_fatiga" to DataDiagnostico.peligroCansancioFatiga,
+                            "autoevaluacion_peligro_malestar_general" to DataDiagnostico.peligroMalestarGeneral,
+                            "autoevaluacion_peligro_fiebre" to DataDiagnostico.peligroTieneOTuvoFiebre,
+                            "autoevaluacion_peligro_intensidad_fiebre" to DataDiagnostico.peligroIntensidadFiebre,
+                            "autoevaluacion_peligro_dolor_pecho" to DataDiagnostico.peligroDolorDePecho,
+                            "autoevaluacion_nivel_riesgo" to DataDiagnostico.nivelDeRieso
+                            ), SetOptions.merge()
                     )
-                    Log.i("Cuidarnos", "Se registraron los datos del diagnostico en la nube")
+                    Log.i("Cuidarnos", "Se registraron los datos del diagnostico en la nube y retrorna al menu principal")
+                    val intent = Intent(this, AccesoAplicacionActivity::class.java)
+                    startActivity(intent)
                 } else {
                     Log.i(
                         "Cuidarnos",

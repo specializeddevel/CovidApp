@@ -189,7 +189,8 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
             } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 0 && sumaFactores >=1 ) {
                 //Sin ningún síntoma y sin contacto con paciente covid y con al menos un factor de riesgo
                 retorno = 3
-            } else if (sumaSintomas >= 2) {
+            }
+            else if (sumaSintomas >= 2) {
                 if (DataDiagnostico.tieneContactoCovid == 1) {
                     if (sumaFactores >= 1) {
                         //Con al menos dos sintomas, al menos un factor de riesgo y contacto covid
@@ -214,12 +215,13 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
                             //al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
                             retorno = 15
                         }
-                    } else {
-                        if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
+                    } else if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
                             //al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
                             retorno = 16
+                        } else {
+                            //al menos dos sintomas no incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
+                            retorno = 17
                         }
-                    }
                 }
             } else {
                 //un solo sintoma
@@ -251,6 +253,9 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
                         if (DataDiagnostico.perdidaOlfato == 1 || DataDiagnostico.perdidaGusto == 1) {
                             //Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
                             retorno = 26
+                        } else {
+                            //un solo sintoma no incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
+                            retorno = 27
                         }
                     }
                 }

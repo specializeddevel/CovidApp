@@ -14,7 +14,7 @@ data class DataGPS(
 	val tiempo: Long? = null,
 
 	@field:SerializedName("precision")
-	val precision: Int? = null,
+	val precision: Double? = null,
 
 	@field:SerializedName("altitud")
 	val altitud: Double? = null

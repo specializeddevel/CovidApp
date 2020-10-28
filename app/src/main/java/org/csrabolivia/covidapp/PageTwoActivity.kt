@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -16,8 +17,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.contains
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.errorprone.annotations.Var
 import kotlinx.android.synthetic.main.activity_page_two.*
 import kotlinx.android.synthetic.main.activity_page_two.btAtras1
 import kotlinx.android.synthetic.main.activity_page_two.btFinalizar1
@@ -26,6 +29,7 @@ import org.json.JSONObject
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.iid.FirebaseInstanceId
+import kotlinx.android.synthetic.main.activity_page_one.*
 import java.io.IOException
 
 
@@ -49,13 +53,12 @@ class PageTwoActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this!!)
 
-        val bundle: Bundle? = intent.extras
-        val nombre = bundle!!.getString(Variables.NOMBRES)
-        val apellidos = bundle!!.getString(Variables.APELLIDOS)
-        val genero = bundle!!.getString(Variables.GENERO)
-        val fnacimiento = bundle!!.getString(Variables.FNACIMIENTO)
-        val telefono = bundle!!.getString(Variables.TELEFONO)
-        val estCivil = bundle!!.getString(Variables.ESTCIVIL)
+        val nombre = Variables.NOMBRES
+        val apellidos = Variables.APELLIDOS
+        val genero = Variables.GENERO
+        val fnacimiento = Variables.FNACIMIENTO
+        val telefono = Variables.TELEFONO
+        val estCivil = Variables.ESTCIVIL
         var seleccionEnCasa: Int? = null
 
         val itemsMunicipio = listOf("Montero", "Otro")
@@ -107,6 +110,8 @@ class PageTwoActivity : AppCompatActivity() {
             closeKeyBoard()
         }
 
+
+
         tbEnCasa.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
 
             if (isChecked) {
@@ -124,6 +129,15 @@ class PageTwoActivity : AppCompatActivity() {
             btFinalizar1.isEnabled = checkBoxTerminos.isChecked
         }
 
+        if (!Variables.primeraVez) {
+            textoMunicipio.setText(Variables.MUNICIPIO,false)
+            textoCiudad.setText(Variables.CIUDAD, false)
+            textoBarrio.setText(Variables.BARRIO,false)
+            textFieldDireccion.editText?.setText(Variables.DIRECCION)
+            layoutEnCasa.visibility = View.GONE
+            checkBoxTerminos.isChecked = true
+            layoutCheckBoxTerminos.visibility = View.GONE
+        }
 
         btFinalizar1.setOnClickListener() {
                 textFieldMunicipio.error = null
@@ -146,7 +160,7 @@ class PageTwoActivity : AppCompatActivity() {
                     textFieldDireccion.error = "Valor requerido"
                     textFieldDireccion.requestFocus()
                     //penKeyBoard()
-                } else if (seleccionEnCasa == null) {
+                } else if (Variables.primeraVez && seleccionEnCasa == null) {
                     tbEnCasa.buttonEnCasaSi.requestFocus()
                     layoutEnCasa.setBackgroundColor(Color.parseColor("#FFCDD2"))
                     layoutEnCasa.background = resources.getDrawable(R.drawable.border_red)
@@ -175,11 +189,15 @@ class PageTwoActivity : AppCompatActivity() {
                         REGISTRO.put("barrio", barrio)
                         REGISTRO.put("direccion", direccion)
                         var cadena: String = "[ $REGISTRO ]"
-
                         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
                         val editor = prefs.edit()
                         editor.putString(key, cadena)
                         editor.apply()
+                        //Actualizacion de los valores de el companion object
+                        Variables.MUNICIPIO = municipio
+                        Variables.CIUDAD = ciudad
+                        Variables.BARRIO = barrio
+                        Variables.DIRECCION = direccion
                         val conDatos = prefs.getString(key, "SD")
                         Log.d(
                             "Cuidarnos",
@@ -327,7 +345,6 @@ class PageTwoActivity : AppCompatActivity() {
             }
             else -> {
                 Log.d("Cuidarnos", "Ya se tenian los permisos para el GPS")
-
             }
 
         }

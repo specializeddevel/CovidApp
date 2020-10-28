@@ -8,11 +8,14 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_antecedentes.*
 import kotlinx.android.synthetic.main.activity_antecedentes.view.*
+import kotlinx.android.synthetic.main.activity_page_two.*
 import org.json.JSONObject
+import www.sanju.motiontoast.MotionToast
 import java.io.IOException
 
 class AntecedentesActivity : AppCompatActivity() {
@@ -35,14 +38,69 @@ class AntecedentesActivity : AppCompatActivity() {
             layoutEmbarazo.visibility = View.VISIBLE
         } else {
             layoutEmbarazo.visibility = View.GONE
+            Variables.varEmbarazada = null
         }
 
         //Escucha antecedente 1
         antecedente1.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
                 Variables.varAntecedente1 = if (toggleButton.btAntecedente1Si.isPressed){1} else{0}
+
             }
         }
+
+        if (!Variables.primeraVez) {
+
+            if (Variables.varAntecedente1 == 1) {
+                antecedente1.check(antecedente1.btAntecedente1Si.id)
+            } else {
+                antecedente1.check(antecedente1.btAntecedente1No.id)
+            }
+            if (Variables.varAntecedente2 == 1) {
+                antecedente2.check(antecedente2.btAntecedente2Si.id)
+            } else {
+                antecedente2.check(antecedente2.btAntecedente2No.id)
+            }
+            if (Variables.varAntecedente3 == 1) {
+                antecedente3.check(antecedente3.btAntecedente3Si.id)
+            } else {
+                antecedente3.check(antecedente3.btAntecedente3No.id)
+            }
+            if (Variables.varAntecedente4 == 1) {
+                antecedente4.check(antecedente4.btAntecedente4Si.id)
+            } else {
+                antecedente4.check(antecedente4.btAntecedente4No.id)
+            }
+            if (Variables.varAntecedente5 == 1) {
+                antecedente5.check(antecedente5.btAntecedente5Si.id)
+            } else {
+                antecedente5.check(antecedente5.btAntecedente5No.id)
+            }
+            if (Variables.varAntecedente6 == 1) {
+                antecedente6.check(antecedente6.btAntecedente6Si.id)
+            } else {
+                antecedente6.check(antecedente6.btAntecedente6No.id)
+            }
+            if (Variables.varAntecedente7 == 1) {
+                antecedente7.check(antecedente7.btAntecedente7Si.id)
+            } else {
+                antecedente7.check(antecedente7.btAntecedente7No.id)
+            }
+            if (Variables.varAntecedente8 == 1) {
+                antecedente8.check(antecedente8.btAntecedente8Si.id)
+            } else {
+                antecedente8.check(antecedente8.btAntecedente8No.id)
+            }
+            if (Variables.varEmbarazada != null) {
+                if (Variables.varEmbarazada ==1) {
+                    embarazada.check(embarazada.btEmbarazadaSi.id)
+                } else {
+                    embarazada.check(embarazada.btEmbarazadaNo.id)
+                }
+            }
+
+        }
+
         //Escucha antecedente 2
         antecedente2.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
@@ -89,8 +147,10 @@ class AntecedentesActivity : AppCompatActivity() {
         embarazada.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
             if(isChecked){
                 Variables.varEmbarazada = if (toggleButton.btEmbarazadaSi.isPressed) {1} else {0}
+
             }
         }
+
 
         //Escuchar boton Continuar
         btContinuar4.setOnClickListener(){
@@ -98,6 +158,12 @@ class AntecedentesActivity : AppCompatActivity() {
                 //No paso la validacion
                 Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
                     .show()
+                MotionToast.createToast(this,"Upload Completed!",
+                    MotionToast.TOAST_SUCCESS,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this,R.font.helvetica_regular))
+
             }else{
                 //Paso la validacion se intenta registro de datos localmente
                 if(registroLocalAntecedentes()){

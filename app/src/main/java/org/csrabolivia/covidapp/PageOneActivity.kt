@@ -4,11 +4,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import com.google.errorprone.annotations.Var
+import kotlinx.android.synthetic.main.activity_antecedentes.*
+import kotlinx.android.synthetic.main.activity_antecedentes.view.*
 import kotlinx.android.synthetic.main.activity_page_one.*
+import kotlinx.android.synthetic.main.activity_page_two.*
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -27,6 +32,11 @@ class PageOneActivity : AppCompatActivity() {
         val itemsGender = listOf("Masculino", "Femenino" )
         val adapterGender = ArrayAdapter(this, R.layout.list_item, itemsGender)
         (textFieldGender.editText as? AutoCompleteTextView)?.setAdapter(adapterGender)
+
+
+        //textFieldGender.addOnEditTextAttachedListener { Variables.varEmbarazada = null }
+
+
 
         val itemsEstadoCivil = listOf(
             "Soltero(a)",
@@ -48,6 +58,15 @@ class PageOneActivity : AppCompatActivity() {
         }
         textViewConfidencial.requestFocus()
         closeKeyBoard()
+
+        if (!Variables.primeraVez) {
+            textFieldNames.editText?.setText(Variables.NOMBRES)
+            textFieldLastNames.editText?.setText(Variables.APELLIDOS)
+            textFieldDateBirthday.editText?.setText(Variables.FNACIMIENTO)
+            textoGenero.setText(Variables.GENERO,false)
+            textoEstadoCivil.setText(Variables.ESTCIVIL,false)
+            textFieldPhone.editText?.setText(Variables.TELEFONO)
+        }
     }
 
     private fun escucharBtnSiguiente(v: View) {
@@ -78,21 +97,26 @@ class PageOneActivity : AppCompatActivity() {
             textFieldPhone.error = "Valor requerido"
             textFieldPhone.requestFocus()
         } else {
-            var intent = Intent(this, PageTwoActivity::class.java)
-            intent.putExtra(Variables.NOMBRES, textFieldNames.editText?.text.toString())
-            intent.putExtra(Variables.APELLIDOS, textFieldLastNames.editText?.text.toString())
-            intent.putExtra(Variables.FNACIMIENTO, textFieldDateBirthday.editText?.text.toString())
-            intent.putExtra(Variables.GENERO, textFieldGender.editText?.text.toString())
-            intent.putExtra(Variables.ESTCIVIL, textFieldCivilState.editText?.text.toString())
-            intent.putExtra(Variables.TELEFONO, textFieldPhone.editText?.text.toString())
+            Variables.NOMBRES = textFieldNames.editText?.text.toString()
+            Variables.APELLIDOS = textFieldLastNames.editText?.text.toString()
+            Variables.GENERO = textFieldGender.editText?.text.toString()
+            Variables.ESTCIVIL = textFieldCivilState.editText?.text.toString()
+            Variables.TELEFONO = textFieldPhone.editText?.text.toString()
+            val intent = Intent(this, PageTwoActivity::class.java)
             startActivity(intent)
         }
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        moveTaskToBack(true)
-        exitProcess(-1)
+        if (Variables.primeraVez) {
+            super.onBackPressed()
+            moveTaskToBack(true)
+            exitProcess(-1)
+        } else {
+            val intent = Intent(this, AccesoAplicacionActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun validarCampos(cadenaValidacion:String):Boolean{
@@ -114,7 +138,9 @@ class PageOneActivity : AppCompatActivity() {
                 val dayStr = if (dayofMonth < 10) "0${dayofMonth}" else "${dayofMonth}"
                 val mon = month + 1
                 val monthStr = if (mon < 10) "0${mon}" else "${mon}"
-                textFieldDateBirthday.editText?.setText("${dayStr}-${monthStr}-${year}")
+                val fechaConcatenada = "${dayStr}-${monthStr}-${year}"
+                Variables.FNACIMIENTO = fechaConcatenada
+                textFieldDateBirthday.editText?.setText(fechaConcatenada)
             }
         })
     }

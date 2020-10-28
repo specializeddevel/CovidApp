@@ -81,6 +81,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_view_comfy_24">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/textoMunicipio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />
@@ -98,6 +99,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_location_city_24">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/textoCiudad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/page_two_activity_city"
@@ -115,6 +117,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_view_compact_24">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/textoBarrio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/page_two_activity_barrio"
@@ -190,22 +193,31 @@
                         app:icon="@drawable/ic_baseline_remove_circle_outline_24" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
+
             </LinearLayout>
 
             <!-- TextField Barrio -->
+
+            <LinearLayout
+                android:id="@+id/layoutCheckBoxTerminos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:orientation="vertical">
+
             <CheckBox
                 android:id="@+id/checkBoxTerminos"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
                 android:background="@drawable/border"
                 android:checked="true"
                 android:text="@string/page_two_activity_terminos"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id" />
+            </LinearLayout>
         </TableLayout>
 
     </ScrollView>
