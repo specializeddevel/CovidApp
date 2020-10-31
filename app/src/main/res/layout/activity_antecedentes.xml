@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PageThreeActivity">
+    tools:context=".AntecedentesActivity">
 
     <ImageView
         android:id="@+id/logocsra"
@@ -51,6 +51,7 @@
         android:text="@string/actecedentes_activity_instruccion"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/my_color_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/your_state_progress_bar_id_pgant" />
@@ -89,7 +90,7 @@
                     android:text="@string/antecedentes_activity_ant1"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -140,7 +141,7 @@
                     android:text="@string/antecedentes_activity_ant2"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -191,7 +192,7 @@
                     android:text="@string/antecedentes_activity_ant3"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -242,7 +243,7 @@
                     android:text="@string/antecedentes_activity_ant4"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -293,7 +294,7 @@
                     android:text="@string/antecedentes_activity_ant5"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -344,7 +345,7 @@
                     android:text="@string/antecedentes_activity_ant6"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -395,7 +396,7 @@
                     android:text="@string/antecedentes_activity_ant7"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -446,7 +447,7 @@
                     android:text="@string/antecedentes_activity_ant8"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -498,7 +499,7 @@
                     android:text="@string/antecedentes_activity_embarazo"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup

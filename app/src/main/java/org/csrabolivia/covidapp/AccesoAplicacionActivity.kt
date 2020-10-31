@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_acceso_aplicacion.*
-import kotlin.system.exitProcess
+import org.csrabolivia.covidapp.jsondata.Variables
 
 
 class AccesoAplicacionActivity : AppCompatActivity() {

@@ -161,7 +161,7 @@
                     android:text="@string/page_two_activity_enCasa"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup

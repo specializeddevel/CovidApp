@@ -1,15 +1,20 @@
 package org.csrabolivia.covidapp
 
+import android.Manifest
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.likethesalad.android.aaper.api.EnsurePermissions
 import kotlinx.android.synthetic.main.activity_mensaje_autodiagnostico.*
+import org.csrabolivia.covidapp.jsondata.DataDiagnostico
+import org.csrabolivia.covidapp.jsondata.Variables
 import java.io.IOException
 import java.util.*
 
@@ -19,8 +24,6 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mensaje_autodiagnostico)
-
-
 
         //Niveles de riesgo
         //0 -> Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
@@ -43,16 +46,19 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
         //25 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
         //26 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
         //27 -> Con un sintoma (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
-        //Diagnostico para caso SIN contacto con persona con COVID, 2 o más síntomas (no incluidos perdida de olfato y perdida de gusto) y SIN antecedente de riesgo
 
 
         val nombreCompleto = "${Variables.NOMBRES}  ${Variables.APELLIDOS}"
         mensaje2Layout.visibility = View.GONE
         mensaje3Layout.visibility = View.GONE
-        mensaje3Layout.visibility = View.GONE
         mensaje4Layout.visibility = View.GONE
         mensaje5Layout.visibility = View.GONE
         mensaje6Layout.visibility = View.GONE
+        llamadaLayout.visibility = View.GONE
+
+        btResultadoLlamarMedico.setOnClickListener(){
+            hacerLlamada()
+        }
 
         when(DataDiagnostico.nivelDeRieso){
             //Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
@@ -175,7 +181,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje4Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             //10 - Con al menos dos sintomas, al menos un factor de riesgo y contacto covid
-            10-> {
+            10 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -210,7 +216,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //11 -> Con al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
-            11-> {
+            11 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -280,7 +286,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //13 -> Con al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y con contacto covid
-            13-> {
+            13 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -315,7 +321,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //14 - Con al menos dos sintomas, al menos un factor de riesgo y sin contacto covid
-            14-> {
+            14 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -350,7 +356,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //15 -> Con al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
-            15-> {
+            15 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -385,13 +391,13 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //16 -> Con al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
-            16-> {
+            16 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
                 headerTitulo.setText("POSIBILIDAD DE COVID-19")
                 ////headerSubtitulo.setText("Presenta algunos síntomas compatibles con COVID-19 y riesgo bajo.")
-                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19 pero baja probabilidad de haberse contagiado.</b>"))
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>tiene síntomas compatibles con COVID-19.</b>"))
                 diagnosticoLinea2.setText("Su evaluación es compatible con COVID-19 y la sospecha es mayor porque presenta síntomas muy específicos. Por favor realice otra autoevaluación en:")
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
@@ -412,7 +418,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
             }
             //17 -> Con al menos dos sintomas (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
-            17-> {
+            17 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -439,7 +445,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
             }
             //20 -> Con un sintoma, al menos un factor de riesgo y contacto covid
-            20-> {
+            20 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -466,7 +472,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
             }
             //21 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
-            21-> {
+            21 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -532,7 +538,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
             }
             //23 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y con contacto covid
-            23-> {
+            23 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -567,7 +573,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje6Texto.setText(R.string.autoevaluacion_familia_aislada)
             }
             //24 -> Con un sintoma, al menos un factor de riesgo y sin contacto covid
-            24-> {
+            24 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -598,7 +604,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje5Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
             //25 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
-            25-> {
+            25 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -633,7 +639,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje6Texto.setText(R.string.autoevaluacion_aislamiento_familia)
             }
             //26 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
-            26-> {
+            26 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -660,7 +666,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje5Texto.setText(R.string.autoevaluacion_no_use_mismo_bano_low)
             }
             //27 -> Con un sintoma (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
-            27-> {
+            27 -> {
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -689,7 +695,99 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje5Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
                 mensaje5Texto.setText(R.string.autoevaluacion_lavese_las_manos)
             }
-            else -> Toast.makeText(this, "Valor de nivel de riesgo no reconocido", Toast.LENGTH_SHORT).show()
+            //Paciente COVID sin complicaciones
+            30 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_low)
+                headerLayout.setBackgroundResource(R.drawable.layout_bg_green)
+                headerTitulo.setText("NO PRESENTA COMPLICACIONES")
+                headerImagen.setImageResource(R.drawable.ic_comprobar)
+                ////headerSubtitulo.setText("No presenta ninguna complicación ni riesgo")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>de acuerdo a los datos otorgados no presenta complicaciónes en su estado de salud. Esta llevando la enfermedad </b>"))
+                diagnosticoLinea2.setText("Realice una nueva autoevaluación dentro de:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                diagnosticoHoraLiteral.setText("48")
+                diagnosticoHoraTexto.setText("HORAS")
+                //mensaje1Texto.setText("RECUERDE:")
+                //mensaje 2
+                mensaje2Layout.visibility = View.VISIBLE
+                mensaje2Imagen.setImageResource(R.drawable.ic_mascara)
+                mensaje2Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
+                //mensaje 3
+                mensaje3Layout.visibility = View.VISIBLE
+                mensaje3Imagen.setImageResource(R.drawable.ic_aislamiento)
+                mensaje3Texto.setText(R.string.autoevaluacion_aislece_con_covid)
+                //mensaje 4
+                mensaje4Layout.visibility = View.VISIBLE
+                mensaje4Imagen.setImageResource(R.drawable.ic_diarrhea)
+                mensaje4Texto.setText(R.string.autoevaluacion_no_use_mismo_bano)
+                //mensaje 5
+                mensaje5Layout.visibility = View.VISIBLE
+                mensaje5Imagen.setImageResource(R.drawable.ic_platos)
+                mensaje5Texto.setText(R.string.autoevaluacion_utencilios_covid)
+                //mensaje 6
+                mensaje6Layout.visibility = View.VISIBLE
+                mensaje6Imagen.setImageResource(R.drawable.ic_lavarse_las_manos)
+                mensaje6Texto.setText(R.string.autoevaluacion_lavese_las_manos)
+            }
+            //Paciente COVID con complicaciones
+            31 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
+                headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
+                headerTitulo.setText("PRESENTA COMPLICACIONES")
+                headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
+                ////headerSubtitulo.setText("Presenta complicaciones")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>de acuerdo a los datos otorgados, presenta algunas complicaciónes en su estado de salud actual.<br><br>Presione el botón [LLAMAR A UN MÉDICO] para ser atendido por personal de salud calificado.</b>"))
+                diagnosticoLinea2.setText("Para informar nuevamente de su estado al personal de salud, realice una nueva autoevaluación dentro de:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                diagnosticoHoraLiteral.setText("24")
+                diagnosticoHoraTexto.setText("HORAS")
+                //mensaje1Texto.setText("RECUERDE:")
+                llamadaLayout.visibility = View.VISIBLE
+                //mensaje 2
+                mensaje2Layout.visibility = View.VISIBLE
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
+                //mensaje 3
+                mensaje3Layout.visibility = View.VISIBLE
+                mensaje3Imagen.setImageResource(R.drawable.ic_llamada_telefonica)
+                mensaje3Texto.setText(R.string.autoevaluacion_llame_personal_salud)
+                //mensaje 3
+                mensaje4Layout.visibility = View.VISIBLE
+                mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece_con_covid_alto)
+            }
+            //Paciente COVID con complicaciones
+            32 -> {
+                tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
+                headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
+                headerTitulo.setText("PRESENTA COMPLICACIONES Y RIESGO")
+                headerImagen.setImageResource(R.drawable.ic_danger_red)
+                ////headerSubtitulo.setText("Presenta complicaciones")
+                diagnosticoNombre.setText(Html.fromHtml("$nombreCompleto, <b>de acuerdo a los datos otorgados, presenta complicaciones en su estado de salud que deben ser evaluadas inmediatamente.<br><br>Presione el botón [LLAMAR A UN MÉDICO] para ser atendido por personal de salud calificado.</b>"))
+                diagnosticoLinea2.setText("Para informar nuevamente de su estado al personal de salud, realice una nueva autoevaluación dentro de:")
+                diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
+                diagnosticoHoraLiteral.setText("24")
+                diagnosticoHoraTexto.setText("HORAS")
+                //mensaje1Texto.setText("RECUERDE:")
+                llamadaLayout.visibility = View.VISIBLE
+                //mensaje 2
+                mensaje2Layout.visibility = View.VISIBLE
+                mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
+                mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
+                //mensaje 3
+                mensaje3Layout.visibility = View.VISIBLE
+                mensaje3Imagen.setImageResource(R.drawable.ic_llamada_telefonica)
+                mensaje3Texto.setText(R.string.autoevaluacion_llame_personal_salud)
+                //mensaje 3
+                mensaje4Layout.visibility = View.VISIBLE
+                mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
+                mensaje4Texto.setText(R.string.autoevaluacion_aislece_con_covid_alto)
+            }
+            else -> Toast.makeText(
+                this,
+                "Valor de nivel de riesgo no reconocido",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         btFinalizarDiagnostico.setOnClickListener() {
@@ -767,9 +865,12 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                             "autoevaluacion_peligro_intensidad_fiebre" to DataDiagnostico.peligroIntensidadFiebre,
                             "autoevaluacion_peligro_dolor_pecho" to DataDiagnostico.peligroDolorDePecho,
                             "autoevaluacion_nivel_riesgo" to DataDiagnostico.nivelDeRieso
-                            ), SetOptions.merge()
+                        ), SetOptions.merge()
                     )
-                    Log.i("Cuidarnos", "Se registraron los datos del diagnostico en la nube y retrorna al menu principal")
+                    Log.i(
+                        "Cuidarnos",
+                        "Se registraron los datos del diagnostico en la nube y retrorna al menu principal"
+                    )
                     val intent = Intent(this, AccesoAplicacionActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -782,10 +883,22 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             else {
                 Log.i(
                     "Cuidarnos",
-                    "No se pueden registrar los datos en la nuve por que no se tiene conexion a internet")
-                Toast.makeText(this, "Por favor conectese a Internet para enviar el diagnóstico.", Toast.LENGTH_SHORT).show()
+                    "No se pueden registrar los datos en la nuve por que no se tiene conexion a internet"
+                )
+                Toast.makeText(
+                    this,
+                    "Por favor conectese a Internet para enviar el diagnóstico.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
+    }
+
+    @EnsurePermissions(permissions = [Manifest.permission.CALL_PHONE])
+    fun hacerLlamada(){
+        Log.d("Cuidarnos", "intentando hacer llamada")
+        val intent = Intent(Intent.ACTION_CALL, Uri.parse(Variables.numeroTelefonoMedico))
+        startActivity(intent)
     }
 
     fun verificaInternet(): Boolean {

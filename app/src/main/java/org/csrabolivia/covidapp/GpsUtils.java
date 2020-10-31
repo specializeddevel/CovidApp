@@ -18,6 +18,9 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import org.csrabolivia.covidapp.jsondata.Variables;
+
 import static android.content.ContentValues.TAG;
 
 

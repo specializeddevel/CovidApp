@@ -7,16 +7,17 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
+import com.likethesalad.android.aaper.Aaper
 import org.csrabolivia.covidapp.jsondata.DataAntecedentes
 import org.csrabolivia.covidapp.jsondata.DataGPS
 import org.csrabolivia.covidapp.jsondata.DataUsuario
+import org.csrabolivia.covidapp.jsondata.Variables
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Aaper.init()
 
         if (verificaInternet()){
             // notification()

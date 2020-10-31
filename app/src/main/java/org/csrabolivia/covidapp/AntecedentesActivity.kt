@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_antecedentes.*
 import kotlinx.android.synthetic.main.activity_antecedentes.view.*
-import kotlinx.android.synthetic.main.activity_page_two.*
+import org.csrabolivia.covidapp.jsondata.Variables
 import org.json.JSONObject
 import www.sanju.motiontoast.MotionToast
 import java.io.IOException

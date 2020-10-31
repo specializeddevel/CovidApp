@@ -65,6 +65,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/my_color_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +105,7 @@
                     android:text="@string/ADM_activity_text_tos_seca"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -156,7 +157,7 @@
                     android:text="@string/ADM_activity_text_fiebre"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -208,7 +209,7 @@
                     android:text="@string/ADM_activity_text_malestar"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -259,7 +260,7 @@
                     android:text="@string/ADM_activity_text_dolor_cabeza"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -310,7 +311,7 @@
                     android:text="@string/ADM_activity_text_problemas_respiracion"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -361,7 +362,7 @@
                     android:text="@string/ADM_activity_text_dolor_muscular"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -412,7 +413,7 @@
                     android:text="@string/ADM_activity_text_dolor_garganta"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -463,7 +464,7 @@
                     android:text="@string/ADM_activity_text_perdida_olfato"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -515,7 +516,7 @@
                     android:text="@string/ADM_activity_text_perdida_gusto"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup

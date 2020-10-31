@@ -35,7 +35,7 @@
     <string name="page_one_activity_btn_continuar">Continuar</string>
     <string name="autodiagnostico_titulo">Autoevaluación</string>
     <string name="page_1_AD_activity_btContinuar">Continuar</string>
-    <string name="page_1_AD_activity_textP1">¿Ud. tiene COVID-19 (confirmado o no por laboratorio)?</string>
+    <string name="page_1_AD_activity_textP1">¿Ud. tiene COVID-19? (confirmado o no por laboratorio)</string>
     <string name="page_1_AD_activity_textP2">¿Estuvo en contacto con una persona confirmada o sospechosa de tener COVID-19, durante la última semana?</string>
     <string name="ADM_activity_text_tos_seca">1. Tos seca</string>
     <string name="autodiagnostico_molestias_intro">¿Tiene alguna de las siguientes molestias?</string>
@@ -67,14 +67,14 @@
     <string name="btADP4_2Alta">ALTA</string>
     <string name="autodiagnostico_final">Resultado de la autoevaluación</string>
     <string name="mainmenu_titulo_autoevaluacion">REALICE LA AUTOEVALUACIÓN</string>
-    <string name="mainmenu_subtitulo_autoevaluacion">Esta opción le permite realizar una nueva autoevaluación y enviar el resultado directamente al Personal de Salud.</string>
+    <string name="mainmenu_subtitulo_autoevaluacion">Esta opción le permite realizar una nueva autoevaluación y enviar el resultado automáticamente al Personal de Salud.</string>
     <string name="mainmenu_titulo_modificarDatos">MODIFICAR SUS DATOS PERSONALES</string>
     <string name="mainmenu_subtitulo_modificarDatos">Ingrese aquí si quiere verificar o modificar sus datos personales, ya sea porque estén mal registrados o porque hayan cambiado.</string>
     <string name="mainmenu_textoBoton_autoevaluacion">INICIAR AUTOEVALUACIÓN</string>
     <string name="mainmenu_textoBoton_editarDatos">EDITAR SUS DATOS</string>
     <string name="mainmenu_titulo_infoCovid">OBTENGA INFORMACIÓN IMPORTANTE</string>
     <string name="mainmenu_subtitulo_infoCovid">Obtenga información de fuentes oficiales sobre el COVID-19, las medidas de prevención y las acciones necesarias que se deben efectuar para superarlo.</string>
-    <string name="mainmenu_textoBoton_infoCovid">OBTENER INFORMACIÓN COVID-19</string>
+    <string name="mainmenu_textoBoton_infoCovid">INFORMACIÓN COVID-19</string>
     <string name="autoevaluacion_envio_datos_bajo">"Los resultados de su evaluación han sido informados a Personal de Salud, quienes se pondran en contacto con Ud. en caso de ser necesario."</string>
     <string name="autoevaluacion_envio_datos_alto">"Los resultados de su evaluación han sido informados a Personal de Salud, quienes se pondran en contacto con Ud."</string>
     <string name="autoevaluacion_lavese_las_manos">"Lávese las manos con agua y jabón, de manera frecuente y por lo menos por 20 segundos."</string>
@@ -83,9 +83,14 @@
     <string name="autoevaluacion_distanciamiento">"Mantenga la distancia con otras personas, separándose de ellas por al menos 2 metros."</string>
     <string name="autoevaluacion_nuevo_sintoma">"En caso de que presente cualquier síntoma, deberá realizar una nueva autoevaluación inmediatamente, para evitar una situación de riesgo."</string>
     <string name="autoevaluacion_aislece">"Manténgase aislado en una habitación separada hasta que se pueda confirmar su diagnóstico."</string>
-    <string name="autoevaluacion_no_use_mismo_bano">"No utilice el mismo baño que utilizan las demás personas con las que convive."</string>
+    <string name="autoevaluacion_aislece_con_covid">"Quédese en su casa y evite salir de la habitación en la que se encuentre aislado."</string>
+    <string name="autoevaluacion_aislece_con_covid_alto">"Quédese en su casa y evite salir de la habitación en la que se encuentre, evite asistir físicamente a un Servicio de Salud"</string>
+    <string name="autoevaluacion_no_use_mismo_bano">"No utilice el mismo baño que utilizan las demás personas con las que convive, si lo comparte debe desinfectarlo antes y después de utilizarlo."</string>
     <string name="autoevaluacion_familia_aislada">"Ud. y su familia deben permanecer en su vivienda, pronto será sometido a pruebas que permitan confirmar el diagnostico."</string>
     <string name="autoevaluacion_aislece_low">"Manténgase aislado el mayor tiempo posible, en una habitación separada hasta que se pueda confirmar su diagnóstico."</string>
-    <string name="autoevaluacion_no_use_mismo_bano_low">"Procure no utilizar el mismo baño que utilizan las demás personas con las que convive."</string>
+    <string name="autoevaluacion_no_use_mismo_bano_low">"Procure no utilizar el mismo baño que utilizan las demás personas con las que convive, si lo comparte debe desinfectarlo antes y después de utilizarlo."</string>
     <string name="autoevaluacion_aislamiento_familia">"Ud. y los integrantes de su familia deben salir lo menos posible de su vivienda, pronto se podra confirmar su diagnostico."</string>
+    <string name="autoevaluacion_utencilios_covid">"Los cubiertos, vasos, platos y otros utensilios que utilice, deben ser lavados con lavavajillas o detergente."</string>
+    <string name="autoevaluacion_llame_personal_salud">"Comuníquese por cualquier medio con el celular 78177431 para ser evaluado por un médico, de manera remota e inmediata."</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package org.csrabolivia.covidapp
+package org.csrabolivia.covidapp.jsondata
 
 import java.io.IOException
 

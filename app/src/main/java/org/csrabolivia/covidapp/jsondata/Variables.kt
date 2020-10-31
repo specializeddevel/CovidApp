@@ -1,4 +1,4 @@
-package org.csrabolivia.covidapp
+package org.csrabolivia.covidapp.jsondata
 
 class Variables {
     companion object{
@@ -34,5 +34,6 @@ class Variables {
         const val LOCATION_REQUEST = 1000
         const val GPS_REQUEST = 1001
         var _conDatosGPS = false
+        var numeroTelefonoMedico = "tel:+59178177431"
     }
 }

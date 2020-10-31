@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p1.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p1.view.*
+import org.csrabolivia.covidapp.jsondata.DataDiagnostico
 import java.util.*
 
 class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {

@@ -28,7 +28,7 @@
         android:text="@string/autodiagnostico_final"
         android:textAlignment="center"
         android:textColor="@color/my_color_light"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/cardViewDiagnostico"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,31 +58,29 @@
             android:stretchColumns="1"
             android:background="@drawable/background_shape_exposure_high">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/headerLayout"
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:background="@drawable/layout_bg_green">
+                android:background="@drawable/layout_bg_green"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/headerImagen"
                     android:layout_width="35pt"
                     android:layout_height="35pt"
-                    android:layout_alignParentTop="true"
                     android:padding="5dp"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:src="@drawable/ic_warning_red" />
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_warning_red"
+                    />
 
                 <TextView
                     android:id="@+id/headerTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toRightOf="@+id/headerImagen"
-                    android:text="SIN SINTOMAS COVID 19"
+                    android:text="POSIBILIDAD BAJA DE COVID-19"
                     android:textSize="22sp"
 
                     />
@@ -94,8 +92,8 @@
                     android:layout_below="@+id/headerTitulo"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_toRightOf="@+id/headerImagen"/>
-            </RelativeLayout>
+                    android:layout_toRightOf="@+id/headerImagen" />
+            </LinearLayout>
 
             <ScrollView
                 android:id="@+id/diagnosticoScroll"
@@ -114,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Raúl Burgos Murray, no tiene síntomas compatibles con COVID-19."
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/diagnosticoLinea2"
@@ -122,8 +120,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/diagnosticoNombre"
                         android:layout_marginTop="8dp"
-                        android:textSize="18sp"
-                        android:text="Texto del segundo parrafo"/>
+                        android:text="Texto del segundo parrafo"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:id="@+id/diagnosticoHoraLayout"
@@ -166,27 +164,29 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/mensaje1Layout"
+                        android:id="@+id/llamadaLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/diagnosticoHoraLayout"
                         android:layout_marginTop="8dp"
-                        android:gravity="center_vertical">
+                        android:gravity="center"
+                        >
 
-                        <TextView
-                            android:id="@+id/mensaje1Texto"
-                            android:layout_width="match_parent"
+                        <Button
+                            android:id="@+id/btResultadoLlamarMedico"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:gravity="center_vertical"
-                            android:textSize="16sp" />
+                            android:textSize="15sp"
+                            android:backgroundTint="#2E7D32"
+                            android:text="Llamar a un Médico"
+                            app:icon="@android:drawable/sym_call_outgoing" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/mensaje2Layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/mensaje1Layout"
+                        android:layout_below="@+id/llamadaLayout"
                         android:layout_marginTop="8dp"
                         android:gravity="center_vertical">
 
@@ -206,7 +206,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje2Imagen"
                             android:gravity="center_vertical"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -233,7 +233,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje3Imagen"
                             android:gravity="center_vertical"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -260,7 +260,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje4Imagen"
                             android:gravity="center_vertical"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -287,7 +287,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje5Imagen"
                             android:gravity="center_vertical"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -314,7 +314,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/mensaje6Imagen"
                             android:gravity="center_vertical"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </RelativeLayout>
                 </RelativeLayout>
             </ScrollView>

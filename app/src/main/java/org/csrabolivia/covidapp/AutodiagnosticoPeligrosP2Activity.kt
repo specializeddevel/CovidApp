@@ -8,10 +8,9 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p2.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p2.view.*
-import java.lang.Math.abs
-import java.util.*
+import org.csrabolivia.covidapp.jsondata.DataDiagnostico
 
-class AutodiagnosticoPeligrosP2Activity : AppCompatActivity() {
+ class AutodiagnosticoPeligrosP2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_autodiagnostico_peligros_p2)

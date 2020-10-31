@@ -8,7 +8,8 @@ import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.view.*
-import kotlinx.android.synthetic.main.activity_page_one.*
+import org.csrabolivia.covidapp.jsondata.DataDiagnostico
+import org.csrabolivia.covidapp.jsondata.Variables
 import java.io.IOException
 import java.util.*
 
@@ -185,7 +186,7 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
                 retorno = 2
             } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 0 && sumaFactores == 0  ) {
                 //Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
-                retorno = 0
+                retorno = 32
             } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 0 && sumaFactores >=1 ) {
                 //Sin ningún síntoma y sin contacto con paciente covid y con al menos un factor de riesgo
                 retorno = 3

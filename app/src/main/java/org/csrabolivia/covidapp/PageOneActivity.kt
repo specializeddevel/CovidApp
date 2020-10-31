@@ -4,16 +4,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import com.google.errorprone.annotations.Var
-import kotlinx.android.synthetic.main.activity_antecedentes.*
-import kotlinx.android.synthetic.main.activity_antecedentes.view.*
 import kotlinx.android.synthetic.main.activity_page_one.*
-import kotlinx.android.synthetic.main.activity_page_two.*
+import org.csrabolivia.covidapp.jsondata.Variables
 import java.util.*
 import kotlin.system.exitProcess
 

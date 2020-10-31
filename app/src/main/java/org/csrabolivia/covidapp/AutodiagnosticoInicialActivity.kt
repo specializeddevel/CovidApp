@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_autodiagnostico_inicial.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_inicial.view.*
-import java.io.IOException
+import org.csrabolivia.covidapp.jsondata.DataDiagnostico
 
 class AutodiagnosticoInicialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

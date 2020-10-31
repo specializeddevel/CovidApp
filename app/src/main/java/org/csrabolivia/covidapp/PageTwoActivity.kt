@@ -17,10 +17,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.contains
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.errorprone.annotations.Var
 import kotlinx.android.synthetic.main.activity_page_two.*
 import kotlinx.android.synthetic.main.activity_page_two.btAtras1
 import kotlinx.android.synthetic.main.activity_page_two.btFinalizar1
@@ -29,7 +27,7 @@ import org.json.JSONObject
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.iid.FirebaseInstanceId
-import kotlinx.android.synthetic.main.activity_page_one.*
+import org.csrabolivia.covidapp.jsondata.Variables
 import java.io.IOException
 
 
