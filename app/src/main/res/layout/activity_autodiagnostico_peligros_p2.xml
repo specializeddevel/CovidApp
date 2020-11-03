@@ -30,7 +30,7 @@
         app:spb_animateToCurrentProgressState="true"
         app:spb_checkStateCompleted="true"
         app:spb_currentStateDescriptionColor="#DB0082"
-        app:spb_currentStateNumber="two"
+        app:spb_currentStateNumber="three"
         app:spb_maxStateNumber="three"
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
@@ -88,7 +88,7 @@
                     android:text="@string/ADP_activity_text_cansancio"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -138,7 +138,7 @@
                     android:text="@string/ADP_activity_text_malestar"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -188,7 +188,7 @@
                     android:text="@string/ADP_activity_text_fiebre"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -238,7 +238,7 @@
                     android:text="@string/ADP_activity_text_intensidad_fiebre"
                     android:textAlignment="textStart"
 
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
@@ -256,7 +256,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/btADP4_2MuyAlta"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
@@ -265,7 +265,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/btADP4_2Alta"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
@@ -274,7 +274,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/btADP1_3Moderada"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
 
                     <Button
@@ -283,7 +283,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/btADP1_3Leve"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         app:icon="@drawable/ic_baseline_check_circle_outline_24" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
             </LinearLayout>

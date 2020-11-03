@@ -186,7 +186,7 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
                 retorno = 2
             } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 0 && sumaFactores == 0  ) {
                 //Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
-                retorno = 32
+                retorno = 0
             } else if (sumaSintomas == 0 && DataDiagnostico.tieneContactoCovid == 0 && sumaFactores >=1 ) {
                 //Sin ningún síntoma y sin contacto con paciente covid y con al menos un factor de riesgo
                 retorno = 3

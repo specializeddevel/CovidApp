@@ -46,7 +46,6 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
                 //startActivity(intent)
                 //Toast.makeText(this, "p1: ${DataDiagnostico.tieneCovid}, p2: ${DataDiagnostico.tieneContactoCovid}", Toast.LENGTH_SHORT).show()
             }
-            // TODO: 19/10/2020 Verificar que el flujo al seleccionar si o no tiene contacto covid funcione correctamente, habia un error aqui
         }
 
         btADContinuar1.setOnClickListener(){

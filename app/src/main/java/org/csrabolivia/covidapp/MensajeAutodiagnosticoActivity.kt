@@ -63,6 +63,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
         when(DataDiagnostico.nivelDeRieso){
             //Sin ningún síntoma y sin contacto con paciente covid y sin factor de riesgo
             0 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_low)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_green)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
@@ -89,6 +91,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //Sin ningún síntoma y con contacto con paciente covid sin factor de riesgo
             1 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -125,6 +129,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //Sin ningún síntoma y con contacto con paciente covid y con al menos un factor de riesgo
             2 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -156,6 +162,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //Sin ningún síntoma y sin contacto con paciente covid y con al menos un factor de riesgo
             3 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_low)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_green)
                 headerTitulo.setText("SIN SINTOMAS COVID-19")
@@ -182,6 +190,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //10 - Con al menos dos sintomas, al menos un factor de riesgo y contacto covid
             10 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -196,12 +206,13 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
                 mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje2Imagen.
                 mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
-                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
+                mensaje3Imagen.setImageResource(R.drawable.ic_llamada_telefonica)
+                mensaje3Texto.setText(R.string.autoevaluacion_llame_personal_salud)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
@@ -217,6 +228,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //11 -> Con al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
             11 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -227,6 +240,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_telefono_inteligente)
                 diagnosticoHoraLiteral.setText("24")
                 diagnosticoHoraTexto.setText("HORAS")
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
@@ -235,8 +249,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
-                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
+                mensaje3Imagen.setImageResource(R.drawable.ic_llamada_telefonica)
+                mensaje3Texto.setText(R.string.autoevaluacion_llame_personal_salud)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
@@ -252,6 +266,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //12 -> Con al menos dos sintomas, sin factor de riesgo y con contacto covid
             12 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -262,16 +278,16 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje1Texto.setText("Por su seguridad y la de su familia, por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
                 mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
                 mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
-                //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
-                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
+                mensaje3Imagen.setImageResource(R.drawable.ic_llamada_telefonica)
+                mensaje3Texto.setText(R.string.autoevaluacion_llame_personal_salud)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
@@ -287,6 +303,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //13 -> Con al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y con contacto covid
             13 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -297,6 +315,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_telefono_inteligente)
                 diagnosticoHoraLiteral.setText("24")
                 diagnosticoHoraTexto.setText("HORAS")
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
@@ -305,8 +324,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
                 //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
-                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
+                mensaje3Imagen.setImageResource(R.drawable.ic_llamada_telefonica)
+                mensaje3Texto.setText(R.string.autoevaluacion_llame_personal_salud)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
@@ -322,6 +341,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //14 - Con al menos dos sintomas, al menos un factor de riesgo y sin contacto covid
             14 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -332,6 +353,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
@@ -357,6 +379,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //15 -> Con al menos dos sintomas incluido perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
             15 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -367,16 +391,16 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("24")
                 diagnosticoHoraTexto.setText("HORAS")
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
                 mensaje2Imagen.setImageResource(R.drawable.ic_enviar_datos)
                 //mensaje2Imagen.
                 mensaje2Texto.setText(R.string.autoevaluacion_envio_datos_alto)
-                //mensaje 2
                 mensaje3Layout.visibility = View.VISIBLE
-                mensaje3Imagen.setImageResource(R.drawable.ic_mascara)
-                mensaje3Texto.setText(R.string.autoevaluacion_use_barbijo_alto)
+                mensaje3Imagen.setImageResource(R.drawable.ic_llamada_telefonica)
+                mensaje3Texto.setText(R.string.autoevaluacion_llame_personal_salud)
                 //mensaje 3
                 mensaje4Layout.visibility = View.VISIBLE
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
@@ -392,6 +416,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //16 -> Con al menos dos sintomas incluido perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
             16 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -419,6 +445,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //17 -> Con al menos dos sintomas (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
             17 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -446,6 +474,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //20 -> Con un sintoma, al menos un factor de riesgo y contacto covid
             20 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -473,6 +503,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //21 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y con contacto covid
             21 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -483,6 +515,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
@@ -508,6 +541,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //22 -> Con un sintoma, sin factor de riesgo y con contacto covid
             22 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -539,6 +574,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //23 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y con contacto covid
             23 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerImagen.setImageResource(R.drawable.ic_danger_red)
@@ -549,6 +586,7 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 diagnosticoHoraImagen.setImageResource(R.drawable.ic_baseline_access_time_24)
                 diagnosticoHoraLiteral.setText("48")
                 diagnosticoHoraTexto.setText("HORAS")
+                llamadaLayout.visibility = View.VISIBLE
                 //mensaje1Texto.setText("Por favor siga cuidadosamente las siguientes recomendaciones:")
                 //mensaje 1
                 mensaje2Layout.visibility = View.VISIBLE
@@ -574,6 +612,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //24 -> Con un sintoma, al menos un factor de riesgo y sin contacto covid
             24 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -605,6 +645,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //25 -> Con un sintoma entre perdida de olfato o gusto, al menos un factor de riesgo y sin contacto covid
             25 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -640,6 +682,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //26 -> Con un sintoma entre perdida de olfato o gusto, sin factor de riesgo y sin contacto covid
             26 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -667,6 +711,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //27 -> Con un sintoma (no incluido perdida de olfato o gusto), sin factor de riesgo y sin contacto covid
             27 -> {
+                //inicializa los peligros de un test previo a null
+                inicializaPeligros()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerImagen.setImageResource(R.drawable.ic_warning_amarillo)
@@ -697,6 +743,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //Paciente COVID sin complicaciones
             30 -> {
+                //Borra los sintomas registrados en un test previo
+                inicializaSintomas()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_low)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_green)
                 headerTitulo.setText("NO PRESENTA COMPLICACIONES")
@@ -731,6 +779,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //Paciente COVID con complicaciones
             31 -> {
+                //Borra los sintomas registrados en un test previo
+                inicializaSintomas()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_high)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_yellow)
                 headerTitulo.setText("PRESENTA COMPLICACIONES")
@@ -758,6 +808,8 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
             }
             //Paciente COVID con complicaciones
             32 -> {
+                //Borra los sintomas registrados en un test previo
+                inicializaSintomas()
                 tableLayoutTarjetaDiagnostico.setBackgroundResource(R.drawable.background_shape_exposure_infected)
                 headerLayout.setBackgroundResource(R.drawable.layout_bg_red)
                 headerTitulo.setText("PRESENTA COMPLICACIONES Y RIESGO")
@@ -892,6 +944,30 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    fun inicializaSintomas(){
+        DataDiagnostico.tieneContactoCovid = null
+        DataDiagnostico.tosSeca = null
+        DataDiagnostico.fiebre = null
+        DataDiagnostico.dolorCabeza = null
+        DataDiagnostico.dificultadRespirar = null
+        DataDiagnostico.dolorMuscular = null
+        DataDiagnostico.dolorGarganta = null
+        DataDiagnostico.perdidaGusto = null
+        DataDiagnostico.perdidaOlfato = null
+    }
+
+    fun inicializaPeligros(){
+        DataDiagnostico.peligroDificuldadRespiratoria = null
+        DataDiagnostico.peligroSeveridadDificultadRespiratoria = null
+        DataDiagnostico.peligroTiempoDificultadRespiratoria = null
+        DataDiagnostico.peligroCansancioFatiga = null
+        DataDiagnostico.peligroMalestarGeneral = null
+        DataDiagnostico.peligroTieneOTuvoFiebre = null
+        DataDiagnostico.peligroIntensidadFiebre = null
+        DataDiagnostico.peligroDolorDePecho = null
+        //DataDiagnostico.peligroAdultoMayor = null
     }
 
     @EnsurePermissions(permissions = [Manifest.permission.CALL_PHONE])

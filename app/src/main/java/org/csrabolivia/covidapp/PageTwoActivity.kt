@@ -202,7 +202,6 @@ class PageTwoActivity : AppCompatActivity() {
                             "Se guardaron localmente los datos del usuario: ${conDatos.toString()}"
                         )
                         //Guardar datos en la BD remota en firestore
-                        //TODO: Si existieran datos ya almacenados localmente se deberian cargar al momento de cargar cada activity para el caso de edicion
                             if (!Variables.IDUNICO.equals("desconocido")) {
                                 db.collection("usuarios").document(Variables.IDUNICO).set(
                                     hashMapOf
@@ -246,7 +245,6 @@ class PageTwoActivity : AppCompatActivity() {
                                     btFinalizar1.callOnClick()
                                 }
                             }
-
                     }
                 }
         }

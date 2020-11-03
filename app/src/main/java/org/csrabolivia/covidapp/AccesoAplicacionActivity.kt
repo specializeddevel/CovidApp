@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_acceso_aplicacion.*
 import org.csrabolivia.covidapp.jsondata.Variables
+import kotlin.system.exitProcess
 
 
 class AccesoAplicacionActivity : AppCompatActivity() {
@@ -37,8 +38,14 @@ class AccesoAplicacionActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        //moveTaskToBack(true)
-        //exitProcess(-1)
+        /*moveTaskToBack(true)
+        exitProcess(-1)
+        finishAffinity()*/
         finishAffinity()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        exitProcess(0)
     }
 }

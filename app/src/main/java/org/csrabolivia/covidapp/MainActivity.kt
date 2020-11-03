@@ -37,9 +37,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Aaper.init()
-
         if (verificaInternet()){
+            Aaper.init()
             // notification()
             //btContinuar.setOnClickListener(this::escucharBtn)
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)

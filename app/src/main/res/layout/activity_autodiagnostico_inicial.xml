@@ -209,8 +209,7 @@
         app:icon="@drawable/ic_baseline_arrow_forward_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/antecedentesScroll" />
+        app:layout_constraintStart_toStartOf="parent"        />
 
 
 
