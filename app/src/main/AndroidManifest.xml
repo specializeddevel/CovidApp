@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.csrabolivia.covidapp">
+    package="org.csrabolivia.cuidarnos">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,34 +17,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AutodiagnosticoPeligrosP2Activity"
+            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoPeligrosP2Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MensajeAutodiagnosticoActivity"
+            android:name="org.csrabolivia.cuidarnos.MensajeAutodiagnosticoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AutodiagnosticoPeligrosP1Activity"
+            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoPeligrosP1Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AutodiagnosticoMolestiasActivity"
+            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoMolestiasActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AntecedentesActivity"
+            android:name="org.csrabolivia.cuidarnos.AntecedentesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AutodiagnosticoInicialActivity"
+            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoInicialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PageTwoActivity"
+            android:name="org.csrabolivia.cuidarnos.PageTwoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PageOneActivity"
+            android:name="org.csrabolivia.cuidarnos.PageOneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AccesoAplicacionActivity"
+            android:name="org.csrabolivia.cuidarnos.AccesoAplicacionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name="org.csrabolivia.cuidarnos.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -54,7 +54,7 @@
         </activity>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name="org.csrabolivia.cuidarnos.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

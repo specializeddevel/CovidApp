@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:theme="@style/AppTheme"
-    tools:context=".MainActivity">
+    tools:context="org.csrabolivia.cuidarnos.MainActivity">
 
     <ImageView
         android:id="@+id/imageView2"

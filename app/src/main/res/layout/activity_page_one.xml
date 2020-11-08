@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PageOneActivity">
+    tools:context="org.csrabolivia.cuidarnos.PageOneActivity">
 
     <ImageView
         android:id="@+id/logocsra"
