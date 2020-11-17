@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_molestias.view.*
 import org.csrabolivia.cuidarnos.R
 import org.csrabolivia.cuidarnos.jsondata.DataDiagnostico
 import org.csrabolivia.cuidarnos.jsondata.Variables
+import www.sanju.motiontoast.MotionToast
 import java.io.IOException
 import java.util.*
 
@@ -87,8 +89,14 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
         btADMContinuar2.setOnClickListener() {
             if (!validarRespuestas()) {
                 //No paso la validacion
-                Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
-                    .show()
+                MotionToast.createColorToast(
+                    this, "Error!",
+                    "Por favor responda todas las preguntas!",
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
             } else {
                     DataDiagnostico.nivelDeRieso = generarDiagnosticoPersonaNueva()
                     Log.d("Cuidarnos", "Nivel de riesgo calculado: ${DataDiagnostico.nivelDeRieso}")
@@ -268,8 +276,6 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
 
     fun calcularEdadAnos(fechaNac: String ): Int {
 
-        // TODO: 20/10/2020 Se debe verificar que las fechas esten en rangos permitidos en el date picker
-
         val DOD: Int = fechaNac.substring(0,2).toInt()
         val DOM: Int = fechaNac.substring(3,5).toInt()
         val DOY: Int = fechaNac.substring(6,10).toInt()
@@ -277,7 +283,6 @@ class AutodiagnosticoMolestiasActivity : AppCompatActivity() {
         var diaActual = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         val mesActual = Calendar.getInstance().get(Calendar.MONTH) + 1
         val anoActual = Calendar.getInstance().get(Calendar.YEAR)
-
 
         var month: Int? = null
         var yea: Int? = null

@@ -4,12 +4,20 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p1.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p1.view.*
+import kotlinx.android.synthetic.main.activity_page_one.*
 import org.csrabolivia.cuidarnos.R
 import org.csrabolivia.cuidarnos.jsondata.DataDiagnostico
+import org.csrabolivia.cuidarnos.jsondata.Variables
+import www.sanju.motiontoast.MotionToast
 import java.util.*
 
 class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
@@ -27,6 +35,20 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
 
         layoutADP1_2.visibility = View.INVISIBLE
         layoutADP1_3.visibility = View.INVISIBLE
+
+        val today: Long?
+        val singleDateBuilder = MaterialDatePicker.Builder.datePicker()
+        today = MaterialDatePicker.todayInUtcMilliseconds()
+        singleDateBuilder.setTitleText(R.string.select_date)
+        singleDateBuilder.setSelection(today)
+        val constru = CalendarConstraints.Builder()
+                //Solo permite fechas como maximo de 3 meses
+            .setStart(today!!-(2629743L*1000L)*3L)
+            .setEnd(today!!)
+            .setValidator(DateValidatorPointBackward.now())
+        //.setValidator(DateValidatorPointForward.from(today!!-31556926L*1000L))
+        singleDateBuilder.setCalendarConstraints(constru.build())
+        val picker = singleDateBuilder.build()
 
         //tiene diificultad respiratoria
         ADPp1_1.addOnButtonCheckedListener { toggleButton, checkedId, isChecked ->
@@ -53,7 +75,7 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
 
         //Desde hace cuanto tiempo tiene diificultad respiratoria
         btADPSelFecha.setOnClickListener() {
-            showDatePickerDialog()
+            picker.show(supportFragmentManager,"DATE")
             //if(DataDiagnostico.peligroSeveridadDificultadRespiratoria!=null && DataDiagnostico.peligroTiempoDificultadRespiratoria !=null){
             //    btADPContinuar3.callOnClick()
             //}
@@ -79,8 +101,14 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
         btADPContinuar3.setOnClickListener() {
             if (!validarRespuestas()) {
                 //No paso la validacion
-                Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
-                    .show()
+                MotionToast.createColorToast(
+                    this, "Error!",
+                    "Por favor responda todas las preguntas!",
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
             } else {
                 //Toast.makeText(this, "pasa a la siguiente activity", Toast.LENGTH_SHORT).show()
                 //se abre la segunda activity de evaluacion de problemas mas serios de salud
@@ -91,6 +119,25 @@ class AutodiagnosticoPeligrosP1Activity : AppCompatActivity() {
 
         btADPAtras3.setOnClickListener(){
             onBackPressed()
+        }
+
+        picker.addOnPositiveButtonClickListener {
+            val fechaSeleccionada = getDateTime(it)
+            Log.d("Cuidarnos", it.toString())
+            tvFechaDifResp.setText(fechaSeleccionada)
+            DataDiagnostico.peligroTiempoDificultadRespiratoria = fechaSeleccionada.toString()
+        }
+    }
+
+    private fun getDateTime(s: Long): String? {
+        return try {
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            calendar.timeZone = TimeZone.getTimeZone("BO/bo")
+            calendar.timeInMillis = s
+            layoutADP1_2.background = resources.getDrawable(R.drawable.border)
+            android.text.format.DateFormat.format("dd/MM/yyyy", calendar).toString()
+        } catch (e: Exception) {
+            e.toString()
         }
     }
 

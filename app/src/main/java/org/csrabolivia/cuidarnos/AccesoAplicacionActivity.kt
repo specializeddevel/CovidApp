@@ -35,6 +35,17 @@ class AccesoAplicacionActivity : AppCompatActivity() {
             editarDatosCardView.visibility = View.GONE
         }
 
+        btInfoCovid.setOnClickListener(){
+            Log.d("Cuidarnos", "Informacion COVID")
+
+        }
+
+        if(!Variables._conDatosGPS && !Variables.primeraVez){
+            Log.d("Cuidarnos", Variables._conDatosGPS.toString())
+            val intent = Intent(this, GeoreferenciaActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     override fun onBackPressed() {

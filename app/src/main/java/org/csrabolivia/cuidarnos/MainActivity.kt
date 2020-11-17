@@ -43,11 +43,11 @@ class MainActivity : AppCompatActivity() {
             // notification()
             //btContinuar.setOnClickListener(this::escucharBtn)
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            /*val editor = prefs.edit()
-            editor.remove("PERSONALDATA")
-            editor.remove("IDUNICO")
-            editor.remove("GPSDATA")
-            editor.apply()*/
+            //val editor = prefs.edit()
+            //editor.remove("PERSONALDATA")
+            //editor.remove("IDUNICO")
+            //editor.remove("GPSDATA")
+            //editor.apply()
             val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
             val bundle = Bundle()
             bundle.putString("InitScreen", "Integración con Firebase completada")
@@ -81,8 +81,8 @@ class MainActivity : AppCompatActivity() {
             if(conDatos.equals("SD")){
                 Variables.primeraVez = true
                 Log.i("Cuidarnos", "No se tiene datos del usuario, se inicia adctivity de registro de datos personales y de antecedentes")
-                val intent = Intent(this, PageOneActivity::class.java)
-                intent.putExtra("ID", Variables.IDUNICO)
+                val intent = Intent(this, SolicitaPinActivity::class.java)
+                //intent.putExtra("ID", Variables.IDUNICO)
                 startActivity(intent)
             } else {
                 Variables.primeraVez = false
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 if (conAntecedentes.equals("SD")) {
                     //No se encontraron datos de antecedentes
                     Variables.primeraVez = true
-                    Log.i("Cuidarnos", "No se tiene datos de antecedentes, se inicia adctivity de registro de datos personales y de antecedentes")
+                    Log.i("Cuidarnos", "No se tiene datos de antecedentes, se inicia adctivity de registro de PIN, datos personales y de antecedentes")
                     val intent = Intent(this, PageOneActivity::class.java)
                     intent.putExtra("ID", Variables.IDUNICO)
                     startActivity(intent)
@@ -119,6 +119,8 @@ class MainActivity : AppCompatActivity() {
             showAlert("Error", "Lo sentimos, se requiere conexión a Internet para poder usar la aplicación", "OK")
         }
     }
+
+
 
     private fun cargaDatosAntecedentes(datosAntecedentesCadena: String): Boolean {
         return try {
@@ -146,6 +148,7 @@ class MainActivity : AppCompatActivity() {
             val gson = Gson()
             val datosUsuarioJson: List<DataUsuario> =
                 gson.fromJson(datosUsuarioCadena, Array<DataUsuario>::class.java).toList()
+            Variables.PIN = datosUsuarioJson[0].pin
             Variables.IDUNICO = datosUsuarioJson[0].idUnico.toString()
             Variables.NOMBRES = datosUsuarioJson[0].nombres.toString()
             Variables.APELLIDOS = datosUsuarioJson[0].apellidos.toString()
@@ -158,6 +161,7 @@ class MainActivity : AppCompatActivity() {
             Variables.BARRIO = datosUsuarioJson[0].barrio.toString()
             Variables.DIRECCION = datosUsuarioJson[0].direccion.toString()
             Log.d("Cuidarnos", "Se cargaron los datos de usuario")
+            Log.d("Cuidarnos", "valor de pin: ${Variables.PIN}")
             true
         } catch (e: IOException){
             false

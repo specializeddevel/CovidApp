@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class DataUsuario(
 
+	@field:SerializedName("pin")
+	val pin: Int? = null,
+
 	@field:SerializedName("apellidos")
 	val apellidos: String? = null,
 

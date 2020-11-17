@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -16,45 +15,49 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SolicitaPinActivity"></activity>
+        <activity android:name=".GeoreferenciaActivity" />
+        <activity android:name=".CustomDialog" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoPeligrosP2Activity"
+            android:name=".AutodiagnosticoPeligrosP2Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.MensajeAutodiagnosticoActivity"
+            android:name=".MensajeAutodiagnosticoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoPeligrosP1Activity"
+            android:name=".AutodiagnosticoPeligrosP1Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoMolestiasActivity"
+            android:name=".AutodiagnosticoMolestiasActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.AntecedentesActivity"
+            android:name=".AntecedentesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.AutodiagnosticoInicialActivity"
+            android:name=".AutodiagnosticoInicialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.PageTwoActivity"
+            android:name=".PageTwoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.PageOneActivity"
+            android:name=".PageOneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.AccesoAplicacionActivity"
+            android:name=".AccesoAplicacionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.csrabolivia.cuidarnos.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
-            android:name="org.csrabolivia.cuidarnos.MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

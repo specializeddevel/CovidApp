@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p2.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_peligros_p2.view.*
 import org.csrabolivia.cuidarnos.R
 import org.csrabolivia.cuidarnos.jsondata.DataDiagnostico
 import org.csrabolivia.cuidarnos.jsondata.Variables
+import www.sanju.motiontoast.MotionToast
 import java.util.*
 
  class AutodiagnosticoPeligrosP2Activity : AppCompatActivity() {
@@ -90,8 +92,14 @@ import java.util.*
          btADPFinalizar4.setOnClickListener() {
              if (!validarRespuestas()) {
                  //No paso la validacion
-                 Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
-                     .show()
+                 MotionToast.createColorToast(
+                     this, "Error!",
+                     "Por favor responda todas las casillas!",
+                     MotionToast.TOAST_ERROR,
+                     MotionToast.GRAVITY_BOTTOM,
+                     MotionToast.LONG_DURATION,
+                     ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                 )
              } else {
                  DataDiagnostico.nivelDeRieso = generarDiagnosticoPersonaCovid()
                  Log.d("Cuidarnos", "Nivel de riesgo calculado: ${DataDiagnostico.nivelDeRieso}")
@@ -143,8 +151,6 @@ import java.util.*
 
 
      fun calcularEdadAnos(fechaNac: String ): Int {
-
-         // TODO: 20/10/2020 Se debe verificar que las fechas esten en rangos permitidos en el date picker
 
          val DOD: Int = fechaNac.substring(0,2).toInt()
          val DOM: Int = fechaNac.substring(3,5).toInt()

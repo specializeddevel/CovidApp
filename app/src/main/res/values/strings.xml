@@ -92,5 +92,8 @@
     <string name="autoevaluacion_aislamiento_familia">"Ud. y los integrantes de su familia deben salir lo menos posible de su vivienda, pronto se podra confirmar su diagnostico."</string>
     <string name="autoevaluacion_utencilios_covid">"Los cubiertos, vasos, platos y otros utensilios que utilice, deben ser lavados con lavavajillas o detergente."</string>
     <string name="autoevaluacion_llame_personal_salud">"Comuníquese por cualquier medio con el celular 78177431 para ser evaluado por un médico, de manera remota e inmediata."</string>
+    <string name="select_date">Seleccione la fecha</string>
+    <string name="solicita_pin_activity_texto">Por favor ingrese el número de identificación personal asignado al promotor de esta zona</string>
+    <string name="solicita_pin_activity_valor_pin">Ingrese PIN</string>
 
 </resources>

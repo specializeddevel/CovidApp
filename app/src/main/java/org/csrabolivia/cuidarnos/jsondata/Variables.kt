@@ -2,6 +2,7 @@ package org.csrabolivia.cuidarnos.jsondata
 
 class Variables {
     companion object{
+        var PIN: Int? = null
         var NOMBRES: String = "nombres"
         var APELLIDOS: String = "apellidos"
         var GENERO: String = "genero"

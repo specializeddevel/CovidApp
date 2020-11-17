@@ -1,34 +1,35 @@
 package org.csrabolivia.cuidarnos
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.android.synthetic.main.activity_page_two.*
-import kotlinx.android.synthetic.main.activity_page_two.btAtras1
-import kotlinx.android.synthetic.main.activity_page_two.btFinalizar1
-import kotlinx.android.synthetic.main.activity_page_two.view.*
-import org.json.JSONObject
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.iid.FirebaseInstanceId
-import org.csrabolivia.cuidarnos.R
+import kotlinx.android.synthetic.main.activity_page_two.*
+import kotlinx.android.synthetic.main.activity_page_two.view.*
 import org.csrabolivia.cuidarnos.jsondata.Variables
+import org.json.JSONObject
+import www.sanju.motiontoast.MotionToast
 import java.io.IOException
 
 
@@ -129,9 +130,9 @@ class PageTwoActivity : AppCompatActivity() {
         }
 
         if (!Variables.primeraVez) {
-            textoMunicipio.setText(Variables.MUNICIPIO,false)
+            textoMunicipio.setText(Variables.MUNICIPIO, false)
             textoCiudad.setText(Variables.CIUDAD, false)
-            textoBarrio.setText(Variables.BARRIO,false)
+            textoBarrio.setText(Variables.BARRIO, false)
             textFieldDireccion.editText?.setText(Variables.DIRECCION)
             layoutEnCasa.visibility = View.GONE
             checkBoxTerminos.isChecked = true
@@ -163,19 +164,33 @@ class PageTwoActivity : AppCompatActivity() {
                     tbEnCasa.buttonEnCasaSi.requestFocus()
                     layoutEnCasa.setBackgroundColor(Color.parseColor("#FFCDD2"))
                     layoutEnCasa.background = resources.getDrawable(R.drawable.border_red)
-                    Toast.makeText(
-                        this,
-                        "Por favor responda todas las preguntas",
-                        Toast.LENGTH_LONG
+                    //Toast.makeText(
+                    //    this,
+                    //    "Por favor responda todas las preguntas",
+                    //    Toast.LENGTH_LONG
+                    //).show()
+                    MotionToast.createColorToast(
+                        this, "Error!",
+                        "Por favor responda todas las casillas!",
+                        MotionToast.TOAST_ERROR,
+                        MotionToast.GRAVITY_BOTTOM,
+                        MotionToast.LONG_DURATION,
+                        ResourcesCompat.getFont(this, R.font.helvetica_regular)
                     )
-                        .show()
                 } else {
                     if (!verificaInternet()) {
-                        Toast.makeText(this, "No hay internet, no se puede continuar", Toast.LENGTH_SHORT)
-                            .show()
+                        MotionToast.createColorToast(
+                            this, "Error!",
+                            "\"No hay internet, no se puede continuar!",
+                            MotionToast.TOAST_NO_INTERNET,
+                            MotionToast.GRAVITY_BOTTOM,
+                            MotionToast.LONG_DURATION,
+                            ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                        )
                     } else {
                         //Guardado de los datos del usaurio localmente mediante shared preferences
                         val REGISTRO = JSONObject()
+                        REGISTRO.put("pin", Variables.PIN)
                         REGISTRO.put("idUnico", Variables.IDUNICO)
                         REGISTRO.put("nombres", nombre)
                         REGISTRO.put("apellidos", apellidos)
@@ -207,6 +222,7 @@ class PageTwoActivity : AppCompatActivity() {
                                 db.collection("usuarios").document(Variables.IDUNICO).set(
                                     hashMapOf
                                         (
+                                        "pin" to Variables.PIN,
                                         "id" to Variables.IDUNICO,
                                         "nombres" to nombre,
                                         "apellidos" to apellidos,
@@ -225,7 +241,10 @@ class PageTwoActivity : AppCompatActivity() {
                                         "tiempo" to Variables.TIEMPO
                                     ), SetOptions.merge()
                                 )
-                                Log.i("Cuidarnos", "Se registraron los datos del usuario en la nube")
+                                Log.i(
+                                    "Cuidarnos",
+                                    "Se registraron los datos del usuario en la nube"
+                                )
                                 val intent = Intent(this, AntecedentesActivity::class.java)
                                 intent.putExtra(Variables.GENERO, genero)
                                 startActivity(intent)
@@ -235,11 +254,14 @@ class PageTwoActivity : AppCompatActivity() {
                                     "No se registraron los datos del usuario en la nube por falta de ID"
                                 )
                                 if (!generarIDUnico()) {
-                                    Toast.makeText(
-                                        this,
-                                        "No se puede continuar sin una conexión a Internet, intente nuevamente",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    MotionToast.createColorToast(
+                                        this, "Error!",
+                                        "No se puede continuar sin una conexión a Internet, intente nuevamente!",
+                                        MotionToast.TOAST_NO_INTERNET,
+                                        MotionToast.GRAVITY_BOTTOM,
+                                        MotionToast.LONG_DURATION,
+                                        ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                                    )
                                     Log.i("Cuidarnos", "No se pudo generar ID unico")
                                     btAtras1.callOnClick()
                                 } else {
@@ -291,23 +313,7 @@ class PageTwoActivity : AppCompatActivity() {
         return false
     }
 
-
-    private fun showAlert(titulo: String, mensaje: String): AlertDialog{
-        val mAlertDialogBuilder = AlertDialog.Builder(this)
-        mAlertDialogBuilder.setTitle(titulo)
-        mAlertDialogBuilder.setMessage(mensaje)
-        mAlertDialogBuilder.setCancelable(false)
-        mAlertDialogBuilder.setPositiveButton("Si"){_,_->
-           respuestaDialogo="si"
-        }
-        mAlertDialogBuilder.setNegativeButton("No"){_,_->
-            respuestaDialogo="no"
-        }
-        val mAlertDialog = mAlertDialogBuilder.create()
-        return mAlertDialog
-    }
-
-    private fun validarCampos(cadenaValidacion:String):Boolean{
+    private fun validarCampos(cadenaValidacion: String):Boolean{
         return cadenaValidacion.trim().isEmpty()
     }
 
@@ -329,16 +335,23 @@ class PageTwoActivity : AppCompatActivity() {
 
 
     private fun setupPermissions(): Boolean  {
-        val permissionGPS2 = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.ACCESS_FINE_LOCATION)
+        val permissionGPS2 = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
 
         when {
             permissionGPS2 != PackageManager.PERMISSION_GRANTED -> {
                 Log.i("Cuidarnos", "Permission to GPS2 denied")
-                ActivityCompat.requestPermissions(this,
+                ActivityCompat.requestPermissions(
+                    this,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    GPS2_REQUEST_CODE)
-                Log.d("Cuidarnos", "Permiso no concedido anteriormente, Se intenta otorgar permisos para el GPS")
+                    GPS2_REQUEST_CODE
+                )
+                Log.d(
+                    "Cuidarnos",
+                    "Permiso no concedido anteriormente, Se intenta otorgar permisos para el GPS"
+                )
             }
             else -> {
                 Log.d("Cuidarnos", "Ya se tenian los permisos para el GPS")
@@ -356,7 +369,8 @@ class PageTwoActivity : AppCompatActivity() {
     fun getLastKnownLocation(): Boolean {
         var exito = false
         if (ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED){
             //Thread.sleep(2000)
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location ->
@@ -377,7 +391,10 @@ class PageTwoActivity : AppCompatActivity() {
                         Variables.ALTITUD = location.altitude.toString()
                         Variables.PRECISION = location.accuracy.toString()
                         Variables.TIEMPO = location.time.toString()
-                        Log.d("Cuidarnos", "Se capturaron y almacenarón los siguientes datos de GPS: $cadenaGps")
+                        Log.d(
+                            "Cuidarnos",
+                            "Se capturaron y almacenarón los siguientes datos de GPS: $cadenaGps"
+                        )
                         Toast.makeText(this, "Posición geográfica almacenada", Toast.LENGTH_SHORT).show()
                         exito = true
                     } else {
@@ -398,8 +415,10 @@ class PageTwoActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray){
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ){
 
         when (requestCode) {
             GPS2_REQUEST_CODE -> {
@@ -413,6 +432,8 @@ class PageTwoActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 
 

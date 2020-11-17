@@ -157,14 +157,14 @@ class AntecedentesActivity : AppCompatActivity() {
         btContinuar4.setOnClickListener(){
             if(!validarRespuestas()){
                 //No paso la validacion
-                Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
-                    .show()
-                MotionToast.createToast(this,"Upload Completed!",
-                    MotionToast.TOAST_SUCCESS,
+                MotionToast.createColorToast(
+                    this, "Error!",
+                    "Por favor responda todas las preguntas!",
+                    MotionToast.TOAST_ERROR,
                     MotionToast.GRAVITY_BOTTOM,
                     MotionToast.LONG_DURATION,
-                    ResourcesCompat.getFont(this, R.font.helvetica_regular))
-
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
             }else{
                 //Paso la validacion se intenta registro de datos localmente
                 if(registroLocalAntecedentes()){
@@ -231,8 +231,14 @@ class AntecedentesActivity : AppCompatActivity() {
     fun registroLocalAntecedentes():Boolean{
         return try {
             if (!verificaInternet()) {
-                Toast.makeText(this, "No hay internet, no se puede continuar", Toast.LENGTH_SHORT)
-                    .show()
+                MotionToast.createColorToast(
+                    this, "Error",
+                    "No hay conexión a Internet, no se puede continuar!",
+                    MotionToast.TOAST_NO_INTERNET,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
             } else {
                 //Guardado de los datos del usaurio localmente mediante shared preferences
                 val REGISTRO = JSONObject()
@@ -291,7 +297,14 @@ class AntecedentesActivity : AppCompatActivity() {
                         "Cuidarnos",
                         "Error crítico! No se registraron los datos en la nube por falta de ID"
                     )
-                    Toast.makeText(this, "Error crítico al registrar datos de antecedentes", Toast.LENGTH_SHORT).show()
+                    MotionToast.createColorToast(
+                        this, "Error",
+                        "Error crítico al registrar datos de antecedentes!",
+                        MotionToast.TOAST_ERROR,
+                        MotionToast.GRAVITY_BOTTOM,
+                        MotionToast.LONG_DURATION,
+                        ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                    )
                 }
 
             }

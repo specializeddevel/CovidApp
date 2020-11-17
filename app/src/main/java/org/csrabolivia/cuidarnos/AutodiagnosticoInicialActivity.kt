@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_autodiagnostico_inicial.*
 import kotlinx.android.synthetic.main.activity_autodiagnostico_inicial.view.*
 import org.csrabolivia.cuidarnos.R
 import org.csrabolivia.cuidarnos.jsondata.DataDiagnostico
+import www.sanju.motiontoast.MotionToast
 
 class AutodiagnosticoInicialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +54,14 @@ class AutodiagnosticoInicialActivity : AppCompatActivity() {
         btADContinuar1.setOnClickListener(){
             if (!validarRespuestas()) {
                 //No paso la validacion
-                Toast.makeText(this, "Por favor responda todas las preguntas", Toast.LENGTH_SHORT)
-                     .show()
+                MotionToast.createColorToast(
+                    this, "Error!",
+                    "Por favor responda todas las preguntas!",
+                    MotionToast.TOAST_ERROR,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
             } else {
                 if (DataDiagnostico.tieneCovid==0 && DataDiagnostico.tieneContactoCovid!=null){
                     //se abre activity de evaluacion de molestias

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.likethesalad.android.aaper.api.EnsurePermissions
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_mensaje_autodiagnostico.*
 import org.csrabolivia.cuidarnos.R
 import org.csrabolivia.cuidarnos.jsondata.DataDiagnostico
 import org.csrabolivia.cuidarnos.jsondata.Variables
+import www.sanju.motiontoast.MotionToast
 import java.io.IOException
 import java.util.*
 
@@ -836,11 +838,14 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                 mensaje4Imagen.setImageResource(R.drawable.ic_aislamiento)
                 mensaje4Texto.setText(R.string.autoevaluacion_aislece_con_covid_alto)
             }
-            else -> Toast.makeText(
-                this,
-                "Valor de nivel de riesgo no reconocido",
-                Toast.LENGTH_SHORT
-            ).show()
+            else -> MotionToast.createColorToast(
+                this, "Error!",
+                "Valor de nivel de riesgo no reconocido!",
+                MotionToast.TOAST_ERROR,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(this, R.font.helvetica_regular)
+            )
         }
 
         btFinalizarDiagnostico.setOnClickListener() {
@@ -938,11 +943,14 @@ class MensajeAutodiagnosticoActivity : AppCompatActivity() {
                     "Cuidarnos",
                     "No se pueden registrar los datos en la nuve por que no se tiene conexion a internet"
                 )
-                Toast.makeText(
-                    this,
+                MotionToast.createColorToast(
+                    this, "Error!",
                     "Por favor conectese a Internet para enviar el diagnóstico.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    MotionToast.TOAST_NO_INTERNET,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this, R.font.helvetica_regular)
+                )
             }
         }
     }
